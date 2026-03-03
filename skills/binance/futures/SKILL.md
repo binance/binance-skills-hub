@@ -399,7 +399,7 @@ Parameters:
 
 ---
 
-### POST /fapi/v1/bnbBurn
+### POST /fapi/v1/feeBurn
 Toggle BNB fee discount on futures trades.
 
 Parameters:
