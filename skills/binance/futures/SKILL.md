@@ -1,14 +1,9 @@
 ---
-name: binance-futures
-description: |
-  Binance USDM Perpetual Futures trading and data skill. Supports market data (price, klines, orderbook,
-  funding rate, open interest), account info, and order management (open, cancel, query).
-  Authentication requires API key and secret key. Supports testnet and mainnet.
-  Use this skill when users ask about Binance futures price, funding rate, open interest, placing futures orders,
-  checking futures positions, futures account balance, or any Binance perpetual contract operations.
+title: Binance Futures
+description: Binance USDM Perpetual Futures trading and data skill. Supports market data (price, klines, orderbook, funding rate, open interest), account info, and order management (open, cancel, query). Authentication requires API key and secret key. Supports testnet and mainnet. Use this skill when users ask about Binance futures price, funding rate, open interest, placing futures orders, checking futures positions, futures account balance, or any Binance perpetual contract operations.
 metadata:
-  version: 1.0.0
-  author: 小苏
+  version: 1.1.0
+  author: cq375
 license: MIT
 ---
 
@@ -45,17 +40,20 @@ Base URLs:
 | /fapi/v2/account | GET | Account info (balances, positions) | Yes |
 | /fapi/v2/balance | GET | Account balance | Yes |
 | /fapi/v2/positionRisk | GET | Current positions | Yes |
-| /fapi/v1/order POST | POST | Place new order | Yes |
-| /fapi/v1/order DELETE | DELETE | Cancel order | Yes |
-| /fapi/v1/order GET | GET | Query order | Yes |
+| /fapi/v1/order | POST | Place new order | Yes |
+| /fapi/v1/order | DELETE | Cancel order | Yes |
+| /fapi/v1/order | GET | Query order | Yes |
+| /fapi/v1/batchOrders | POST | Place multiple orders (max 5) | Yes |
+| /fapi/v1/batchOrders | DELETE | Cancel multiple orders | Yes |
 | /fapi/v1/openOrders | GET | All open orders | Yes |
-| /fapi/v1/openOrders DELETE | DELETE | Cancel all open orders | Yes |
+| /fapi/v1/openOrders | DELETE | Cancel all open orders on symbol | Yes |
 | /fapi/v1/allOrders | GET | All orders history | Yes |
 | /fapi/v1/userTrades | GET | Trade history | Yes |
 | /fapi/v1/leverage | POST | Change leverage | Yes |
 | /fapi/v1/marginType | POST | Change margin type | Yes |
-| /fapi/v1/positionMargin | POST | Adjust isolated margin | Yes |
-| /fapi/v1/income | GET | Income history | Yes |
+| /fapi/v1/positionMargin | POST | Adjust isolated position margin | Yes |
+| /fapi/v1/income | GET | Income/PnL history | Yes |
+| /fapi/v1/commissionRate | GET | Query commission rate | Yes |
 
 ---
 
@@ -144,6 +142,17 @@ Parameters:
 
 ---
 
+### GET /fapi/v1/globalLongShortAccountRatio
+Global long/short account ratio (all users).
+
+Parameters:
+- symbol (string, required)
+- period (enum, required): 5m 15m 30m 1h 2h 4h 6h 12h 1d
+- limit (int, optional): Default 30, max 500
+- startTime / endTime (long, optional)
+
+---
+
 ## Account & Trading APIs (Auth Required)
 
 ### GET /fapi/v2/balance
@@ -207,6 +216,18 @@ IMPORTANT: Mainnet orders require user confirmation. Always ask user to type "CO
 
 ---
 
+### POST /fapi/v1/batchOrders
+Place up to 5 orders in a single request.
+
+Parameters:
+- batchOrders (JSON array, required): Array of order objects, same fields as /fapi/v1/order
+- timestamp (long, required)
+
+Example:
+batchOrders=[{"symbol":"BTCUSDT","side":"BUY","type":"LIMIT","quantity":"0.01","price":"80000","timeInForce":"GTC"},...]
+
+---
+
 ### DELETE /fapi/v1/order
 Cancel an order.
 
@@ -235,6 +256,44 @@ Parameters:
 - symbol (string, required)
 - marginType (enum, required): ISOLATED or CROSSED
 - timestamp (long, required)
+
+---
+
+### POST /fapi/v1/positionMargin
+Adjust margin for an isolated position.
+
+Parameters:
+- symbol (string, required)
+- positionSide (enum, optional): BOTH | LONG | SHORT
+- amount (decimal, required): Margin amount to add or reduce
+- type (int, required): 1 = Add margin, 2 = Reduce margin
+- timestamp (long, required)
+
+---
+
+### GET /fapi/v1/income
+Income and PnL history.
+
+Parameters:
+- symbol (string, optional)
+- incomeType (enum, optional): TRANSFER | WELCOME_BONUS | REALIZED_PNL | FUNDING_FEE | COMMISSION | INSURANCE_CLEAR
+- startTime / endTime (long, optional)
+- limit (int, optional): Default 100, max 1000
+- timestamp (long, required)
+
+---
+
+### GET /fapi/v1/commissionRate
+Query maker/taker commission rates.
+
+Parameters:
+- symbol (string, required)
+- timestamp (long, required)
+
+Response fields:
+- symbol: Symbol
+- makerCommissionRate: Maker fee rate (e.g. 0.0002 = 0.02%)
+- takerCommissionRate: Taker fee rate
 
 ---
 
@@ -274,3 +333,4 @@ Store credentials in TOOLS.md under "## Binance Futures Accounts":
 4. Hedge mode: specify positionSide (LONG/SHORT); one-way mode: use BOTH
 5. reduceOnly=true ensures order only reduces existing position
 6. Always check liquidationPrice before adding to a position
+7. batchOrders max 5 orders per request
