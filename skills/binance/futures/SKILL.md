@@ -92,6 +92,13 @@ WebSocket API:
 | /fapi/v1/commissionRate | GET | Query commission rate | Yes |
 | /fapi/v1/income | GET | Income/PnL history | Yes |
 | /fapi/v1/bnbBurn | POST | Toggle BNB burn on futures trade | Yes |
+| /fapi/v1/bnbBurn | GET | Query BNB burn status | Yes |
+| /fapi/v1/order/asyn | GET | Get download ID for futures order history | Yes |
+| /fapi/v1/order/asyn/id | GET | Get futures order history download link by ID | Yes |
+| /fapi/v1/trade/asyn | GET | Get download ID for futures trade history | Yes |
+| /fapi/v1/trade/asyn/id | GET | Get futures trade history download link by ID | Yes |
+| /fapi/v1/income/asyn | GET | Get download ID for futures transaction history | Yes |
+| /fapi/v1/income/asyn/id | GET | Get futures transaction history download link by ID | Yes |
 | /fapi/v1/order | POST | Place new order | Yes |
 | /fapi/v1/order | PUT | Modify order | Yes |
 | /fapi/v1/order | DELETE | Cancel order | Yes |
