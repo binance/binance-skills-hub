@@ -63,9 +63,14 @@ WebSocket API:
 | /fapi/v1/topLongShortPositionRatio | GET | Top trader long/short ratio (position) | No |
 | /fapi/v1/globalLongShortAccountRatio | GET | Global long/short ratio | No |
 | /fapi/v1/takerLongShortRatio | GET | Taker buy/sell volume ratio | No |
-| /fapi/v1/basis | GET | Basis data | No |
+| /futures/data/basis | GET | Basis data (futures vs spot) | No |
 | /fapi/v1/constituents | GET | Index price constituents | No |
 | /fapi/v1/assetIndex | GET | Multi-assets mode asset index | No |
+| /fapi/v1/symbolAdlRisk | GET | Symbol-level ADL risk rating | No |
+| /fapi/v1/tradingSchedule | GET | Trading schedule | No |
+| /fapi/v1/insuranceFund | GET | Insurance fund balance snapshot | No |
+| /fapi/v1/rpiOrderBook | GET | RPI order book (Retail Price Improvement) | No |
+| /fapi/v1/settlementPrice | GET | Quarterly contract settlement price | No |
 | /fapi/v1/indexInfo | GET | Composite index symbol info | No |
 | /fapi/v2/account | GET | Account info v2 | Yes |
 | /fapi/v3/account | GET | Account info v3 (latest) | Yes |
@@ -270,7 +275,7 @@ Response fields: buySellRatio, buyVol, sellVol, timestamp
 
 ---
 
-### GET /fapi/v1/basis
+### GET /futures/data/basis
 Basis data (futures vs spot price difference).
 
 Parameters:
