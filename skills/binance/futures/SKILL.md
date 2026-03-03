@@ -58,19 +58,19 @@ WebSocket API:
 | /fapi/v1/fundingInfo | GET | Funding rate info (limits) | No |
 | /fapi/v1/premiumIndex | GET | Mark price + funding rate | No |
 | /fapi/v1/openInterest | GET | Open interest | No |
-| /fapi/v1/openInterestHist | GET | Open interest history | No |
-| /fapi/v1/topLongShortAccountRatio | GET | Top trader long/short ratio (account) | No |
-| /fapi/v1/topLongShortPositionRatio | GET | Top trader long/short ratio (position) | No |
-| /fapi/v1/globalLongShortAccountRatio | GET | Global long/short ratio | No |
-| /fapi/v1/takerLongShortRatio | GET | Taker buy/sell volume ratio | No |
+| /futures/data/openInterestHist | GET | Open interest history | No |
+| /futures/data/topLongShortAccountRatio | GET | Top trader long/short ratio (account) | No |
+| /futures/data/topLongShortPositionRatio | GET | Top trader long/short ratio (position) | No |
+| /futures/data/globalLongShortAccountRatio | GET | Global long/short ratio | No |
+| /futures/data/takerlongshortRatio | GET | Taker buy/sell volume ratio | No |
 | /futures/data/basis | GET | Basis data (futures vs spot) | No |
 | /fapi/v1/constituents | GET | Index price constituents | No |
 | /fapi/v1/assetIndex | GET | Multi-assets mode asset index | No |
 | /fapi/v1/symbolAdlRisk | GET | Symbol-level ADL risk rating | No |
 | /fapi/v1/tradingSchedule | GET | Trading schedule | No |
-| /fapi/v1/insuranceFund | GET | Insurance fund balance snapshot | No |
-| /fapi/v1/rpiOrderBook | GET | RPI order book (Retail Price Improvement) | No |
-| /fapi/v1/settlementPrice | GET | Quarterly contract settlement price | No |
+| /fapi/v1/insuranceBalance | GET | Insurance fund balance snapshot | No |
+| /fapi/v1/rpiDepth | GET | RPI order book (Retail Price Improvement) | No |
+| /futures/data/delivery-price | GET | Quarterly contract settlement price | No |
 | /fapi/v1/indexInfo | GET | Composite index symbol info | No |
 | /fapi/v2/account | GET | Account info v2 | Yes |
 | /fapi/v3/account | GET | Account info v3 (latest) | Yes |
@@ -91,7 +91,7 @@ WebSocket API:
 | /fapi/v1/rateLimit/order | GET | Query order rate limit | Yes |
 | /fapi/v1/commissionRate | GET | Query commission rate | Yes |
 | /fapi/v1/income | GET | Income/PnL history | Yes |
-| /fapi/v1/bnbBurn | POST | Toggle BNB burn on futures trade | Yes |
+| /fapi/v1/feeBurn | POST | Toggle BNB burn on futures trade | Yes |
 | /fapi/v1/feeBurn | GET | Query BNB burn status | Yes |
 | /fapi/v1/order/asyn | GET | Get download ID for futures order history | Yes |
 | /fapi/v1/order/asyn/id | GET | Get futures order history download link by ID | Yes |
@@ -103,10 +103,12 @@ WebSocket API:
 | /fapi/v1/order | PUT | Modify order | Yes |
 | /fapi/v1/order | DELETE | Cancel order | Yes |
 | /fapi/v1/order | GET | Query order | Yes |
-| /fapi/v1/order/amendment | GET | Query order modify history | Yes |
+| /fapi/v1/order/test | POST | Test new order (no execution) | Yes |
+| /fapi/v1/orderAmendment | GET | Query order modify history | Yes |
 | /fapi/v1/openOrder | GET | Query current open order | Yes |
 | /fapi/v1/openOrders | GET | All open orders | Yes |
 | /fapi/v1/openOrders | DELETE | Cancel all open orders on symbol | Yes |
+| /fapi/v1/allOpenOrders | GET | All current open orders (all symbols) | Yes |
 | /fapi/v1/batchOrders | POST | Place multiple orders (max 5) | Yes |
 | /fapi/v1/batchOrders | PUT | Modify multiple orders | Yes |
 | /fapi/v1/batchOrders | DELETE | Cancel multiple orders | Yes |
@@ -117,14 +119,14 @@ WebSocket API:
 | /fapi/v1/marginType | POST | Change margin type | Yes |
 | /fapi/v1/positionMargin | POST | Adjust isolated position margin | Yes |
 | /fapi/v1/positionMargin/history | GET | Position margin change history | Yes |
-| /fapi/v1/algo/newOrderVp | POST | New VP algo order | Yes |
-| /fapi/v1/algo/newOrderTwap | POST | New TWAP algo order | Yes |
+| /fapi/v1/algoOrder | POST | New algo order (VP/TWAP) | Yes |
 | /fapi/v1/algoOrder | DELETE | Cancel algo order | Yes |
-| /fapi/v1/algoOpenOrders | GET | Current algo open orders | Yes |
-| /fapi/v1/algo/historicalOrders | GET | Historical algo orders | Yes |
-| /fapi/v1/algo/subOrders | GET | Algo sub orders | Yes |
+| /fapi/v1/algoOpenOrders | DELETE | Cancel all algo open orders | Yes |
+| /fapi/v1/openAlgoOrders | GET | Current algo open orders | Yes |
+| /fapi/v1/allAlgoOrders | GET | All historical algo orders | Yes |
+| /fapi/v1/algoOrder | GET | Query algo order + sub orders | Yes |
 | /fapi/v1/pmAccountInfo | GET | Classic Portfolio Margin account info | Yes |
-| /fapi/v1/tradFiPerpsContract | GET | Futures TradFi Perps contract info | Yes |
+| /fapi/v1/stock/contract | GET | Futures TradFi Perps contract info | Yes |
 | /fapi/v1/convert/exchangeInfo | GET | Convert exchange info | No |
 | /fapi/v1/convert/getQuote | POST | Send quote request | Yes |
 | /fapi/v1/convert/acceptQuote | POST | Accept quote | Yes |
@@ -246,7 +248,7 @@ Response fields: symbol, priceChange, priceChangePercent, weightedAvgPrice, last
 
 ---
 
-### GET /fapi/v1/topLongShortAccountRatio
+### GET /futures/data/topLongShortAccountRatio
 Top trader long/short account ratio.
 
 Parameters:
@@ -257,21 +259,21 @@ Parameters:
 
 ---
 
-### GET /fapi/v1/topLongShortPositionRatio
+### GET /futures/data/topLongShortPositionRatio
 Top trader long/short position ratio.
 
 Parameters: same as topLongShortAccountRatio
 
 ---
 
-### GET /fapi/v1/globalLongShortAccountRatio
+### GET /futures/data/globalLongShortAccountRatio
 Global long/short account ratio (all users).
 
 Parameters: same as topLongShortAccountRatio
 
 ---
 
-### GET /fapi/v1/takerLongShortRatio
+### GET /futures/data/takerlongshortRatio
 Taker buy/sell volume ratio.
 
 Parameters:
@@ -551,8 +553,8 @@ Response: symbol, makerCommissionRate, takerCommissionRate
 
 ## Algo Orders (TWAP / VP)
 
-### POST /fapi/v1/algo/newOrderTwap
-New TWAP (Time-Weighted Average Price) algo order.
+### POST /fapi/v1/algoOrder
+New algo order (TWAP or VP).
 
 Parameters:
 - symbol (string, required)
@@ -567,22 +569,6 @@ Parameters:
 
 ---
 
-### POST /fapi/v1/algo/newOrderVp
-New VP (Volume Participation) algo order.
-
-Parameters:
-- symbol (string, required)
-- side (enum, required): BUY | SELL
-- positionSide (enum, optional)
-- quantity (decimal, required)
-- urgency (enum, required): LOW | MEDIUM | HIGH
-- clientAlgoId (string, optional)
-- reduceOnly (boolean, optional)
-- limitPrice (decimal, optional)
-- timestamp (long, required)
-
----
-
 ### DELETE /fapi/v1/algoOrder
 Cancel an algo order.
 
@@ -592,7 +578,7 @@ Parameters:
 
 ---
 
-### GET /fapi/v1/algoOpenOrders
+### GET /fapi/v1/openAlgoOrders
 Current open algo orders.
 
 Parameters:
@@ -600,8 +586,8 @@ Parameters:
 
 ---
 
-### GET /fapi/v1/algo/historicalOrders
-Historical algo orders.
+### GET /fapi/v1/allAlgoOrders
+All historical algo orders.
 
 Parameters:
 - symbol (string, optional)
