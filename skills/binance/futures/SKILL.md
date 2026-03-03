@@ -92,7 +92,7 @@ WebSocket API:
 | /fapi/v1/commissionRate | GET | Query commission rate | Yes |
 | /fapi/v1/income | GET | Income/PnL history | Yes |
 | /fapi/v1/bnbBurn | POST | Toggle BNB burn on futures trade | Yes |
-| /fapi/v1/bnbBurn | GET | Query BNB burn status | Yes |
+| /fapi/v1/feeBurn | GET | Query BNB burn status | Yes |
 | /fapi/v1/order/asyn | GET | Get download ID for futures order history | Yes |
 | /fapi/v1/order/asyn/id | GET | Get futures order history download link by ID | Yes |
 | /fapi/v1/trade/asyn | GET | Get download ID for futures trade history | Yes |
@@ -119,8 +119,8 @@ WebSocket API:
 | /fapi/v1/positionMargin/history | GET | Position margin change history | Yes |
 | /fapi/v1/algo/newOrderVp | POST | New VP algo order | Yes |
 | /fapi/v1/algo/newOrderTwap | POST | New TWAP algo order | Yes |
-| /fapi/v1/algo/order | DELETE | Cancel algo order | Yes |
-| /fapi/v1/algo/openOrders | GET | Current algo open orders | Yes |
+| /fapi/v1/algoOrder | DELETE | Cancel algo order | Yes |
+| /fapi/v1/algoOpenOrders | GET | Current algo open orders | Yes |
 | /fapi/v1/algo/historicalOrders | GET | Historical algo orders | Yes |
 | /fapi/v1/algo/subOrders | GET | Algo sub orders | Yes |
 | /fapi/v1/convert/exchangeInfo | GET | Convert exchange info | No |
@@ -581,7 +581,7 @@ Parameters:
 
 ---
 
-### DELETE /fapi/v1/algo/order
+### DELETE /fapi/v1/algoOrder
 Cancel an algo order.
 
 Parameters:
@@ -590,7 +590,7 @@ Parameters:
 
 ---
 
-### GET /fapi/v1/algo/openOrders
+### GET /fapi/v1/algoOpenOrders
 Current open algo orders.
 
 Parameters:
