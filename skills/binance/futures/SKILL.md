@@ -2,7 +2,7 @@
 title: Binance Futures
 description: Binance USDM Perpetual Futures trading and data skill. Supports market data (price, klines, orderbook, funding rate, open interest), account info, and order management (open, cancel, modify, query). Authentication requires API key and secret key. Supports testnet and mainnet. Use this skill when users ask about Binance futures price, funding rate, open interest, placing/modifying futures orders, checking futures positions, futures account balance, algo orders (TWAP/VP), or any Binance perpetual contract operations.
 metadata:
-  version: 1.2.0
+  version: 1.3.0
   author: cq375
 license: MIT
 ---
@@ -123,6 +123,8 @@ WebSocket API:
 | /fapi/v1/algoOpenOrders | GET | Current algo open orders | Yes |
 | /fapi/v1/algo/historicalOrders | GET | Historical algo orders | Yes |
 | /fapi/v1/algo/subOrders | GET | Algo sub orders | Yes |
+| /fapi/v1/pmAccountInfo | GET | Classic Portfolio Margin account info | Yes |
+| /fapi/v1/tradFiPerpsContract | GET | Futures TradFi Perps contract info | Yes |
 | /fapi/v1/convert/exchangeInfo | GET | Convert exchange info | No |
 | /fapi/v1/convert/getQuote | POST | Send quote request | Yes |
 | /fapi/v1/convert/acceptQuote | POST | Accept quote | Yes |
