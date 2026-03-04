@@ -97,6 +97,28 @@ curl -X POST 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/tracker
 | marketCap | string | Market cap (USD) |
 | tokenRiskLevel | integer | Risk: -1=unknown, 1=low, 2=medium, 3=high |
 
+### Example Response
+
+```json
+{
+  "data": [
+    {
+      "ca": "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+      "tokenName": "PancakeSwap Token",
+      "inflow": 2340000,
+      "countBuy": "312",
+      "countSell": "87",
+      "traders": 34,
+      "holders": "1250000",
+      "holdersTop10Percent": "28.5",
+      "price": "2.41",
+      "marketCap": "650000000",
+      "tokenRiskLevel": 1
+    }
+  ]
+}
+```
+
 ---
 
 ## Step 2: Acceleration Calculation
