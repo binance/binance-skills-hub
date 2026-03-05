@@ -1,9 +1,9 @@
 ---
-name: funding-rate-heatmap
+title: Funding Rate Heatmap
 description: Binance USDM Futures funding rate heatmap. Visualizes funding rates across all perpetual contracts to identify extreme sentiment and funding arbitrage opportunities.
 metadata:
-  version: 1.0.0
-  author: MEFAI
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
