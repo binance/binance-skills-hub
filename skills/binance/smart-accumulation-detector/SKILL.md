@@ -1,10 +1,9 @@
 ---
-name: smart-accumulation-detector
+title: Smart Accumulation Detector
 description: Detects stealth institutional accumulation using a 4-factor composite scoring model combining volume surge, open interest buildup, price stability with near-zero funding, and taker buy aggression across 12 major pairs.
 metadata:
-  version: 1.0.0
-  author: MEFAI
-  display_name: Smart Accumulation Detector
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
