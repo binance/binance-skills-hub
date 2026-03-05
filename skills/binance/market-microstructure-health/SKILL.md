@@ -1,26 +1,10 @@
 ---
-name: Market Microstructure Health Index
+title: Market Microstructure Health Index
 description: Continuous health monitoring system that fuses 5 market microstructure metrics into a single composite health score with letter grades for each Binance futures pair
-author: mefai-dev
-tags:
-  - microstructure
-  - health-monitoring
-  - market-quality
-  - spread-analysis
-  - composite-score
-category: analytics
-difficulty: advanced
-binance_products:
-  - Futures
-  - Spot
-api_endpoints:
-  - GET /fapi/v1/ticker/24hr
-  - GET /fapi/v1/ticker/bookTicker
-  - GET /api/v3/ticker/bookTicker
-  - GET /fapi/v1/premiumIndex
-  - GET /futures/data/takerlongshortRatio
-  - GET /futures/data/openInterestHist
-auth_required: false
+metadata:
+  version: "1.0.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # Market Microstructure Health Index
