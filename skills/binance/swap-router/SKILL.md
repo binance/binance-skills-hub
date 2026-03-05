@@ -1,9 +1,9 @@
 ---
-name: swap-router
+title: Swap Router
 description: Binance Web3 Wallet multi-chain DEX swap aggregation supporting BNB Chain, Ethereum, Solana, Arbitrum, Base, and Polygon with best-price routing.
 metadata:
-  version: 1.0.0
-  author: Community
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
