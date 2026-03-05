@@ -1,27 +1,10 @@
 ---
-name: Smart Money Radar
+title: Smart Money Radar
 description: Real-time institutional vs retail positioning intelligence using 6 Binance-exclusive data signals to generate composite Smart Money Scores, divergence alerts, and market regime classification
-author: mefai-dev
-tags:
-  - smart-money
-  - institutional-flow
-  - signal-generation
-  - divergence
-  - composite-intelligence
-  - binance-exclusive
-category: analytics
-difficulty: advanced
-binance_products:
-  - Futures
-api_endpoints:
-  - GET /fapi/v1/ticker/24hr
-  - GET /fapi/v1/premiumIndex
-  - GET /futures/data/globalLongShortAccountRatio
-  - GET /futures/data/topLongShortAccountRatio
-  - GET /futures/data/topLongShortPositionRatio
-  - GET /futures/data/takerlongshortRatio
-  - GET /futures/data/openInterestHist
-auth_required: false
+metadata:
+  version: "1.0.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # Smart Money Radar
