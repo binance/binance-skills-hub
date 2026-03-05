@@ -1,9 +1,9 @@
 ---
-name: order-book-depth-analyzer
+title: Order Book Depth Analyzer
 description: Analyze order book depth imbalances and detect whale walls on Binance Spot markets for identifying support/resistance levels and large trader activity.
 metadata:
-  version: 1.0.0
-  author: Community
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
