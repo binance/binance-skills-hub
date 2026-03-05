@@ -1,5 +1,5 @@
 ---
-name: order-book-intelligence
+title: Order Book Intelligence
 description: |
   Analyze Binance Spot order book depth, trade flow, and market microstructure to detect
   whale walls, bid/ask imbalances, support/resistance levels, and aggressive order flow direction.
@@ -7,8 +7,9 @@ description: |
   Use this skill when users ask about order flow, buy/sell pressure, whale walls, liquidity analysis,
   price support/resistance, or market microstructure.
 metadata:
-  author: mefai-dev
   version: "1.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # Order Book Intelligence Skill
