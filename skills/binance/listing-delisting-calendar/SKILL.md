@@ -1,9 +1,9 @@
 ---
-name: listing-delisting-calendar
+title: Listing Delisting Calendar
 description: Binance new listing, delisting, and airdrop announcement monitor. Uses the public CMS article API to track listing/delisting events and airdrop announcements.
 metadata:
-  version: 1.0.0
-  author: MEFAI
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
