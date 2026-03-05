@@ -1,9 +1,9 @@
 ---
-name: trading-rules-validator
+title: Trading Rules Validator
 description: Binance trading rules and filter validator. Uses the public Exchange Information API to check lot sizes, tick sizes, notional limits, order types, and permissions for any trading pair.
 metadata:
-  version: 1.0.0
-  author: MEFAI
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
