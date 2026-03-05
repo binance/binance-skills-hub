@@ -1,9 +1,9 @@
 ---
-name: bsc-tx-explorer
+title: BSC TX Explorer
 description: BNB Smart Chain transaction and block explorer using BSC JSON-RPC. Query blocks, transactions, receipts, balances, and gas prices directly from BSC nodes.
 metadata:
-  version: 1.0.0
-  author: MEFAI
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
