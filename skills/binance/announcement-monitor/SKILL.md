@@ -1,9 +1,9 @@
 ---
-name: announcement-monitor
+title: Announcement Monitor
 description: Monitor Binance announcements for new listings, delistings, airdrops, and activities using the public CMS article API.
 metadata:
-  version: 1.0.0
-  author: Community
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
