@@ -1,10 +1,10 @@
 ---
-name: "Liquidation Magnet Estimator"
+title: Liquidation Magnet Estimator
 description: "Estimates liquidation cluster zones that attract price movement using OI and leverage data"
-category: "trading"
-api_type: "REST"
-auth_required: false
-data_source: "Binance Futures"
+metadata:
+  version: "1.0.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # Liquidation Magnet Estimator
