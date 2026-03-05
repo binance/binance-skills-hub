@@ -1,10 +1,9 @@
 ---
-name: pair-correlation-matrix
+title: Pair Correlation Matrix
 description: Real-time cross-asset correlation analysis that calculates Pearson correlation coefficients between 12 major Binance pairs, visualized as an interactive heatmap for portfolio diversification and pair trading.
 metadata:
-  version: 1.0.0
+  version: "1.0.0"
   author: mefai-dev
-  display_name: Pair Correlation Matrix
 license: MIT
 ---
 
