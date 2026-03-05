@@ -1,10 +1,10 @@
 ---
-name: "Trade Setup Scanner"
+title: Trade Setup Scanner
 description: "Automated technical analysis scanner — RSI, MACD, Bollinger Bands, Volume spikes"
-category: "trading"
-api_type: "REST"
-auth_required: false
-data_source: "Binance Spot Klines"
+metadata:
+  version: "1.0.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # Trade Setup Scanner
