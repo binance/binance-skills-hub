@@ -1,13 +1,14 @@
 ---
-name: global-market-pulse
+title: Global Market Pulse
 description: |
   Global cryptocurrency market overview dashboard. Shows total market cap, 24h volume,
   BTC dominance, market dominance distribution, and DeFi market summary.
   Use this skill when users ask about overall crypto market status, market cap,
   BTC dominance, DeFi market size, or general market conditions.
 metadata:
-  author: binance-web3-team
   version: "1.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # Global Market Pulse Skill
