@@ -1,5 +1,5 @@
 ---
-name: bsc-protocol-revenue-intelligence
+title: BSC Protocol Revenue Intelligence
 description: |
   Real-time BNB Chain DeFi protocol fee and revenue analytics across 237+ protocols.
   Tracks protocol fees, revenue, methodology breakdown, and trend analysis.
@@ -7,8 +7,9 @@ description: |
   Use this skill when users ask about BSC protocol revenue, DeFi fees, which protocols make money,
   fee comparison, protocol sustainability, or revenue trends on BNB Chain.
 metadata:
-  author: binance-web3-team
   version: "1.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # BSC Protocol Revenue Intelligence Skill
