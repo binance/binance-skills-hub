@@ -1,9 +1,9 @@
 ---
-name: alpha-airdrop-claimer
+title: Alpha Airdrop Claimer
 description: Discover and track Binance Alpha airdrop tokens with eligibility requirements, claim lifecycle, and early-stage token intelligence from DexScreener data.
 metadata:
-  version: 1.0.0
-  author: Community
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
