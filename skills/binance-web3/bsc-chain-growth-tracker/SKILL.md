@@ -1,5 +1,5 @@
 ---
-name: bsc-chain-growth-tracker
+title: BSC Chain Growth Tracker
 description: |
   BNB Chain ecosystem growth analytics combining historical TVL tracking, multi-chain comparison,
   and real-time ecosystem health metrics.
@@ -8,8 +8,9 @@ description: |
   Use this skill when users ask about BNB Chain growth, BSC TVL history, chain comparison,
   ecosystem health, BNB Chain vs Ethereum, how BSC has grown, or chain market share.
 metadata:
-  author: binance-web3-team
   version: "1.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # BSC Chain Growth Tracker Skill
