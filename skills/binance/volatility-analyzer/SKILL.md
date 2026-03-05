@@ -1,9 +1,9 @@
 ---
-name: volatility-analyzer
+title: Volatility Analyzer
 description: Rank Binance Spot pairs by intraday volatility using 24hr range, body-to-wick ratio, and volume-weighted volatility scoring.
 metadata:
-  version: 1.0.0
-  author: Community
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
