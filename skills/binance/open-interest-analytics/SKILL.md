@@ -1,9 +1,9 @@
 ---
-name: open-interest-analytics
+title: Open Interest Analytics
 description: Track historical open interest changes across Binance USDM Futures to detect unusual position buildup or liquidation events.
 metadata:
-  version: 1.0.0
-  author: Community
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
