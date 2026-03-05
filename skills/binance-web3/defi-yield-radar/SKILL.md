@@ -1,13 +1,14 @@
 ---
-name: defi-yield-radar
+title: DeFi Yield Radar
 description: |
   DeFi yield pool scanner for BSC (BNB Chain). Fetches real-time yield data from DefiLlama,
   filters for BSC pools, and presents APY, TVL, IL risk, and stablecoin classification.
   Use this skill when users ask about DeFi yields, farming opportunities, APY comparisons,
   yield farming on BSC, or stablecoin yield strategies.
 metadata:
-  author: binance-web3-team
   version: "1.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # DeFi Yield Radar Skill
