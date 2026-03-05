@@ -1,20 +1,13 @@
 ---
-name: liquidation-heatmap
-description: >
+title: Liquidation Heatmap
+description: |
   Estimate liquidation price levels by combining futures premium index, open interest changes,
   long/short account ratios, and funding rate data. Identifies crowded leverage zones where
   cascading liquidations are most likely to occur.
 metadata:
-  category: derivatives-analytics
-  tags:
-    - futures
-    - liquidation
-    - leverage
-    - risk-management
   version: "1.0.0"
   author: mefai-dev
-  api_type: public
-  authentication: none
+license: MIT
 ---
 
 # Liquidation Heatmap
