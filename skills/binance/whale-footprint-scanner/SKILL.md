@@ -1,10 +1,9 @@
 ---
-name: whale-footprint-scanner
+title: Whale Footprint Scanner
 description: Real-time large trade detection across top Binance spot pairs. Scans aggregated trades to identify whale activity ($50K+), classifying trades as Dolphin ($50K+), Whale ($250K+), or Mega ($1M+) with live buy/sell pressure analysis.
 metadata:
-  version: 1.0.0
-  author: MEFAI
-  display_name: Whale Footprint Scanner
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
