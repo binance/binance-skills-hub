@@ -1,5 +1,5 @@
 ---
-name: futures-analytics
+title: Futures Analytics
 description: |
   Query Binance USDM Futures public analytics data. Retrieve funding rates, open interest,
   long/short ratios, taker buy/sell volume, and mark prices for all perpetual contracts.
@@ -7,8 +7,9 @@ description: |
   Use this skill when users ask about derivatives sentiment, funding arbitrage, market positioning,
   or futures market analytics.
 metadata:
-  author: mefai-dev
   version: "1.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # Futures Analytics Skill
