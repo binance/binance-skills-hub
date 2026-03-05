@@ -1,10 +1,9 @@
 ---
-name: dca-backtester
+title: DCA Backtester
 description: Dollar-cost averaging backtester that simulates DCA strategies over historical Binance data, comparing daily, weekly, and monthly accumulation versus lump-sum investing with ROI, drawdown, and cost-basis analysis.
 metadata:
-  version: 1.0.0
+  version: "1.0.0"
   author: mefai-dev
-  display_name: DCA Backtester
 license: MIT
 ---
 
