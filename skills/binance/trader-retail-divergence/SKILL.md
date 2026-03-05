@@ -1,9 +1,9 @@
 ---
-name: trader-retail-divergence
+title: Trader Retail Divergence
 description: Binance Futures top trader vs retail sentiment divergence analysis. Compares top trader long/short ratios with global retail ratios to identify smart money positioning.
 metadata:
-  version: 1.0.0
-  author: MEFAI
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
