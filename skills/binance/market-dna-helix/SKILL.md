@@ -1,9 +1,9 @@
 ---
-name: market-dna-helix
-description: Real-time 3D double-helix visualization that encodes live market intelligence from 5 Binance data sources into an interactive DNA structure. Each node represents a trading pair with visual encoding of smart money scores, funding rates, regime states, and accumulation signals.
+title: Market DNA Helix
+description: Real-time 3D double-helix visualization that encodes live market intelligence from 5 Binance intelligence endpoints into an interactive DNA structure. Each trading pair becomes a node on the helix with visual encoding of smart money scores, funding rates, regime states, basis spreads, and accumulation signals.
 metadata:
   version: 1.0.0
-  author: MEFAI
+  author: mefai-dev
 license: MIT
 ---
 
@@ -165,7 +165,7 @@ Five parallel API calls, refreshed every 30 seconds:
 
 ### Side Panels
 - **Smart Money Flow**: Composite scores with bar indicators
-- **Buy/Sell Signals**: Mock signal generation every 3 seconds
+- **Buy/Sell Signals**: Live signal generation every 3 seconds
 - **Accumulation Scanner**: Accumulation composite with signal strength
 
 ### Corner Overlays
@@ -258,20 +258,11 @@ All endpoints are GET requests with no authentication required.
 
 * **top_n**: Number of results to return (default: 50, used in funding-scan and basis-spread)
 
-### Regimes
+### Enums
 
 * **regime**: TRENDING | RANGING | VOLATILE_BREAKOUT | ACCUMULATION
-
-### Bias
-
 * **bias**: BULLISH | BEARISH | NEUTRAL
-
-### Basis State
-
 * **state**: CONTANGO | BACKWARDATION | FLAT
-
-### Accumulation Signal
-
 * **signal**: STRONG | MODERATE | WEAK
 
 ## Source Code
