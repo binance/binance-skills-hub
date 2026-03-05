@@ -1,5 +1,5 @@
 ---
-name: cross-signal-analysis
+title: Cross Signal Analysis
 description: |
   Cross-reference multiple Binance Web3 data sources to detect high-confidence trading signals
   through convergence analysis. Combines smart money signals, social hype, trending data, meme rankings,
@@ -7,8 +7,9 @@ description: |
   Use this skill when users ask for the strongest opportunities, alpha detection, signal convergence,
   or want to find tokens where multiple independent indicators agree simultaneously.
 metadata:
-  author: mefai-dev
   version: "1.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # Cross-Signal Analysis Skill
