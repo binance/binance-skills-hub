@@ -1,13 +1,14 @@
 ---
-name: stablecoin-flow-tracker
+title: Stablecoin Flow Tracker
 description: |
   Cross-chain stablecoin supply tracker. Shows stablecoin circulating supply on BSC vs other chains,
   with chain distribution visualization and per-stablecoin breakdown.
   Use this skill when users ask about stablecoin flows, USDT/USDC supply on BSC,
   cross-chain stablecoin movement, or chain liquidity comparisons.
 metadata:
-  author: binance-web3-team
   version: "1.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # Stablecoin Flow Tracker Skill
