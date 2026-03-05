@@ -1,23 +1,14 @@
 ---
-name: goplus-security-scanner
-description: >
+title: GoPlus Security Scanner
+description: |
   Third-party token security verification using GoPlus Security API. Detects honeypots,
   rug-pull risks, malicious contracts, hidden owners, tax manipulation, and blacklist
   mechanisms. Cross-validates Binance's built-in audit with independent on-chain analysis
   across 40+ chains.
 metadata:
-  category: security
-  tags:
-    - security
-    - audit
-    - honeypot
-    - rug-pull
-    - goplus
-    - multi-chain
   version: "1.0.0"
   author: mefai-dev
-  api_type: public
-  authentication: none
+license: MIT
 ---
 
 # GoPlus Security Scanner
