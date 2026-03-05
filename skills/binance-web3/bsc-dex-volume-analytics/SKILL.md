@@ -1,5 +1,5 @@
 ---
-name: bsc-dex-volume-analytics
+title: BSC DEX Volume Analytics
 description: |
   Real-time BNB Chain DEX trading volume analytics across 129+ decentralized exchanges.
   Tracks per-protocol 24h/7d/30d volumes, market share breakdown, daily volume timeseries,
@@ -7,8 +7,9 @@ description: |
   Use this skill when users ask about BSC DEX volume, PancakeSwap volume, DEX market share,
   trading activity on BNB Chain, which DEX has the most volume, or DEX volume trends.
 metadata:
-  author: binance-web3-team
   version: "1.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # BSC DEX Volume Analytics Skill
