@@ -1,9 +1,9 @@
 ---
-name: bsc-nft-portfolio
+title: BSC NFT Portfolio
 description: BNB Smart Chain NFT portfolio scanner using BSC JSON-RPC. Check NFT balances across popular BSC collections using ERC721 standard calls.
 metadata:
-  version: 1.0.0
-  author: MEFAI
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
