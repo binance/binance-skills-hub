@@ -1,10 +1,10 @@
 ---
-name: "BTC Macro Cycle Indicators"
+title: BTC Macro Cycle Indicators
 description: "Pi Cycle Top, Rainbow Chart, and Golden Ratio Multiplier for Bitcoin cycle analysis"
-category: "analytics"
-api_type: "REST"
-auth_required: false
-data_source: "Bitcoin.com Charts API"
+metadata:
+  version: "1.0.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # BTC Macro Cycle Indicators
