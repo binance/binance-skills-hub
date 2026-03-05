@@ -1,10 +1,10 @@
 ---
-name: "Binance Options Market"
+title: Binance Options Market
 description: "Option Greeks, implied volatility, OI by expiry, and strike analysis from Binance EAPI"
-category: "trading"
-api_type: "REST"
-auth_required: false
-data_source: "Binance European Options (EAPI)"
+metadata:
+  version: "1.0.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # Binance Options Market
