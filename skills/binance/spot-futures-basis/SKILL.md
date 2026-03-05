@@ -1,9 +1,9 @@
 ---
-name: spot-futures-basis
+title: Spot Futures Basis
 description: Binance Spot vs USDM Futures basis spread analysis. Combines spot ticker prices with futures premium index to calculate contango/backwardation across all trading pairs.
 metadata:
-  version: 1.0.0
-  author: MEFAI
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
