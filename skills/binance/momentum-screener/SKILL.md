@@ -1,9 +1,9 @@
 ---
-name: momentum-screener
+title: Momentum Screener
 description: Screen Binance Spot market for momentum signals using 24hr price statistics, VWAP distance, and range position analysis.
 metadata:
-  version: 1.0.0
-  author: Community
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
