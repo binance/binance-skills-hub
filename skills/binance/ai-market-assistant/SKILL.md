@@ -1,16 +1,10 @@
 ---
-name: AI Market Assistant
+title: AI Market Assistant
 description: Interactive conversational AI that answers natural language questions about any Binance-listed asset using real-time market data from multiple API endpoints
-category: Trading & Strategy Tools
-tags:
-  - ai
-  - analysis
-  - conversational
-  - multi-api
-  - real-time
-  - market-intelligence
-author: MEFAI
-version: 1.0.0
+metadata:
+  version: "1.0.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # AI Market Assistant
