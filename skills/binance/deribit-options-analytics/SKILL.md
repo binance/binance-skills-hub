@@ -1,10 +1,10 @@
 ---
-name: "Deribit Options Analytics"
+title: Deribit Options Analytics
 description: "Options market analytics — IV, Put/Call ratio, Max Pain, strike OI distribution"
-category: "trading"
-api_type: "REST"
-auth_required: false
-data_source: "Deribit Exchange"
+metadata:
+  version: "1.0.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # Deribit Options Analytics
