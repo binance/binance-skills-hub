@@ -1,26 +1,10 @@
 ---
-name: Composite Anomaly Detector
+title: Composite Anomaly Detector
 description: Real-time multi-signal anomaly detection system that fuses 6 independent market anomaly indicators into a unified severity-ranked alert dashboard for Binance futures markets
-author: mefai-dev
-tags:
-  - anomaly-detection
-  - market-surveillance
-  - multi-signal
-  - risk-monitoring
-  - composite-analysis
-category: analytics
-difficulty: advanced
-binance_products:
-  - Futures
-  - Spot
-api_endpoints:
-  - GET /fapi/v1/ticker/24hr
-  - GET /fapi/v1/premiumIndex
-  - GET /fapi/v1/ticker/bookTicker
-  - GET /api/v3/ticker/bookTicker
-  - GET /futures/data/takerlongshortRatio
-  - GET /futures/data/openInterestHist
-auth_required: false
+metadata:
+  version: "1.0.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # Composite Anomaly Detector
