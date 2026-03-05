@@ -1,10 +1,10 @@
 ---
-name: "Bitcoin On-Chain Stats"
+title: Bitcoin On-Chain Stats
 description: "Network hashrate, difficulty, mining pools, block time, and transaction metrics"
-category: "market-data"
-api_type: "REST"
-auth_required: false
-data_source: "Blockchain.info"
+metadata:
+  version: "1.0.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # Bitcoin On-Chain Stats
