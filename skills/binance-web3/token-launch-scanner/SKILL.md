@@ -1,13 +1,14 @@
 ---
-name: token-launch-scanner
+title: Token Launch Scanner
 description: |
   New token safety scanner combining DexScreener boosted tokens with GoPlus security analysis.
   Identifies top boosted tokens and runs automated security checks to flag risks.
   Use this skill when users ask about new token safety, launch analysis, rug pull detection,
   boosted token security, or whether a new token is safe to trade.
 metadata:
-  author: binance-web3-team
   version: "1.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # Token Launch Safety Scanner Skill
