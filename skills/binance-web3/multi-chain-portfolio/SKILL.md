@@ -1,23 +1,14 @@
 ---
-name: multi-chain-portfolio
-description: >
+title: Multi Chain Portfolio
+description: |
   Track any wallet's token holdings across multiple blockchains simultaneously using
   Binance Web3 address API. Supports BSC, Ethereum, Solana, Base, Arbitrum, Polygon,
   and more. Aggregates positions, calculates cross-chain portfolio value, and enables
   whale wallet intelligence across the entire multi-chain ecosystem.
 metadata:
-  category: wallet-analytics
-  tags:
-    - wallet
-    - portfolio
-    - multi-chain
-    - address
-    - positions
-    - whale-tracking
   version: "1.0.0"
   author: mefai-dev
-  api_type: public
-  authentication: none
+license: MIT
 ---
 
 # Multi-Chain Address Portfolio
