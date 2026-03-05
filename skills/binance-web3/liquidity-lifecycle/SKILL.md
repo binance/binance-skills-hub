@@ -1,13 +1,14 @@
 ---
-name: liquidity-lifecycle
+title: Liquidity Lifecycle
 description: |
   Track the complete liquidity lifecycle of any token — from LP creation to lock status,
   holder concentration, DEX distribution, and rug probability estimation.
   Combines GoPlus Security API (LP holders, lock status, DEX pairs) with DexScreener
   (real-time liquidity, volume, pair data) to build a comprehensive liquidity health profile.
 metadata:
-  author: mefai-dev
   version: "1.0"
+  author: mefai-dev
+license: MIT
 ---
 
 # Liquidity Lifecycle Tracker
