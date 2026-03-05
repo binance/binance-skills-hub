@@ -1,9 +1,9 @@
 ---
-name: index-composition-tracker
+title: Index Composition Tracker
 description: View the composition and weight distribution of Binance composite futures indices like BTCDOMUSDT and DEFIUSDT.
 metadata:
-  version: 1.0.0
-  author: Community
+  version: "1.0.0"
+  author: mefai-dev
 license: MIT
 ---
 
