@@ -6,7 +6,7 @@ description: |
   Supports pure text posts.
 metadata:
   author: binance-square
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Square Post Skill
@@ -32,6 +32,7 @@ https://www.binance.com/bapi/composite/v1/public/pgc/openApi/content/add
 |--------|----------|-------------|
 | X-Square-OpenAPI-Key | Yes | Square OpenAPI Key |
 | Content-Type | Yes | `application/json` |
+| clienttype | Yes | `binanceSkill` |
 
 **Request Body**:
 
@@ -45,6 +46,7 @@ https://www.binance.com/bapi/composite/v1/public/pgc/openApi/content/add
 curl -X POST 'https://www.binance.com/bapi/composite/v1/public/pgc/openApi/content/add' \
   -H 'X-Square-OpenAPI-Key: your_api_key' \
   -H 'Content-Type: application/json' \
+  -H 'clienttype: binanceSkill' \
   -d '{
     "bodyTextOnly": "BTC looking bullish today!"
   }'
