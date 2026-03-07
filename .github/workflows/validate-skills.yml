@@ -1,0 +1,16 @@
+name: Validate Skills
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  frontmatter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate SKILL.md frontmatter
+        run: ./scripts/validate-skills-frontmatter.sh
