@@ -34,11 +34,11 @@ To add a new skill:
 
    ```markdown
    ---
-   title: <Skill Name>
+   name: <skill-name>
    description: A clear description of what the skill does and when to use it.
    metadata:
-     version: <Skill Version>
-     author: <Your Github Username>
+     version: <Skill Version> # e.g., 1.0.0 (semantic versioning recommended)
+     author: <Your GitHub Username>
    license: MIT
    ---
 
