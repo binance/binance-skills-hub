@@ -1,0 +1,4 @@
+aiohttp>=3.9.0
+web3>=6.0.0
+eth-account>=0.10.0
+python-dotenv>=1.0.0
