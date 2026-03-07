@@ -1,6 +1,6 @@
 ---
-title: SHLL Security Guard
-description: >
+name: shll-security-guard
+description: |
   Pre-execution security validation for AI agent on-chain transactions on BNB Chain.
   Validates any transaction payload against SHLL PolicyGuard before execution,
   enforcing spending limits, token whitelists, DEX whitelists, receiver checks,
@@ -8,7 +8,7 @@ description: >
   with ERC-6551 isolated vault accounts.
   Use this skill BEFORE executing any on-chain trade to protect agent-managed funds.
 metadata:
-  version: 1.0.0
+  version: "1.0.0"
   author: kledx
 license: MIT
 ---
