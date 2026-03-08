@@ -1,6 +1,9 @@
 ---
 name: cz_style_rewrite
 description: Rewrites or generates a post in CZ-inspired style using dataset-derived profile cues.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # CZ Style Rewrite

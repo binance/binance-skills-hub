@@ -1,6 +1,9 @@
 ---
 name: bitagent_bonding_playbook
 description: Provides guarded execution playbook for launch/buy/sell flows on BSC bonding-curve products.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # BitAgent Bonding Playbook

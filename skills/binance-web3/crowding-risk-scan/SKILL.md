@@ -1,6 +1,9 @@
 ---
 name: crowding_risk_scan
 description: Tracks long/short crowding from account ratios, taker flow, and OI change for squeeze warnings.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Crowding Risk Scan

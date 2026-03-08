@@ -1,6 +1,9 @@
 ---
 name: four_meme_bitquery_query_kit
 description: Provides a query-first analytics toolkit for Four.meme using Bitquery GraphQL/streams (trades, bonding progress, migrations, liquidity, and trader behavior).
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Four.Meme Bitquery Query Kit

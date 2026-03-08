@@ -1,6 +1,9 @@
 ---
 name: four_meme_mcp_ops_guard
 description: Hardens Four.meme MCP-server operations with read-only defaults, explicit trade confirmations, and secret-isolation policies.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Four.Meme MCP Ops Guard

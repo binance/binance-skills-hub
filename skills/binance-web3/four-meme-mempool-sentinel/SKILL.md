@@ -1,6 +1,9 @@
 ---
 name: four_meme_mempool_sentinel
 description: Builds real-time pending-transaction watchlists for Four.meme and upgrades alerts only after event-level confirmation, reducing false positives.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Four.Meme Mempool Sentinel

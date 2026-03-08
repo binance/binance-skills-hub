@@ -1,6 +1,9 @@
 ---
 name: bap578_vault_checklist
 description: Outputs a concise checklist for vault-controller and operator safety.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # BAP578 Vault Checklist

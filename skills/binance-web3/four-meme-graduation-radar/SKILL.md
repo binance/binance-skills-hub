@@ -1,6 +1,9 @@
 ---
 name: four_meme_graduation_radar
 description: Tracks graduation and migration signals from Four.meme bonding curves to Pancake liquidity using rankings, listing flags, and LiquidityAdded events.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Four.Meme Graduation Radar

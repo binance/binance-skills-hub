@@ -1,6 +1,9 @@
 ---
 name: symbol_status
 description: Checks trading status and filters from exchangeInfo.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Symbol Status Checker

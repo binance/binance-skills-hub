@@ -1,6 +1,9 @@
 ---
 name: bap578_test_template
 description: Generates Hardhat test skeleton for adapter + vault flows.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # BAP578 Test Template

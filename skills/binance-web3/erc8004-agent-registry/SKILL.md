@@ -1,6 +1,9 @@
 ---
 name: erc8004_agent_registry
 description: Generates deployment and operation checklist for ERC-8004-style agent identity and reputation registries.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # ERC8004 Agent Registry

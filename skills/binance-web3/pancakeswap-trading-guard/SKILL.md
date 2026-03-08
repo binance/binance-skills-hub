@@ -1,6 +1,9 @@
 ---
 name: pancakeswap_trading_guard
 description: Builds pre-trade checklist and execution guardrails for BSC PancakeSwap workflows.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # PancakeSwap Trading Guard

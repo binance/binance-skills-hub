@@ -1,6 +1,9 @@
 ---
 name: funding_basis_carry_scan
 description: Combines funding history and basis term structure to surface carry setups with risk labels.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Funding Basis Carry Scan

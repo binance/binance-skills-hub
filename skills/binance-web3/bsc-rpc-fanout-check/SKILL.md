@@ -1,6 +1,9 @@
 ---
 name: bsc_rpc_fanout_check
 description: Validates BSC RPC endpoints for health, latency, and block drift.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # BSC RPC Fanout Check

@@ -1,6 +1,9 @@
 ---
 name: finclaw_meme_monitor_playbook
 description: Adapts FinClaw's social-signal and market-analysis flow into a Four.meme candidate discovery and manual-launch decision playbook.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # FinClaw Meme Monitor Playbook

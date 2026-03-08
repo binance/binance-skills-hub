@@ -1,6 +1,9 @@
 ---
 name: four_meme_trade_playbook
 description: Creates quote-first Four.meme buy and sell execution plans with slippage, loss limits, and event-level reconciliation. Use when users ask to buy, sell, scale in, or scale out Four.meme tokens.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Four.Meme Trade Playbook

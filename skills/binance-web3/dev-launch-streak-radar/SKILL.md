@@ -1,6 +1,9 @@
 ---
 name: dev_launch_streak_radar
 description: Detects whether a launcher wallet keeps opening new Pancake pairs on consecutive days and returns streak/risk signals. Use when users ask if a dev is continuously launching tokens, repeatedly opening markets, or needs launch-frequency risk checks on BSC.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Dev Launch Streak Radar

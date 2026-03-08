@@ -1,6 +1,9 @@
 ---
 name: bsc_nft_ops_guide
 description: Guides ERC-721 metadata, ownership checks, and transfer-safe operational flow on BSC.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # BSC NFT Ops Guide

@@ -1,6 +1,9 @@
 ---
 name: ai_quick_chat
 description: Sends a short prompt to OpenRouter-compatible LLM for capability verification.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # AI Quick Chat

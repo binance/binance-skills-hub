@@ -1,6 +1,9 @@
 ---
 name: kline_brief
 description: Summarizes recent candles with trend percentage.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Kline Brief

@@ -1,6 +1,9 @@
 ---
 name: four_meme_ai
 description: Installs and exposes the official four-meme-ai CLI skill so Hub agents can run create/buy/sell/send flows on Four.Meme directly from chats.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Four.Meme Agent Skill Bridge

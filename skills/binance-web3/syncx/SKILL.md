@@ -1,6 +1,9 @@
 ---
 name: syncx
 description: One-command SyncX workflow for cross-posting crypto content to Binance Square and X/Twitter, with optional Telegram and Threads targets.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # SyncX Multi-Platform Publisher
@@ -23,26 +26,31 @@ description: One-command SyncX workflow for cross-posting crypto content to Bina
 
 ## Workflow
 
-1. Initialize local config:
+1. Clone SyncX repo and enter project directory:
+   ```bash
+   git clone https://github.com/SyncX2026/SyncX.git
+   cd SyncX
+   ```
+2. Initialize local config:
    ```bash
    python3 scripts/publish_sync.py --init-config
    ```
-2. Fill `.env` with platform credentials.
-3. Run doctor checks before any publish:
+3. Fill `.env` with platform credentials.
+4. Run doctor checks before any publish:
    ```bash
    python3 scripts/publish_sync.py \
      --doctor \
      --platforms square,twitter \
      --twitter-mode official
    ```
-4. Publish once and fan out by platform:
+5. Publish once and fan out by platform:
    ```bash
    python3 scripts/publish_sync.py \
      --text "BTC retrace then continuation; watch 4h structure." \
      --platforms square,twitter \
      --twitter-mode official
    ```
-5. Use dry-run for safe validation:
+6. Use dry-run for safe validation:
    ```bash
    python3 scripts/publish_sync.py \
      --text "test" \
@@ -68,5 +76,4 @@ description: One-command SyncX workflow for cross-posting crypto content to Bina
 ## Source Anchors
 
 - Repo: https://github.com/SyncX2026/SyncX
-- Skill root: `skills/syncx`
-- Script entrypoint: `skills/syncx/scripts/publish_sync.py`
+- Script entrypoint: https://github.com/SyncX2026/SyncX/blob/main/scripts/publish_sync.py

@@ -1,6 +1,9 @@
 ---
 name: prediction_market_clob
 description: Provides orderbook trading and risk-control playbook for BSC prediction-market CLOB integrations.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Prediction Market CLOB

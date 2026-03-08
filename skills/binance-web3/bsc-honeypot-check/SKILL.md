@@ -1,6 +1,9 @@
 ---
 name: bsc_honeypot_check
 description: Checks sell restrictions, tax anomalies, and multi-DEX liquidity signals before buy-in.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # BSC Honeypot Check

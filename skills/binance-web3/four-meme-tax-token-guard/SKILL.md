@@ -1,6 +1,9 @@
 ---
 name: four_meme_tax_token_guard
 description: Plans TaxToken creation with fee-split sanity checks, anti-sniping defaults, explicit confirmation gates, and post-launch tax-info reconciliation.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Four.Meme Tax Token Guard

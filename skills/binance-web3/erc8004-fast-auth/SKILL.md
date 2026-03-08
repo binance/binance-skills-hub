@@ -1,6 +1,9 @@
 ---
 name: erc8004_fast_auth
 description: Implements a fast authorization runbook for ERC-8004 agent identity operations using ERC-721 approvals and immediate revoke controls. Use when users ask for quick agent authorization, delegated execution windows, or session-scoped operator permissions.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # ERC8004 Fast Auth

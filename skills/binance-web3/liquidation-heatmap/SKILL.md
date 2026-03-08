@@ -1,6 +1,9 @@
 ---
 name: liquidation_heatmap
 description: Aggregates recent force orders to estimate long-vs-short liquidation pressure.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Liquidation Heatmap

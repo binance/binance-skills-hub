@@ -1,6 +1,9 @@
 ---
 name: multichain_portfolio_tracker
 description: Outlines cross-chain portfolio analysis workflow for TRON/ETH/BSC with position and fee breakdown.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Multichain Portfolio Tracker

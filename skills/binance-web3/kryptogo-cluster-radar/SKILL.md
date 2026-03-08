@@ -1,6 +1,9 @@
 ---
 name: kryptogo_cluster_radar
 description: Read-only token intelligence workflow adapted from KryptoGO cluster analysis. Tracks whale and smart-money accumulation across BSC/Solana/Base/Monad with trading flows omitted from current integration scope.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # KryptoGO Cluster Radar (Read-Only)

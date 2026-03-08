@@ -1,6 +1,9 @@
 ---
 name: open_interest_scan
 description: Tracks futures open interest and taker flow changes for a symbol.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Open Interest Scan

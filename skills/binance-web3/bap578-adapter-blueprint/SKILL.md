@@ -1,6 +1,9 @@
 ---
 name: bap578_adapter_blueprint
 description: Generates a simple adapter contract blueprint for token-bound agent accounts.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # BAP578 Adapter Blueprint

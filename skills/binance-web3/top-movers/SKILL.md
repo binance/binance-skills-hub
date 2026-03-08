@@ -1,6 +1,9 @@
 ---
 name: top_movers
 description: Ranks top symbols by 24h change or quote volume with optional liquidity filter.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Top Movers Radar

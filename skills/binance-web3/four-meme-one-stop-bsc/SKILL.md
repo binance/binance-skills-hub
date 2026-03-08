@@ -1,6 +1,9 @@
 ---
 name: four_meme_one_stop_bsc
 description: Runs a one-stop Four.meme workflow that combines token launch, buy execution, tweet material generation, ERC8004 identity setup, and fast operator authorization with revoke discipline. Use when users ask for an end-to-end Four.meme execution playbook instead of separate skills.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Four.Meme One-Stop Launch

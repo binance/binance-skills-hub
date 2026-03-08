@@ -1,6 +1,9 @@
 ---
 name: four_meme_create_pipeline
 description: Plans and executes Four.meme two-step token creation (create-api then create-chain) with confirmation gates, fee sanity checks, and post-create verification. Use when users ask to launch or issue a new token on Four.meme from an agent workflow.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Four.Meme Create Pipeline
@@ -20,7 +23,7 @@ description: Plans and executes Four.meme two-step token creation (create-api th
   "name": "Meme Agent Coin",
   "symbol": "MAC",
   "description": "Agent launch token for BSC growth",
-  "logoPath": "./assets/mac.png",
+  "logoPath": "/path/to/logo.png",
   "label": "Meme",
   "budgetBnb": 0.01,
   "dryRun": true

@@ -1,6 +1,9 @@
 ---
 name: bap578_deploy_plan
 description: Builds a deploy+verify execution plan from environment variables.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # BAP578 Deploy Plan

@@ -1,6 +1,9 @@
 ---
 name: four_meme_agentic_ops
 description: Runs a human-in-the-loop agentic operating loop for Four.meme (discover, score, confirm, execute, monitor, and journal). Use when users ask for automated strategy support without granting fully autonomous hot-wallet trading.
+metadata:
+  author: brief-onchain
+  version: "1.0"
 ---
 
 # Four.Meme Agentic Ops
