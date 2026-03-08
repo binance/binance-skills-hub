@@ -1,5 +1,5 @@
 ---
-title: FarmDash Signal Architect
+name: farmdash-signal-architect
 description: 100% non-custodial agent-to-agent swap router API. Execute single-chain and cross-chain token swaps with zero custody via FarmDash.
 metadata:
   version: "1.2.0"
