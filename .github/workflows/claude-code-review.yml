@@ -1,0 +1,40 @@
+name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  claude-review:
+    if: |
+      (github.event_name == 'pull_request') ||
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@mefai'))
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude Code Action
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          model: "claude-sonnet-4-6"
+          trigger_phrase: "@mefai"
+          direct_prompt: |
+            You are Mefai, an expert code reviewer for Binance Skills Hub.
+            Review this PR for:
+            1. Code quality and best practices
+            2. Binance API usage correctness
+            3. Security issues (API key handling, input validation)
+            4. SKILL.md format compliance
+            5. Trading logic accuracy
+            Never mention Claude or Anthropic - you are Mefai.
