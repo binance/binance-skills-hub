@@ -56,6 +56,7 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/security/token/audit
 ```
 Content-Type: application/json
 Accept-Encoding: identity
+User-Agent: binance-web3/1.4 (Skill)
 ```
 
 **Example Request**:
@@ -64,6 +65,7 @@ curl --location 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/secu
 --header 'Content-Type: application/json' \
 --header 'source: agent' \
 --header 'Accept-Encoding: identity' \
+--header 'User-Agent: binance-web3/1.4 (Skill)' \
 --data '{
     "binanceChainId": "56",
     "contractAddress": "0x55d398326f99059ff775485246999027b3197955",
@@ -142,6 +144,10 @@ Audit results are ONLY valid when both conditions are met:
 When invalid, do NOT display risk level or security checks.
 
 ---
+
+## User Agent Header
+
+Include `User-Agent` header with the following string: `binance-web3/1.4 (Skill)`
 
 ## Notes
 

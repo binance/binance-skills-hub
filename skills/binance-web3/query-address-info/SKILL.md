@@ -36,13 +36,14 @@ https://web3.binance.com/bapi/defi/v3/public/wallet-direct/buw/wallet/address/pn
 |-----------|------|----------|-------------|
 | address | string | Yes | Wallet address, e.g., `0x0000000000000000000000000000000000000001` |
 | chainId | string | Yes | Chain ID, e.g., `56` (BSC), `8453` (Base) |
-| offset | number | No | Pagination offset, default 0 |
+| offset | number | Yes | Pagination offset, default 0 |
 
 **Request Headers**:
 ```
 clienttype: web
 clientversion: 1.2.0
 Accept-Encoding: identity
+User-Agent: binance-web3/1.0 (Skill)
 ```
 
 **Example Request**:
@@ -50,7 +51,8 @@ Accept-Encoding: identity
 curl --location 'https://web3.binance.com/bapi/defi/v3/public/wallet-direct/buw/wallet/address/pnl/active-position-list?address=0x0000000000000000000000000000000000000001&chainId=56&offset=0' \
 --header 'clienttype: web' \
 --header 'clientversion: 1.2.0' \
---header 'Accept-Encoding: identity'
+--header 'Accept-Encoding: identity' \
+--header 'User-Agent: binance-web3/1.0 (Skill)'
 ```
 
 **Response Example**:
@@ -109,6 +111,10 @@ curl --location 'https://web3.binance.com/bapi/defi/v3/public/wallet-direct/buw/
 1. **Query Wallet Assets**: When users want to view tokens held by a wallet address
 2. **Track Holdings**: Monitor wallet token positions
 3. **Portfolio Analysis**: Understand wallet asset allocation
+
+## User Agent Header
+
+Include `User-Agent` header with the following string: `binance-web3/1.0 (Skill)`
 
 ## Notes
 

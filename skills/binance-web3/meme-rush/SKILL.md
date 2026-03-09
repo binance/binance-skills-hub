@@ -161,10 +161,11 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/tok
 curl -X POST 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/rank/list' \
 -H 'Content-Type: application/json' \
 -H 'Accept-Encoding: identity' \
+-H 'User-Agent: binance-web3/1.0 (Skill)' \
 -d '{"chainId":"CT_501","rankType":10,"limit":20}'
 ```
 
-### Response (`data.tokens[]`)
+### Response (`data[]`)
 
 **Core Fields**:
 
@@ -288,7 +289,8 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/tok
 
 ```bash
 curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/social-rush/rank/list?chainId=CT_501&rankType=30&sort=30&asc=false' \
--H 'Accept-Encoding: identity'
+-H 'Accept-Encoding: identity' \
+-H 'User-Agent: binance-web3/1.0 (Skill)'
 ```
 
 ### Response (`data[]`)
@@ -339,6 +341,10 @@ curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/mark
 | migrateStatus | integer | Migrated: `0`=no, `1`=yes |
 
 ---
+
+## User Agent Header
+
+Include `User-Agent` header with the following string: `binance-web3/1.0 (Skill)`
 
 ## Notes
 

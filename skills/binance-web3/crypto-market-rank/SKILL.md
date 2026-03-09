@@ -68,7 +68,8 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/tok
 **Example**:
 ```bash
 curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/social/hype/rank/leaderboard?chainId=56&sentiment=All&socialLanguage=ALL&targetLanguage=en&timeRange=1' \
--H 'Accept-Encoding: identity'
+-H 'Accept-Encoding: identity' \
+-H 'User-Agent: binance-web3/2.0 (Skill)'
 ```
 
 **Response** (`data.leaderBoardList[]`):
@@ -175,6 +176,7 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/tok
 curl -X POST 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/unified/rank/list' \
 -H 'Content-Type: application/json' \
 -H 'Accept-Encoding: identity' \
+-H 'User-Agent: binance-web3/2.0 (Skill)' \
 -d '{"rankType":10,"chainId":"1","period":50,"sortBy":70,"orderAsc":false,"page":1,"size":20}'
 ```
 
@@ -239,7 +241,7 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/tracker/wallet/token/
 |-------|------|----------|-------------|
 | chainId | string | Yes | Chain ID: `56` (BSC), `CT_501` (Solana) |
 | period | string | No | Stats window: `5m`, `1h`, `4h`, `24h` |
-| tagType | integer | No | Address tag type (e.g. `2`) |
+| tagType | integer | Yes | Address tag type (always `2`) |
 
 ### Example Request
 
@@ -247,6 +249,7 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/tracker/wallet/token/
 curl -X POST 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/tracker/wallet/token/inflow/rank/query' \
 -H 'Content-Type: application/json' \
 -H 'Accept-Encoding: identity' \
+-H 'User-Agent: binance-web3/2.0 (Skill)' \
 -d '{"chainId":"56","period":"24h","tagType":2}'
 ```
 
@@ -300,7 +303,8 @@ Returns top 100 meme tokens launched via Pulse platform, scored and ranked by an
 
 ```bash
 curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/exclusive/rank/list?chainId=56' \
--H 'Accept-Encoding: identity'
+-H 'Accept-Encoding: identity' \
+-H 'User-Agent: binance-web3/2.0 (Skill)'
 ```
 
 ### Response (`data.tokens[]`)
@@ -358,8 +362,8 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/market/leaderboard/qu
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | chainId | string | Yes | Chain ID: `56` (BSC), `CT_501` (Solana) |
-| period | string | No | Time period: `7d`, `30d`, `90d` |
-| tag | string | No | Address tag filter: `ALL`, `KOL` |
+| period | string | Yes | Time period: `7d`, `30d`, `90d` |
+| tag | string | Yes | Address tag filter: `ALL`, `KOL` |
 | sortBy | integer | No | Sort field |
 | orderBy | integer | No | Order direction |
 | pageNo | integer | No | Page number (min 1) |
@@ -378,7 +382,8 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/market/leaderboard/qu
 
 ```bash
 curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/market/leaderboard/query?tag=ALL&pageNo=1&chainId=CT_501&pageSize=25&sortBy=0&orderBy=0&period=30d' \
--H 'Accept-Encoding: identity'
+-H 'Accept-Encoding: identity' \
+-H 'User-Agent: binance-web3/2.0 (Skill)'
 ```
 
 ### Response
@@ -421,6 +426,10 @@ curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/market/leaderbo
 | genericAddressTagList | array | Detailed tag info (tagName, logoUrl, extraInfo) |
 
 ---
+
+## User Agent Header
+
+Include `User-Agent` header with the following string: `binance-web3/2.0 (Skill)`
 
 ## Notes
 
