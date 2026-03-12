@@ -1,0 +1,22 @@
+{
+  "name": "funding-rate-scanner",
+  "version": "1.0.0",
+  "description": "Scan crypto funding rates and find arbitrage opportunities. No API key needed.",
+  "main": "scan.js",
+  "scripts": {
+    "test": "node test.js",
+    "scan": "node scan.js"
+  },
+  "keywords": [
+    "binance",
+    "funding-rate",
+    "arbitrage",
+    "crypto",
+    "trading"
+  ],
+  "author": "first-butler",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
