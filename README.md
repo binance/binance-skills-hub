@@ -16,6 +16,26 @@ Browse the existing skills to understand patterns and naming conventions before 
 
 ---
 
+## Installation
+
+Get started with Binance Skills Hub in a single command. Works with various agents such as OpenClaw and Claude Code.
+
+### Prerequisites
+
+Before installing Binance Skills Hub, ensure you have the following prerequisites:
+
+* **Node.js** (version 22 or higher)
+
+### Install Skills Hub
+
+Run the following command to add Binance Skills Hub to your project:
+
+```bash
+npx skills add https://github.com/binance/binance-skills-hub
+```
+
+---
+
 ## Contribution
 
 We welcome contributions.
