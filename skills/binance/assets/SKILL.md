@@ -107,10 +107,10 @@ Assets request on Binance using authenticated API endpoints. Requires API key an
 * **status**: 0(0:Email Sent, 2:Awaiting Approval 3:Rejected 4:Processing 6:Completed)
 * **offset**: Default: 0
 * **txId**:  (e.g., 1)
-* **depositId**: Deposit record Id, priority use (e.g., 1)
+* **depositId** (one-click arrival): Deposit record ID for one-click arrival deposit apply, priority use (e.g., 1)
 * **subAccountId**: Sub-accountId of Cloud user (e.g., 1)
 * **subUserId**: Sub-userId of parent user (e.g., 1)
-* **withdrawOrderId**: client side id for withdrawal, if provided in POST `/sapi/v1/capital/withdraw/apply`, can be used here for query. (e.g., 1)
+* **withdrawOrderId** (withdraw history): Client-side ID for withdrawal, if provided in POST `/sapi/v1/capital/withdraw/apply`, can be used here for query. (e.g., 1)
 * **idList**: id list returned in the response of POST `/sapi/v1/capital/withdraw/apply`, separated by `,`
 * **address**: 
 * **addressTag**: Secondary address identifier for coins like XRP,XMR etc.
@@ -118,15 +118,15 @@ Assets request on Binance using authenticated API endpoints. Requires API key an
 * **name**: Description of the address. Address book cap is 200, space in name should be encoded into `%20`
 * **walletType**: The wallet type for withdraw，0-spot wallet ，1-funding wallet. Default walletType is the current "selected wallet" under wallet->Fiat and Spot/Funding->Deposit
 * **subAccountId**: External user ID. (e.g., 1)
-* **depositId**: Wallet deposit ID (e.g., 1)
+* **depositId** (broker questionnaire): Wallet deposit ID for broker deposit questionnaire (e.g., 1)
 * **questionnaire**: JSON format questionnaire answers.
 * **beneficiaryPii**: JSON format beneficiary Pii.
 * **address**: 
 * **signature**: Must be the last parameter.
 * **addressName**: Description of the address. Address book cap is 200, space in name should be encoded into `%20`
-* **withdrawOrderId**: withdrawID defined by the client (i.e. client's internal withdrawID) (e.g., 1)
+* **withdrawOrderId** (broker withdraw): Withdraw ID defined by the client for broker withdraw (i.e. client's internal withdrawID) (e.g., 1)
 * **originatorPii**: JSON format originator Pii, see StandardPii section below
-* **depositId**: Comma(,) separated list of wallet tran Ids. (e.g., 1)
+* **depositId** (travel rule history): Comma(,) separated list of wallet tran IDs for travel rule deposit history (e.g., 1)
 * **retrieveQuestionnaire**: true: return `questionnaire` within response.
 * **trId**: Comma(,) separated list of travel rule record Ids. (e.g., 1)
 * **tranId**: Comma(,) separated list of wallet tran Ids. (e.g., 1)
