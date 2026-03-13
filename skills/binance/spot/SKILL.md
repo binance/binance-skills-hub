@@ -83,7 +83,7 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 * **price**:  (e.g., 400)
 * **newClientOrderId**: A unique id among open orders. Automatically generated if not sent.  Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
 * **strategyId**:  (e.g., 1)
-* **strategyType**: The value cannot be less than `1000000`. (e.g., 1)
+* **strategyType**: The value cannot be less than `1000000`. (e.g., 1000000)
 * **stopPrice**: Used with `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, and `TAKE_PROFIT_LIMIT` orders. (e.g., 1)
 * **trailingDelta**: See Trailing Stop order FAQ. (e.g., 1)
 * **icebergQty**: Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order. (e.g., 1)
@@ -99,12 +99,12 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 * **limitClientOrderId**: A unique Id for the limit order
 * **price**:  (e.g., 1)
 * **limitStrategyId**:  (e.g., 1)
-* **limitStrategyType**: The value cannot be less than `1000000`. (e.g., 1)
+* **limitStrategyType**: The value cannot be less than `1000000`. (e.g., 1000000)
 * **limitIcebergQty**: Used to make the `LIMIT_MAKER` leg an iceberg order. (e.g., 1)
 * **stopClientOrderId**: A unique Id for the stop loss/stop loss limit leg
 * **stopPrice**:  (e.g., 1)
 * **stopStrategyId**:  (e.g., 1)
-* **stopStrategyType**: The value cannot be less than `1000000`. (e.g., 1)
+* **stopStrategyType**: The value cannot be less than `1000000`. (e.g., 1000000)
 * **stopLimitPrice**: If provided, `stopLimitTimeInForce` is required. (e.g., 1)
 * **stopIcebergQty**: Used with `STOP_LOSS_LIMIT` leg to make an iceberg order. (e.g., 1)
 * **computeCommissionRates**: Default: `false`   See Commissions FAQ to learn more.
@@ -115,7 +115,7 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 * **aboveStopPrice**: Can be used if `aboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`.  Either `aboveStopPrice` or `aboveTrailingDelta` or both, must be specified. (e.g., 1)
 * **aboveTrailingDelta**: See Trailing Stop order FAQ. (e.g., 1)
 * **aboveStrategyId**: Arbitrary numeric value identifying the above order within an order strategy. (e.g., 1)
-* **aboveStrategyType**: Arbitrary numeric value identifying the above order strategy.  Values smaller than 1000000 are reserved and cannot be used. (e.g., 1)
+* **aboveStrategyType**: Arbitrary numeric value identifying the above order strategy.  Values smaller than 1000000 are reserved and cannot be used. (e.g., 1000000)
 * **abovePegOffsetValue**:  (e.g., 1)
 * **belowClientOrderId**: Arbitrary unique ID among open orders for the below order. Automatically generated if not sent
 * **belowIcebergQty**: Note that this can only be used if `belowTimeInForce` is `GTC`. (e.g., 1)
@@ -123,14 +123,14 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 * **belowStopPrice**: Can be used if `belowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT, TAKE_PROFIT` or `TAKE_PROFIT_LIMIT`  Either belowStopPrice or belowTrailingDelta or both, must be specified. (e.g., 1)
 * **belowTrailingDelta**: See Trailing Stop order FAQ. (e.g., 1)
 * **belowStrategyId**: Arbitrary numeric value identifying the below order within an order strategy. (e.g., 1)
-* **belowStrategyType**: Arbitrary numeric value identifying the below order strategy.  Values smaller than 1000000 are reserved and cannot be used. (e.g., 1)
+* **belowStrategyType**: Arbitrary numeric value identifying the below order strategy.  Values smaller than 1000000 are reserved and cannot be used. (e.g., 1000000)
 * **belowPegOffsetValue**:  (e.g., 1)
 * **workingClientOrderId**: Arbitrary unique ID among open orders for the working order. Automatically generated if not sent.
 * **workingPrice**:  (e.g., 1)
 * **workingQuantity**: Sets the quantity for the working order. (e.g., 1)
 * **workingIcebergQty**: This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`. (e.g., 1)
 * **workingStrategyId**: Arbitrary numeric value identifying the working order within an order strategy. (e.g., 1)
-* **workingStrategyType**: Arbitrary numeric value identifying the working order strategy. Values smaller than 1000000 are reserved and cannot be used. (e.g., 1)
+* **workingStrategyType**: Arbitrary numeric value identifying the working order strategy. Values smaller than 1000000 are reserved and cannot be used. (e.g., 1000000)
 * **workingPegOffsetValue**:  (e.g., 1)
 * **pendingClientOrderId**: Arbitrary unique ID among open orders for the pending order. Automatically generated if not sent.
 * **pendingPrice**:  (e.g., 1)
@@ -138,7 +138,7 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 * **pendingTrailingDelta**:  (e.g., 1)
 * **pendingIcebergQty**: This can only be used if `pendingTimeInForce` is `GTC` or if `pendingType` is `LIMIT_MAKER`. (e.g., 1)
 * **pendingStrategyId**: Arbitrary numeric value identifying the pending order within an order strategy. (e.g., 1)
-* **pendingStrategyType**: Arbitrary numeric value identifying the pending order strategy. Values smaller than 1000000 are reserved and cannot be used. (e.g., 1)
+* **pendingStrategyType**: Arbitrary numeric value identifying the pending order strategy. Values smaller than 1000000 are reserved and cannot be used. (e.g., 1000000)
 * **pendingPegOffsetValue**:  (e.g., 1)
 * **pendingAboveClientOrderId**: Arbitrary unique ID among open orders for the pending above order. Automatically generated if not sent.
 * **pendingAbovePrice**: Can be used if `pendingAboveType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price. (e.g., 1)
@@ -146,7 +146,7 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 * **pendingAboveTrailingDelta**: See Trailing Stop FAQ (e.g., 1)
 * **pendingAboveIcebergQty**: This can only be used if `pendingAboveTimeInForce` is `GTC` or if `pendingAboveType` is `LIMIT_MAKER`. (e.g., 1)
 * **pendingAboveStrategyId**: Arbitrary numeric value identifying the pending above order within an order strategy. (e.g., 1)
-* **pendingAboveStrategyType**: Arbitrary numeric value identifying the pending above order strategy. Values smaller than 1000000 are reserved and cannot be used. (e.g., 1)
+* **pendingAboveStrategyType**: Arbitrary numeric value identifying the pending above order strategy. Values smaller than 1000000 are reserved and cannot be used. (e.g., 1000000)
 * **pendingAbovePegOffsetValue**:  (e.g., 1)
 * **pendingBelowClientOrderId**: Arbitrary unique ID among open orders for the pending below order. Automatically generated if not sent.
 * **pendingBelowPrice**: Can be used if `pendingBelowType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT` to specify limit price (e.g., 1)
@@ -154,7 +154,7 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 * **pendingBelowTrailingDelta**:  (e.g., 1)
 * **pendingBelowIcebergQty**: This can only be used if `pendingBelowTimeInForce` is `GTC`, or if `pendingBelowType` is `LIMIT_MAKER`. (e.g., 1)
 * **pendingBelowStrategyId**: Arbitrary numeric value identifying the pending below order within an order strategy. (e.g., 1)
-* **pendingBelowStrategyType**: Arbitrary numeric value identifying the pending below order strategy. Values smaller than 1000000 are reserved and cannot be used. (e.g., 1)
+* **pendingBelowStrategyType**: Arbitrary numeric value identifying the pending below order strategy. Values smaller than 1000000 are reserved and cannot be used. (e.g., 1000000)
 * **pendingBelowPegOffsetValue**:  (e.g., 1)
 * **pendingQuantity**: Sets the quantity for the pending order. (e.g., 1)
 * **omitZeroBalances**: When set to `true`, emits only the non-zero balances of an account.  Default value: `false`
