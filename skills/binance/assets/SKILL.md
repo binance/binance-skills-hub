@@ -69,70 +69,55 @@ Assets request on Binance using authenticated API endpoints. Requires API key an
 
 ### Common Parameters
 
-* **recvWindow**:  (e.g., 5000)
-* **type**: 
-* **startTime**:  (e.g., 1623319461670)
-* **endTime**:  (e.g., 1641782889000)
-* **limit**: min 7, max 30, default 7 (e.g., 7)
+* **recvWindow**: The value cannot be greater than `60000`. (e.g., 5000)
+* **type**: Account snapshot type (`SPOT`, `MARGIN`, `FUTURES`) or transfer/delegation type (`Delegate`, `Undelegate`)
+* **startTime**: Start timestamp in ms. (e.g., 1623319461670)
+* **endTime**: End timestamp in ms. (e.g., 1641782889000)
+* **limit**: Result limit. For account snapshot: min 7, max 30, default 7. (e.g., 7)
 * **spotBNBBurn**: "true" or "false"; Determines whether to use BNB to pay for trading fees on SPOT
 * **interestBNBBurn**: "true" or "false"; Determines whether to use BNB to pay for margin loan's interest
-* **asset**: If asset is blank, then query all positive assets user have.
-* **accountType**: `SPOT` or `MARGIN`,default `SPOT` (e.g., SPOT)
-* **tranId**: The transaction id (e.g., 1)
+* **asset**: Asset name. If blank, query all positive assets. (e.g., BTC)
+* **accountType**: `SPOT` or `MARGIN`, default `SPOT` (e.g., SPOT)
+* **tranId**: Transaction ID. Can also be comma-separated list for travel rule queries. (e.g., 1)
 * **clientTranId**: The unique flag (e.g., 1)
-* **startTime**:  (e.g., 1623319461670)
-* **endTime**:  (e.g., 1641782889000)
-* **current**: current page, default 1, the min value is 1 (e.g., 1)
-* **size**: page size, default 10, the max value is 100 (e.g., 10)
-* **asset**: 
+* **current**: Current page, default 1, the min value is 1 (e.g., 1)
+* **size**: Page size, default 10, the max value is 100 (e.g., 10)
 * **clientId**: A unique id for the request (e.g., 1)
-* **targetAsset**: 
-* **thirdPartyClientId**:  (e.g., 1)
-* **dustQuotaAssetToTargetAssetPrice**:  (e.g., 1.0)
-* **targetAsset**: 
-* **needBtcValuation**: true or false
-* **email**: 
-* **type**: Delegate/Undelegate
-* **fromSymbol**: 
-* **toSymbol**: 
+* **targetAsset**: Target asset for dust conversion. (e.g., BNB)
+* **thirdPartyClientId**: Third party client ID. (e.g., 1)
+* **dustQuotaAssetToTargetAssetPrice**: Dust quota asset to target asset price. (e.g., 1.0)
+* **needBtcValuation**: Whether BTC valuation is needed. true or false
+* **email**: Account email for delegation history queries.
+* **fromSymbol**: Source symbol for universal transfer.
+* **toSymbol**: Target symbol for universal transfer.
 * **quoteAsset**: `USDT`, `ETH`, `USDC`, `BNB`, etc. default `BTC` (e.g., BTC)
-* **symbol**: 
-* **needBtcValuation**: Whether need btc valuation or not.
-* **amount**:  (e.g., 1.0)
-* **coin**: 
-* **network**: 
-* **amount**:  (e.g., 1.0)
-* **includeSource**: Default: `false`, return `sourceAddress`field when set to `true`
-* **coin**: 
-* **status**: 0(0:Email Sent, 2:Awaiting Approval 3:Rejected 4:Processing 6:Completed)
-* **offset**: Default: 0
-* **txId**:  (e.g., 1)
-* **depositId**: Deposit record Id, priority use (e.g., 1)
-* **subAccountId**: Sub-accountId of Cloud user (e.g., 1)
+* **symbol**: Trading pair symbol. (e.g., BNBUSDT)
+* **amount**: Transfer or withdrawal amount. (e.g., 1.0)
+* **coin**: Coin name. (e.g., BTC)
+* **network**: Network for deposit or withdrawal. (e.g., ETH)
+* **includeSource**: Default: `false`, return `sourceAddress` field when set to `true`
+* **status**: Deposit status. 0: Email Sent, 2: Awaiting Approval, 3: Rejected, 4: Processing, 6: Completed
+* **offset**: Pagination offset. Default: 0
+* **txId**: Transaction hash ID. (e.g., 1)
+* **depositId**: Deposit record ID. Can also be comma-separated list for travel rule queries. (e.g., 1)
+* **subAccountId**: Sub-account ID of Cloud user or external user ID. (e.g., 1)
 * **subUserId**: Sub-userId of parent user (e.g., 1)
-* **withdrawOrderId**: client side id for withdrawal, if provided in POST `/sapi/v1/capital/withdraw/apply`, can be used here for query. (e.g., 1)
-* **idList**: id list returned in the response of POST `/sapi/v1/capital/withdraw/apply`, separated by `,`
-* **address**: 
-* **addressTag**: Secondary address identifier for coins like XRP,XMR etc.
+* **withdrawOrderId**: Client-side ID for withdrawal. If provided in POST `/sapi/v1/capital/withdraw/apply`, can be used for query. (e.g., 1)
+* **idList**: ID list returned in the response of POST `/sapi/v1/capital/withdraw/apply`, separated by `,`
+* **address**: Destination address for withdrawal.
+* **addressTag**: Secondary address identifier for coins like XRP, XMR etc.
 * **transactionFeeFlag**: When making internal transfer, `true` for returning the fee to the destination account; `false` for returning the fee back to the departure account. Default `false`.
 * **name**: Description of the address. Address book cap is 200, space in name should be encoded into `%20`
-* **walletType**: The wallet type for withdraw，0-spot wallet ，1-funding wallet. Default walletType is the current "selected wallet" under wallet->Fiat and Spot/Funding->Deposit
-* **subAccountId**: External user ID. (e.g., 1)
-* **depositId**: Wallet deposit ID (e.g., 1)
+* **walletType**: The wallet type for withdraw. 0: spot wallet, 1: funding wallet. Default is the current selected wallet.
 * **questionnaire**: JSON format questionnaire answers.
-* **beneficiaryPii**: JSON format beneficiary Pii.
-* **address**: 
+* **beneficiaryPii**: JSON format beneficiary PII.
 * **signature**: Must be the last parameter.
 * **addressName**: Description of the address. Address book cap is 200, space in name should be encoded into `%20`
-* **withdrawOrderId**: withdrawID defined by the client (i.e. client's internal withdrawID) (e.g., 1)
-* **originatorPii**: JSON format originator Pii, see StandardPii section below
-* **depositId**: Comma(,) separated list of wallet tran Ids. (e.g., 1)
+* **originatorPii**: JSON format originator PII, see StandardPii section below
 * **retrieveQuestionnaire**: true: return `questionnaire` within response.
-* **trId**: Comma(,) separated list of travel rule record Ids. (e.g., 1)
-* **tranId**: Comma(,) separated list of wallet tran Ids. (e.g., 1)
-* **travelRuleStatus**: 0:Completed,1:Pending,2:Failed
+* **trId**: Comma-separated list of travel rule record IDs. (e.g., 1)
+* **travelRuleStatus**: 0: Completed, 1: Pending, 2: Failed
 * **pendingQuestionnaire**: true: Only return records that pending deposit questionnaire. false/not provided: return all records.
-* **tranId**: Wallet tran ID (e.g., 1)
 
 
 ## Authentication
