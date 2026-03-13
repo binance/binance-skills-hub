@@ -118,6 +118,6 @@ Include `User-Agent` header with the following string: `binance-web3/1.0 (Skill)
 
 ## Notes
 
-1. Icon URL requires full domain prefix: `bin.bnbstatic.com` + icon path
+1. Icon URL requires full domain prefix: `https://bin.bnbstatic.com` + icon path
 2. Price and quantity are string format, convert to numbers when using
 3. Use offset parameter for pagination
