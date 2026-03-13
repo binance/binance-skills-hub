@@ -134,7 +134,7 @@ Real-time stream of every article with AI classification and analysis.
 curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=SOL&newsType=important"
 
 # Good: specific coin + exclude routine
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=BTC&excludeLevel=4,5"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=BTC&excludeLevels=4,5"
 
 # Acceptable: specific coin only
 curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=ETH"
@@ -167,9 +167,9 @@ curl -s "https://api.ns3.ai/feed/news-data?lang=en&newsType=breaking"
 **Exclude levels** (multi): Removes articles at specific importance levels.
 ```bash
 # Remove routine and off-domain (Level 1-3 only)
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&excludeLevel=4,5"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&excludeLevels=4,5"
 # Level 1-2 only
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&excludeLevel=3,4,5"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&excludeLevels=3,4,5"
 ```
 
 **Combined filters**: Multiple parameters can be combined.
@@ -177,7 +177,7 @@ curl -s "https://api.ns3.ai/feed/news-data?lang=en&excludeLevel=3,4,5"
 # Important BTC news only (recommended for "BTC important news")
 curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=BTC&newsType=important"
 # BTC news excluding routine items
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=BTC&excludeLevel=4,5"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=BTC&excludeLevels=4,5"
 # Important ETH news in Korean
 curl -s "https://api.ns3.ai/feed/news-data?lang=ko&crypto=ETH&newsType=important"
 ```
@@ -270,10 +270,10 @@ Four categories: major crypto news, macro news affecting crypto, major exchange 
 
 ```bash
 # Crypto/macro/price alerts only (exclude listings)
-curl -s "https://api.ns3.ai/feed/news-flash?lang=en&excludeNews=2"
+curl -s "https://api.ns3.ai/feed/news-flash?lang=en&excludeSources=2"
 
 # Listings only
-curl -s "https://api.ns3.ai/feed/news-flash?lang=en&excludeNews=1"
+curl -s "https://api.ns3.ai/feed/news-flash?lang=en&excludeSources=1"
 ```
 
 ### Response (up to 100 items)
