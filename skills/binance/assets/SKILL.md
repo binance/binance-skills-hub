@@ -29,12 +29,12 @@ Assets request on Binance using authenticated API endpoints. Requires API key an
 | `/sapi/v1/asset/ledger-transfer/cloud-mining/queryByPage` (GET) | Get Cloud-Mining payment and refund history (USER_DATA) | startTime, endTime | tranId, clientTranId, asset, current, size | Yes |
 | `/sapi/v1/asset/dust-convert/convert` (POST) | Dust Convert (USER_DATA) | asset | clientId, targetAsset, thirdPartyClientId, dustQuotaAssetToTargetAssetPrice | Yes |
 | `/sapi/v1/asset/dust-convert/query-convertible-assets` (POST) | Dust Convertible Assets (USER_DATA) | targetAsset | dustQuotaAssetToTargetAssetPrice | Yes |
-| `/sapi/v1/asset/dribblet` (GET) | DustLog(USER_DATA) | None | accountType, startTime, endTime, recvWindow | Yes |
+| `/sapi/v1/asset/dribblet` (GET) | DustLog (USER_DATA) | None | accountType, startTime, endTime, recvWindow | Yes |
 | `/sapi/v1/asset/dust` (POST) | Dust Transfer (USER_DATA) | asset | accountType, recvWindow | Yes |
 | `/sapi/v1/asset/get-funding-asset` (POST) | Funding Wallet (USER_DATA) | None | asset, needBtcValuation, recvWindow | Yes |
 | `/sapi/v1/spot/open-symbol-list` (GET) | Get Open Symbol List (MARKET_DATA) | None | None | No |
-| `/sapi/v1/asset/custody/transfer-history` (GET) | Query User Delegation History(For Master Account)(USER_DATA) | email, startTime, endTime | type, asset, current, size, recvWindow | Yes |
-| `/sapi/v1/asset/transfer` (GET) | Query User Universal Transfer History(USER_DATA) | type | startTime, endTime, current, size, fromSymbol, toSymbol, recvWindow | Yes |
+| `/sapi/v1/asset/custody/transfer-history` (GET) | Query User Delegation History (For Master Account) (USER_DATA) | email, startTime, endTime | type, asset, current, size, recvWindow | Yes |
+| `/sapi/v1/asset/transfer` (GET) | Query User Universal Transfer History (USER_DATA) | type | startTime, endTime, current, size, fromSymbol, toSymbol, recvWindow | Yes |
 | `/sapi/v1/asset/transfer` (POST) | User Universal Transfer (USER_DATA) | type, asset, amount | fromSymbol, toSymbol, recvWindow | Yes |
 | `/sapi/v1/asset/wallet/balance` (GET) | Query User Wallet Balance (USER_DATA) | None | quoteAsset, recvWindow | Yes |
 | `/sapi/v1/spot/delist-schedule` (GET) | Get symbols delist schedule for spot (MARKET_DATA) | None | recvWindow | No |
@@ -43,12 +43,12 @@ Assets request on Binance using authenticated API endpoints. Requires API key an
 | `/sapi/v1/capital/config/getall` (GET) | All Coins' Information (USER_DATA) | None | recvWindow | Yes |
 | `/sapi/v1/capital/deposit/address` (GET) | Deposit Address(supporting network) (USER_DATA) | coin | network, amount, recvWindow | Yes |
 | `/sapi/v1/capital/deposit/hisrec` (GET) | Deposit History (supporting network) (USER_DATA) | None | includeSource, coin, status, startTime, endTime, offset, limit, recvWindow, txId | Yes |
-| `/sapi/v1/capital/deposit/address/list` (GET) | Fetch deposit address list with network(USER_DATA) | coin | network | Yes |
+| `/sapi/v1/capital/deposit/address/list` (GET) | Fetch deposit address list with network (USER_DATA) | coin | network | Yes |
 | `/sapi/v1/capital/withdraw/address/list` (GET) | Fetch withdraw address list (USER_DATA) | None | None | Yes |
 | `/sapi/v1/capital/withdraw/quota` (GET) | Fetch withdraw quota (USER_DATA) | None | None | Yes |
 | `/sapi/v1/capital/deposit/credit-apply` (POST) | One click arrival deposit apply (for expired address deposit) (USER_DATA) | None | depositId, txId, subAccountId, subUserId | Yes |
 | `/sapi/v1/capital/withdraw/history` (GET) | Withdraw History (supporting network) (USER_DATA) | None | coin, withdrawOrderId, status, offset, limit, idList, startTime, endTime, recvWindow | Yes |
-| `/sapi/v1/capital/withdraw/apply` (POST) | Withdraw(USER_DATA) | coin, address, amount | withdrawOrderId, network, addressTag, transactionFeeFlag, name, walletType, recvWindow | Yes |
+| `/sapi/v1/capital/withdraw/apply` (POST) | Withdraw (USER_DATA) | coin, address, amount | withdrawOrderId, network, addressTag, transactionFeeFlag, name, walletType, recvWindow | Yes |
 | `/sapi/v1/system/status` (GET) | System Status (System) | None | None | No |
 | `/sapi/v1/addressVerify/list` (GET) | Fetch address verification list (USER_DATA) | None | recvWindow | Yes |
 | `/sapi/v1/localentity/broker/deposit/provide-info` (PUT) | Submit Deposit Questionnaire (For local entities that require travel rule) (supporting network) (USER_DATA) | subAccountId, depositId, questionnaire, beneficiaryPii, signature | network, coin, amount, address, addressTag | Yes |
@@ -104,7 +104,7 @@ Assets request on Binance using authenticated API endpoints. Requires API key an
 * **amount**:  (e.g., 1.0)
 * **includeSource**: Default: `false`, return `sourceAddress`field when set to `true`
 * **coin**: 
-* **status**: 0(0:Email Sent, 2:Awaiting Approval 3:Rejected 4:Processing 6:Completed)
+* **status**: Deposit status code. Values: 0 (Email Sent), 2 (Awaiting Approval), 3 (Rejected), 4 (Processing), 6 (Completed)
 * **offset**: Default: 0
 * **txId**:  (e.g., 1)
 * **depositId**: Deposit record Id, priority use (e.g., 1)
