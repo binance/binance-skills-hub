@@ -68,7 +68,7 @@ Create Ed25519 signature of the query string using your private key:
 ```bash
 # Example using openssl
 echo -n "symbol=BTCUSDT&side=BUY&type=MARKET&quantity=0.001&timestamp=1234567890123" | \
-  openssl pkeyut -pubout -in private_key.pem -outform DER | \
+  openssl pkeyutl -pubout -in private_key.pem -outform DER | \
   openssl dgst -sha256 -sign private_key.pem | base64
 ```
 
