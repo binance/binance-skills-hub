@@ -322,3 +322,40 @@ Example: `agent-1a2b3c4d5e6f7g8h9i`
 Include `User-Agent` header with the following string: `binance-derivatives-trading-usds-futures/1.0.0 (Skill)`
 
 See [`references/authentication.md`](./references/authentication.md) for implementation details.
+
+## Error Codes
+
+Common error codes for futures endpoints:
+
+| Code | Description |
+|------|-------------|
+| -1000 | Unknown error |
+| -1001 | Disconnected from server |
+| -1002 | Unauthorized (invalid API key) |
+| -1003 | Too many requests (rate limit exceeded) |
+| -1015 | Too many orders |
+| -1021 | Timestamp outside recvWindow |
+| -1022 | Invalid signature |
+| -2010 | New order rejected |
+| -2011 | Cancel order rejected |
+| -2013 | Order does not exist |
+| -2014 | Invalid API key format |
+| -2015 | Invalid API key, IP, or permissions |
+| -4000 | Invalid order status |
+| -4001 | Price less than 0 |
+| -4003 | Quantity less than 0 |
+| -4014 | Price precision exceeded |
+| -4015 | Quantity precision exceeded |
+| -4028 | Timestamp is ahead of server time |
+| -4046 | Leverage reduction not supported |
+| -4048 | Margin not sufficient |
+| -4061 | Order would immediately trigger |
+| -4164 | Minimum notional required |
+
+## Rate Limits
+
+| Type | Limit |
+|------|-------|
+| Request Weight | 2400/min |
+| Order Rate | 300/10s per account |
+| Order Rate | 10/s per symbol |
