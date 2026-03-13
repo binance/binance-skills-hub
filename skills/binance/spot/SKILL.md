@@ -20,7 +20,7 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 | `/api/v3/time` (GET) | Check server time | None | None | No |
 | `/api/v3/aggTrades` (GET) | Compressed/Aggregate trades list | symbol | fromId, startTime, endTime, limit | No |
 | `/api/v3/avgPrice` (GET) | Current average price | symbol | None | No |
-| `/api/v3/depth` (GET) | Order book | symbol | limit, symbolStatus | No |
+| `/api/v3/depth` (GET) | Order book | symbol | limit | No |
 | `/api/v3/historicalTrades` (GET) | Old trade lookup | symbol | limit, fromId | No |
 | `/api/v3/klines` (GET) | Kline/Candlestick data | symbol, interval | startTime, endTime, timeZone, limit | No |
 | `/api/v3/ticker` (GET) | Rolling window price change statistics | None | symbol, symbols, windowSize, type, symbolStatus | No |
