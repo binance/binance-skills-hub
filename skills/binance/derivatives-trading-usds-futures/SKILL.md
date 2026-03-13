@@ -202,7 +202,8 @@ Required credentials:
 
 Base URLs:
 * Mainnet: https://fapi.binance.com
-* Testnet: https://demo-fapi.binance.com
+* Testnet: https://testnet.binancefuture.com
+* Demo: https://demo-fapi.binance.com
 
 ## Security
 

@@ -7,7 +7,8 @@ All trading endpoints require HMAC SHA256 signed requests.
 | Environment | URL |
 |-------------|-----|
 | Mainnet | https://fapi.binance.com |
-| Testnet | https://demo-fapi.binance.com |
+| Testnet | https://testnet.binancefuture.com |
+| Demo | https://demo-fapi.binance.com |
 
 ## Required Headers
 
@@ -123,5 +124,6 @@ If you get -1021 Timestamp outside recvWindow:
 * Never share your secret key
 * Use IP whitelist in Binance API settings
 * Enable only required permissions (spot trading, no withdrawals)
-* Use testnet for development: https://demo-fapi.binance.com
-* Testnet credentials are separate from mainnet
+* Use testnet for development: https://testnet.binancefuture.com
+* Use demo environment for paper trading: https://demo-fapi.binance.com
+* Testnet and demo credentials are separate from mainnet
