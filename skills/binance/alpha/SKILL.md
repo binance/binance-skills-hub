@@ -37,6 +37,8 @@ Alpha request on Binance using authenticated API endpoints. Requires API key and
 
 ## Authentication
 
+> **Note:** All endpoints in this skill are currently public and do not require authentication. The authentication reference below is provided for future authenticated endpoints that may be added.
+
 For endpoints that require authentication, you will need to provide Binance API credentials.
 Required credentials:
 
