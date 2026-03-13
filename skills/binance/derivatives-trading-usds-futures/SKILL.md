@@ -122,7 +122,7 @@ Derivatives-trading-usds-futures request on Binance using authenticated API endp
 * **startTime**: Timestamp in ms (e.g., 1623319461670)
 * **endTime**: Timestamp in ms (e.g., 1641782889000)
 * **downloadId**: get by download id api (e.g., 1)
-* **incomeType**: TRANSFER, WELCOME_BONUS, REALIZED_PNL, FUNDING_FEE, COMMISSION, INSURANCE_CLEAR, REFERRAL_KICKBACK, COMMISSION_REBATE, API_REBATE, CONTEST_REWARD, CROSS_COLLATERAL_TRANSFER, OPTIONS_PREMIUM_FEE, OPTIONS_SETTLE_PROFIT, INTERNAL_TRANSFER, AUTO_EXCHANGE, DELIVERED_SETTELMENT, COIN_SWAP_DEPOSIT, COIN_SWAP_WITHDRAW, POSITION_LIMIT_INCREASE_FEE, STRATEGY_UMFUTURES_TRANSFER，FEE_RETURN，BFUSD_REWARD
+* **incomeType**: TRANSFER, WELCOME_BONUS, REALIZED_PNL, FUNDING_FEE, COMMISSION, INSURANCE_CLEAR, REFERRAL_KICKBACK, COMMISSION_REBATE, API_REBATE, CONTEST_REWARD, CROSS_COLLATERAL_TRANSFER, OPTIONS_PREMIUM_FEE, OPTIONS_SETTLE_PROFIT, INTERNAL_TRANSFER, AUTO_EXCHANGE, DELIVERED_SETTLEMENT, COIN_SWAP_DEPOSIT, COIN_SWAP_WITHDRAW, POSITION_LIMIT_INCREASE_FEE, STRATEGY_UMFUTURES_TRANSFER, FEE_RETURN, BFUSD_REWARD
 * **startTime**:  (e.g., 1623319461670)
 * **endTime**:  (e.g., 1641782889000)
 * **page**: 
@@ -154,7 +154,7 @@ Derivatives-trading-usds-futures request on Binance using authenticated API endp
 * **multiAssetsMargin**: "true": Multi-Assets Mode; "false": Single-Asset Mode
 * **dualSidePosition**: "true": Hedge Mode; "false": One-way Mode
 * **algoType**: 
-* **type**: 1: Add position margin，2: Reduce position margin
+* **type**: 1: Add position margin, 2: Reduce position margin
 * **amount**:  (e.g., 1.0)
 * **type**: 
 * **batchOrders**: order list. Max 5 orders
@@ -164,12 +164,12 @@ Derivatives-trading-usds-futures request on Binance using authenticated API endp
 * **quantity**:  (e.g., 1.0)
 * **price**:  (e.g., 1.0)
 * **triggerPrice**:  (e.g., 1.0)
-* **closePosition**: `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
+* **closePosition**: `true`, `false`; Close-All, used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
 * **priceProtect**: "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
 * **reduceOnly**: "true" or "false". default "false". Cannot be sent in Hedge Mode
 * **activatePrice**: Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`) (e.g., 1.0)
 * **callbackRate**: Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 5 where 1 for 1% (e.g., 1.0)
-* **goodTillDate**: order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
+* **goodTillDate**: order cancel time for timeInForce `GTD`, mandatory when `timeInForce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
 * **newClientOrderId**: A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[\.A-Z\:/a-z0-9_-]{1,36}$` (e.g., 1)
 * **stopPrice**: Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders. (e.g., 1.0)
 * **activationPrice**: Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`) (e.g., 1.0)
@@ -181,7 +181,7 @@ Derivatives-trading-usds-futures request on Binance using authenticated API endp
 * **contractType**: PERPETUAL | CURRENT_MONTH | NEXT_MONTH | CURRENT_QUARTER | NEXT_QUARTER | PERPETUAL_DELIVERING
 * **period**: 5m | 15m | 30m | 1h | 2h | 4h | 6h | 12h | 1d
 * **interval**: 1m | 3m | 5m | 15m | 30m | 1h | 2h | 4h | 6h | 8h | 12h | 1d | 3d | 1w | 1M
-* **marginType**: ISOLATED | CROSSED
+* **marginType**: ISOLATED | CROSS
 * **positionSide**: BOTH | LONG | SHORT
 * **side**: BUY | SELL
 * **priceMatch**: NONE | OPPONENT | OPPONENT_5 | OPPONENT_10 | OPPONENT_20 | QUEUE | QUEUE_5 | QUEUE_10 | QUEUE_20
