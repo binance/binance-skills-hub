@@ -348,6 +348,8 @@ curl --location 'https://web3.binance.com/bapi/defi/v4/public/wallet-direct/buw/
 https://dquery.sintral.io/u-kline/v1/k-line/candles
 ```
 
+> **Note:** This endpoint uses a third-party service (`dquery.sintral.io`), not the standard Binance Web3 API domain. Do not send Binance authentication headers to this endpoint.
+
 **Request Parameters**:
 
 | Parameter | Type | Required | Description |
