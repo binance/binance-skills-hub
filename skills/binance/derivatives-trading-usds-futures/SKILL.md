@@ -117,63 +117,50 @@ Derivatives-trading-usds-futures request on Binance using authenticated API endp
 
 ### Common Parameters
 
-* **recvWindow**:  (e.g., 5000)
-* **symbol**: 
+* **recvWindow**: The value cannot be greater than `60000`. (e.g., 5000)
+* **symbol**: Trading pair symbol (e.g., BTCUSDT)
 * **startTime**: Timestamp in ms (e.g., 1623319461670)
 * **endTime**: Timestamp in ms (e.g., 1641782889000)
-* **downloadId**: get by download id api (e.g., 1)
-* **incomeType**: TRANSFER, WELCOME_BONUS, REALIZED_PNL, FUNDING_FEE, COMMISSION, INSURANCE_CLEAR, REFERRAL_KICKBACK, COMMISSION_REBATE, API_REBATE, CONTEST_REWARD, CROSS_COLLATERAL_TRANSFER, OPTIONS_PREMIUM_FEE, OPTIONS_SETTLE_PROFIT, INTERNAL_TRANSFER, AUTO_EXCHANGE, DELIVERED_SETTELMENT, COIN_SWAP_DEPOSIT, COIN_SWAP_WITHDRAW, POSITION_LIMIT_INCREASE_FEE, STRATEGY_UMFUTURES_TRANSFER，FEE_RETURN，BFUSD_REWARD
-* **startTime**:  (e.g., 1623319461670)
-* **endTime**:  (e.g., 1641782889000)
-* **page**: 
+* **downloadId**: Get by download id api (e.g., 1)
+* **incomeType**: TRANSFER, WELCOME_BONUS, REALIZED_PNL, FUNDING_FEE, COMMISSION, INSURANCE_CLEAR, REFERRAL_KICKBACK, COMMISSION_REBATE, API_REBATE, CONTEST_REWARD, CROSS_COLLATERAL_TRANSFER, OPTIONS_PREMIUM_FEE, OPTIONS_SETTLE_PROFIT, INTERNAL_TRANSFER, AUTO_EXCHANGE, DELIVERED_SETTELMENT, COIN_SWAP_DEPOSIT, COIN_SWAP_WITHDRAW, POSITION_LIMIT_INCREASE_FEE, STRATEGY_UMFUTURES_TRANSFER, FEE_RETURN, BFUSD_REWARD
+* **page**: Page number for paginated results. (e.g., 1)
 * **limit**: Default 100; max 1000 (e.g., 100)
 * **feeBurn**: "true": Fee Discount On; "false": Fee Discount Off
-* **symbol**: 
-* **quoteId**:  (e.g., 1)
-* **fromAsset**: User spends coin
-* **toAsset**: User receives coin
-* **orderId**: Either orderId or quoteId is required (e.g., 1)
-* **quoteId**: Either orderId or quoteId is required (e.g., 1)
-* **fromAsset**: 
-* **toAsset**: 
+* **quoteId**: Quote ID. Either orderId or quoteId is required for order status queries. (e.g., 1)
+* **fromAsset**: Source asset for conversion. User spends this coin.
+* **toAsset**: Target asset for conversion. User receives this coin.
+* **orderId**: Order ID. Either orderId or quoteId is required for order status queries. (e.g., 1)
 * **fromAmount**: When specified, it is the amount you will be debited after the conversion (e.g., 1.0)
 * **toAmount**: When specified, it is the amount you will be credited after the conversion (e.g., 1.0)
 * **validTime**: 10s, default 10s (e.g., 10s)
-* **pair**: 
-* **limit**: Default 30,Max 500 (e.g., 30)
+* **pair**: Trading pair (e.g., BTCUSDT)
 * **fromId**: ID to get aggregate trades from INCLUSIVE. (e.g., 1)
-* **asset**: 
-* **orderId**:  (e.g., 1)
-* **countdownTime**: countdown time, 1000 for 1 second. 0 to cancel the timer
-* **algoId**:  (e.g., 1)
-* **clientAlgoId**:  (e.g., 1)
-* **orderIdList**: max length 10   e.g. [1234567,2345678]
-* **origClientOrderIdList**: max length 10  e.g. ["my_id_1","my_id_2"], encode the double quotes. No space after comma.
-* **origClientOrderId**:  (e.g., 1)
-* **leverage**: target initial leverage: int from 1 to 125
+* **asset**: Asset name (e.g., BTC)
+* **countdownTime**: Countdown time, 1000 for 1 second. 0 to cancel the timer
+* **algoId**: Algo order ID. (e.g., 1)
+* **clientAlgoId**: Client-defined algo order ID. (e.g., 1)
+* **orderIdList**: Max length 10. e.g. [1234567,2345678]
+* **origClientOrderIdList**: Max length 10. e.g. ["my_id_1","my_id_2"], encode the double quotes. No space after comma.
+* **origClientOrderId**: Original client order ID. (e.g., 1)
+* **leverage**: Target initial leverage: int from 1 to 125
 * **multiAssetsMargin**: "true": Multi-Assets Mode; "false": Single-Asset Mode
 * **dualSidePosition**: "true": Hedge Mode; "false": One-way Mode
-* **algoType**: 
-* **type**: 1: Add position margin，2: Reduce position margin
-* **amount**:  (e.g., 1.0)
-* **type**: 
-* **batchOrders**: order list. Max 5 orders
+* **algoType**: Algo order type. Only supports `CONDITIONAL`.
+* **type**: Order type. Values: `LIMIT`, `MARKET`, `STOP`, `STOP_MARKET`, `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`, `TRAILING_STOP_MARKET`
+* **amount**: Position margin amount. (e.g., 1.0)
+* **batchOrders**: Order list. Max 5 orders.
 * **quantity**: Order quantity, cannot be sent with `closePosition=true` (e.g., 1.0)
-* **price**:  (e.g., 1.0)
-* **algoType**: Only support `CONDITIONAL`
-* **quantity**:  (e.g., 1.0)
-* **price**:  (e.g., 1.0)
-* **triggerPrice**:  (e.g., 1.0)
-* **closePosition**: `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
+* **price**: Order price. (e.g., 1.0)
+* **triggerPrice**: Trigger price for algo orders. (e.g., 1.0)
+* **closePosition**: `true`, `false`. Close-All, used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
 * **priceProtect**: "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
 * **reduceOnly**: "true" or "false". default "false". Cannot be sent in Hedge Mode
-* **activatePrice**: Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`) (e.g., 1.0)
+* **activatePrice**: Used with `TRAILING_STOP_MARKET` orders, default as the latest price (supporting different `workingType`) (e.g., 1.0)
 * **callbackRate**: Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 5 where 1 for 1% (e.g., 1.0)
-* **goodTillDate**: order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
+* **goodTillDate**: Order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
 * **newClientOrderId**: A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[\.A-Z\:/a-z0-9_-]{1,36}$` (e.g., 1)
 * **stopPrice**: Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders. (e.g., 1.0)
-* **activationPrice**: Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`) (e.g., 1.0)
-* **batchOrders**: order list. Max 5 orders
+* **activationPrice**: Used with `TRAILING_STOP_MARKET` orders, default as the latest price (supporting different `workingType`) (e.g., 1.0)
 
 
 ### Enums
