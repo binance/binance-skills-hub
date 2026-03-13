@@ -242,3 +242,8 @@ Otherwise, do not perform steps 3–5.
 Include `User-Agent` header with the following string: `binance-wallet/1.0.0 (Skill)`
 
 See [`references/authentication.md`](./references/authentication.md) for implementation details.
+
+## Related Skills
+
+- [spot](../spot/) — Spot trading operations
+- [margin-trading](../margin-trading/) — Margin trading with borrowed assets

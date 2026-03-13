@@ -450,3 +450,9 @@ Include `User-Agent` header with the following string: `binance-web3/1.0 (Skill)
 3. Dynamic data updates in real-time, suitable for market display
 4. K-Line API uses `platform` (eth/bsc/solana/base) instead of `chainId`, and `limit` takes priority over `from` when both are provided
 5. K-Line response is a 2D array (not JSON objects) — parse by index: [open, high, low, close, volume, timestamp, count]
+
+## Related Skills
+
+- [query-token-audit](../query-token-audit/) — Security audit before trading a token
+- [trading-signal](../trading-signal/) — Smart money signals for token trading opportunities
+- [crypto-market-rank](../crypto-market-rank/) — Market rankings and trending token discovery

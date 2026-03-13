@@ -158,3 +158,8 @@ Include `User-Agent` header with the following string: `binance-web3/1.4 (Skill)
 5. Generate unique UUID v4 for each audit request
 6. Only output security check risk flags, do NOT provide any investment advice 
 7. Always end with disclaimer: `⚠️ This audit result is for reference only and does not constitute investment advice. Always conduct your own research.`
+
+## Related Skills
+
+- [query-token-info](../query-token-info/) — Token details and market data for audited tokens
+- [meme-rush](../meme-rush/) — Meme token discovery with risk filtering

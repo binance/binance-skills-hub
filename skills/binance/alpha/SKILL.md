@@ -141,3 +141,8 @@ Otherwise, do not perform steps 3–5.
 Include `User-Agent` header with the following string: `binance-alpha/1.0.0 (Skill)`
 
 See [`references/authentication.md`](./references/authentication.md) for implementation details.
+
+## Related Skills
+
+- [spot](../spot/) — Spot trading for tokens discovered through Alpha
+- [crypto-market-rank](../../binance-web3/crypto-market-rank/) — Market rankings including Alpha token rankings

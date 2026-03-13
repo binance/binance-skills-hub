@@ -437,3 +437,9 @@ Include `User-Agent` header with the following string: `binance-web3/2.0 (Skill)
 2. Unified Token Rank supports both GET and POST; POST is recommended
 3. All numeric fields in responses are strings — parse when needed
 4. Period fields use shorthand: `{1m,5m,1h,4h,24h}` means separate fields like `percentChange1m`, `percentChange5m`, etc.
+
+## Related Skills
+
+- [query-token-info](../query-token-info/) — Detailed token information and market data
+- [trading-signal](../trading-signal/) — Smart money trading signals for ranked tokens
+- [meme-rush](../meme-rush/) — Meme token launchpad tracking and topic discovery
