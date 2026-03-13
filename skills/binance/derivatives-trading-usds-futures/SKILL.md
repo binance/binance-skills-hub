@@ -40,7 +40,7 @@ Derivatives-trading-usds-futures request on Binance using authenticated API endp
 | `/fapi/v1/commissionRate` (GET) | User Commission Rate (USER_DATA) | symbol | recvWindow | Yes |
 | `/fapi/v1/convert/acceptQuote` (POST) | Accept the offered quote (USER_DATA) | quoteId | recvWindow | Yes |
 | `/fapi/v1/convert/exchangeInfo` (GET) | List All Convert Pairs | None | fromAsset, toAsset | No |
-| `/fapi/v1/convert/orderStatus` (GET) | Order status(USER_DATA) | None | orderId, quoteId | Yes |
+| `/fapi/v1/convert/orderStatus` (GET) | Order status(USER_DATA) | orderId or quoteId | recvWindow | Yes |
 | `/fapi/v1/convert/getQuote` (POST) | Send Quote Request(USER_DATA) | fromAsset, toAsset | fromAmount, toAmount, validTime, recvWindow | Yes |
 | `/fapi/v1/ticker/24hr` (GET) | 24hr Ticker Price Change Statistics | None | symbol | No |
 | `/fapi/v1/symbolAdlRisk` (GET) | ADL Risk | None | symbol | No |
