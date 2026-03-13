@@ -151,14 +151,14 @@ Margin-trading request on Binance using authenticated API endpoints. Requires AP
 * **pendingIcebergQty**: This can only be used if `pendingTimeInForce` is `GTC`. (e.g., 1.0)
 * **pendingTimeInForce**: GTC,IOC,FOK
 * **workingIcebergQty**: This can only be used if `workingTimeInForce` is `GTC`. (e.g., 1.0)
-* **pendingAboveType**: Supported values: `LIMIT_MAKER`, `STOP_LOSS`, and `STOP_LOSS_LIMIT`
+* **pendingAboveType**: Supported values: `LIMIT_MAKER`, `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, and `TAKE_PROFIT_LIMIT`
 * **pendingAboveClientOrderId**: Arbitrary unique ID among open orders for the pending above order. Automatically generated if not sent. (e.g., 1)
 * **pendingAbovePrice**:  (e.g., 1.0)
 * **pendingAboveStopPrice**:  (e.g., 1.0)
 * **pendingAboveTrailingDelta**:  (e.g., 1.0)
 * **pendingAboveIcebergQty**: This can only be used if `pendingAboveTimeInForce` is `GTC`. (e.g., 1.0)
 * **pendingAboveTimeInForce**: 
-* **pendingBelowType**: Supported values: `LIMIT_MAKER`, `STOP_LOSS`, and `STOP_LOSS_LIMIT`
+* **pendingBelowType**: Supported values: `LIMIT_MAKER`, `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, and `TAKE_PROFIT_LIMIT`
 * **pendingBelowClientOrderId**: Arbitrary unique ID among open orders for the pending below order. Automatically generated if not sent. (e.g., 1)
 * **pendingBelowPrice**:  (e.g., 1.0)
 * **pendingBelowStopPrice**:  (e.g., 1.0)
