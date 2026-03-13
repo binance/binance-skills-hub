@@ -164,7 +164,7 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 * **fromPreventedMatchId**:  (e.g., 1)
 * **orderId**:  (e.g., 1)
 * **fromExecutionId**:  (e.g., 1)
-* **limit**: Default:500; Maximum: 1000 (e.g., 500)
+* **limit**: Default: 500; Maximum: 1000 (e.g., 500)
 
 
 ### Enums
