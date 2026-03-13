@@ -83,11 +83,11 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 * **price**:  (e.g., 400)
 * **newClientOrderId**: A unique id among open orders. Automatically generated if not sent.  Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
 * **strategyId**:  (e.g., 1)
-* **strategyType**: The value cannot be less than `1000000`. (e.g., 1)
+* **strategyType**: The value cannot be less than `1000000`. (e.g., 1000000)
 * **stopPrice**: Used with `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, and `TAKE_PROFIT_LIMIT` orders. (e.g., 1)
 * **trailingDelta**: See Trailing Stop order FAQ. (e.g., 1)
 * **icebergQty**: Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order. (e.g., 1)
-* **pegOffsetValue**: Priceleveltopegthepriceto(max:100). SeePeggedOrdersInfo (e.g., 1)
+* **pegOffsetValue**: Price level to peg the price to (max: 100). See Pegged Orders Info. (e.g., 1)
 * **orderId**:  (e.g., 1)
 * **origClientOrderId**: 
 * **newQty**: `newQty` must be greater than 0 and less than the order's quantity. (e.g., 1)
@@ -178,8 +178,8 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 * **timeInForce**: GTC | IOC | FOK | NON_REPRESENTABLE
 * **pegPriceType**: PRIMARY_PEG | MARKET_PEG | NON_REPRESENTABLE
 * **pegOffsetType**: PRICE_LEVEL | NON_REPRESENTABLE
-* **newOrderRespType**: ACK | RESULT | FULL | MARKET | LIMIT
-* **cancelRestrictions**: ONLY_NEW | NEW | ONLY_PARTIALLY_FILLED | PARTIALLY_FILLED
+* **newOrderRespType**: ACK | RESULT | FULL
+* **cancelRestrictions**: ONLY_NEW | ONLY_PARTIALLY_FILLED
 * **cancelReplaceMode**: STOP_ON_FAILURE | ALLOW_FAILURE
 * **orderRateLimitExceededMode**: DO_NOTHING | CANCEL_ONLY
 * **stopLimitTimeInForce**: GTC | IOC | FOK
