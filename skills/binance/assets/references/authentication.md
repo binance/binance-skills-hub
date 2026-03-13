@@ -84,10 +84,9 @@ Include `User-Agent` header with the following string: `binance-wallet/1.0.0 (Sk
 
 Request:
 ```bash
-curl -X GET "https://api.binance.com/sapi/v1/account/apiTradingStatus" \
+curl -X GET "https://api.binance.com/sapi/v1/account/apiTradingStatus?timestamp=1234567890123&signature=..." \
   -H "X-MBX-APIKEY: your_api_key" \
-  -H "User-Agent: binance-wallet/1.0.0 (Skill)" \
-  -d "timestamp=1234567890123&signature=..."
+  -H "User-Agent: binance-wallet/1.0.0 (Skill)"
 ```
 
 ```bash
@@ -107,7 +106,7 @@ SIGNATURE=$(echo -n "$QUERY" | openssl dgst -sha256 -hmac "$SECRET_KEY" | cut -d
 
 # Make request
 curl -X GET "${BASE_URL}/sapi/v1/account/apiTradingStatus?${QUERY}&signature=${SIGNATURE}" \
-  -H "X-MBX-APIKEY: ${API_KEY}"\
+  -H "X-MBX-APIKEY: ${API_KEY}" \
   -H "User-Agent: binance-wallet/1.0.0 (Skill)"
 ```
 

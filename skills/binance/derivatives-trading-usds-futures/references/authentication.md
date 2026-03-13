@@ -108,7 +108,7 @@ SIGNATURE=$(echo -n "$QUERY" | openssl dgst -sha256 -hmac "$SECRET_KEY" | cut -d
 
 # Make request
 curl -X POST "${BASE_URL}/fapi/v1/order?${QUERY}&signature=${SIGNATURE}" \
-  -H "X-MBX-APIKEY: ${API_KEY}"\
+  -H "X-MBX-APIKEY: ${API_KEY}" \
   -H "User-Agent: binance-derivatives-trading-usds-futures/1.0.0 (Skill)"
 ```
 

@@ -84,10 +84,9 @@ Include `User-Agent` header with the following string: `binance-alpha/1.0.0 (Ski
 
 Request:
 ```bash
-curl -X GET "https://www.binance.com/bapi/defi/v1/public/alpha-trade/ticker" \
+curl -X GET "https://www.binance.com/bapi/defi/v1/public/alpha-trade/ticker?symbol=...&timestamp=1234567890123&signature=..." \
   -H "X-MBX-APIKEY: your_api_key" \
-  -H "User-Agent: binance-alpha/1.0.0 (Skill)" \
-  -d "symbol=...&timestamp=1234567890123&signature=..."
+  -H "User-Agent: binance-alpha/1.0.0 (Skill)"
 ```
 
 ```bash
@@ -107,7 +106,7 @@ SIGNATURE=$(echo -n "$QUERY" | openssl dgst -sha256 -hmac "$SECRET_KEY" | cut -d
 
 # Make request
 curl -X GET "${BASE_URL}/bapi/defi/v1/public/alpha-trade/ticker?${QUERY}&signature=${SIGNATURE}" \
-  -H "X-MBX-APIKEY: ${API_KEY}"\
+  -H "X-MBX-APIKEY: ${API_KEY}" \
   -H "User-Agent: binance-alpha/1.0.0 (Skill)"
 ```
 
