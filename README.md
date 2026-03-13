@@ -54,7 +54,7 @@ To add a new skill:
 
    ```markdown
    ---
-   title: <Skill Name>
+   name: <Skill Name>
    description: A clear description of what the skill does and when to use it.
    metadata:
      version: <Skill Version>
