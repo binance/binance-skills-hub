@@ -239,6 +239,6 @@ Otherwise, do not perform steps 3–5.
 
 ## User Agent Header
 
-Include `User-Agent` header with the following string: `binance-wallet/1.0.0 (Skill)`
+Include `User-Agent` header with the following string: `binance-assets/1.0.0 (Skill)`
 
 See [`references/authentication.md`](./references/authentication.md) for implementation details.

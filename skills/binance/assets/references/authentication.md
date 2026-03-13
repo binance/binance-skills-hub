@@ -11,7 +11,7 @@ All trading endpoints require HMAC SHA256 signed requests.
 ## Required Headers
 
 * `X-MBX-APIKEY`: your_api_key
-* `User-Agent`: binance-wallet/1.0.0 (Skill)
+* `User-Agent`: binance-assets/1.0.0 (Skill)
 
 ## Signing Process
 
@@ -78,7 +78,7 @@ Add signature parameter to the query string:
 
 ### Step 5: Add Product User Agent Header
 
-Include `User-Agent` header with the following string: `binance-wallet/1.0.0 (Skill)`
+Include `User-Agent` header with the following string: `binance-assets/1.0.0 (Skill)`
 
 #### Complete Example
 
@@ -86,7 +86,7 @@ Request:
 ```bash
 curl -X GET "https://api.binance.com/sapi/v1/account/apiTradingStatus" \
   -H "X-MBX-APIKEY: your_api_key" \
-  -H "User-Agent: binance-wallet/1.0.0 (Skill)" \
+  -H "User-Agent: binance-assets/1.0.0 (Skill)" \
   -d "timestamp=1234567890123&signature=..."
 ```
 
@@ -108,7 +108,7 @@ SIGNATURE=$(echo -n "$QUERY" | openssl dgst -sha256 -hmac "$SECRET_KEY" | cut -d
 # Make request
 curl -X GET "${BASE_URL}/sapi/v1/account/apiTradingStatus?${QUERY}&signature=${SIGNATURE}" \
   -H "X-MBX-APIKEY: ${API_KEY}"\
-  -H "User-Agent: binance-wallet/1.0.0 (Skill)"
+  -H "User-Agent: binance-assets/1.0.0 (Skill)"
 ```
 
 ### Security Notes
