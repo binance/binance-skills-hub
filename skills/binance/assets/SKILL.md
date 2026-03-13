@@ -70,7 +70,7 @@ Assets request on Binance using authenticated API endpoints. Requires API key an
 ### Common Parameters
 
 * **recvWindow**:  (e.g., 5000)
-* **type**: 
+* **type** (account snapshot): Account type for daily snapshot. Values: `SPOT`, `MARGIN`, `FUTURES`
 * **startTime**:  (e.g., 1623319461670)
 * **endTime**:  (e.g., 1641782889000)
 * **limit**: min 7, max 30, default 7 (e.g., 7)
@@ -92,7 +92,7 @@ Assets request on Binance using authenticated API endpoints. Requires API key an
 * **targetAsset**: 
 * **needBtcValuation**: true or false
 * **email**: 
-* **type**: Delegate/Undelegate
+* **type** (delegation): `Delegate`, `Undelegate`
 * **fromSymbol**: 
 * **toSymbol**: 
 * **quoteAsset**: `USDT`, `ETH`, `USDC`, `BNB`, etc. default `BTC` (e.g., BTC)
