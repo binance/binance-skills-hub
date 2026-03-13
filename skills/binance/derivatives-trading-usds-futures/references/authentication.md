@@ -122,6 +122,6 @@ If you get -1021 Timestamp outside recvWindow:
 
 * Never share your secret key
 * Use IP whitelist in Binance API settings
-* Enable only required permissions (spot trading, no withdrawals)
+* Enable only required permissions (futures trading, no withdrawals)
 * Use testnet for development: https://demo-fapi.binance.com
 * Testnet credentials are separate from mainnet

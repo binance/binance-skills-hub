@@ -115,4 +115,4 @@ curl -X GET "${BASE_URL}/sapi/v1/margin/isolated/account?${QUERY}&signature=${SI
 
 * Never share your secret key
 * Use IP whitelist in Binance API settings
-* Enable only required permissions (spot trading, no withdrawals)
+* Enable only required permissions (margin trading, no withdrawals)
