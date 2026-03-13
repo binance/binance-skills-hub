@@ -212,6 +212,37 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 * **pendingBelowTimeInForce**: GTC | IOC | FOK
 
 
+## Usage Examples
+
+### Get Exchange Information
+```bash
+GET /api/v3/exchangeInfo
+```
+Response includes trading rules, symbol info, and filters.
+
+### Get Current Price
+```bash
+GET /api/v3/ticker/price?symbol=BNBUSDT
+```
+Returns: `{"symbol":"BNBUSDT","price":"610.50"}`
+
+### Get Klines (Candlestick Data)
+```bash
+GET /api/v3/klines?symbol=BTCUSDT&interval=1h&limit=5
+```
+
+### Place a Limit Order (Authenticated)
+```bash
+POST /api/v3/order
+symbol=BNBUSDT&side=BUY&type=LIMIT&timeInForce=GTC&quantity=0.1&price=600.00&timestamp={{timestamp}}&signature={{signature}}
+```
+
+### Get Account Information (Authenticated)
+```bash
+GET /api/v3/account?timestamp={{timestamp}}&signature={{signature}}
+```
+Returns balances for all assets.
+
 ## Authentication
 
 For endpoints that require authentication, you will need to provide Binance API credentials.
