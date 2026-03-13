@@ -188,7 +188,7 @@ Derivatives-trading-usds-futures request on Binance using authenticated API endp
 * **timeInForce**: GTC | IOC | FOK | GTX | GTD | RPI
 * **workingType**: MARK_PRICE | CONTRACT_PRICE
 * **newOrderRespType**: ACK | RESULT
-* **selfTradePreventionMode**: EXPIRE_TAKER | EXPIRE_BOTH | EXPIRE_MAKER
+* **selfTradePreventionMode**: NONE | EXPIRE_TAKER | EXPIRE_MAKER | EXPIRE_BOTH
 * **autoCloseType**: LIQUIDATION | ADL
 
 
