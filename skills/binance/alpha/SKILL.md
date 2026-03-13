@@ -21,6 +21,8 @@ Alpha request on Binance using authenticated API endpoints. Requires API key and
 | `/bapi/defi/v1/public/alpha-trade/klines` (GET) | Klines (Candlestick Data) | symbol, interval | limit, startTime, endTime | No |
 | `/bapi/defi/v1/public/wallet-direct/buw/wallet/cex/alpha/all/token/list` (GET) | Token List | None | None | No |
 
+> Note: All endpoints listed above are public and do not require authentication. The authentication section below applies to future authenticated endpoints.
+
 ---
 
 ## Parameters
@@ -34,6 +36,41 @@ Alpha request on Binance using authenticated API endpoints. Requires API key and
 * **limit**: number of results to return (default 500, max 1000) (e.g., 500)
 * **interval**: e.g., "1h" – supported intervals: 1s, 15s, 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M
 
+
+## Usage Examples
+
+### Get All Alpha Tokens
+```bash
+GET /bapi/defi/v1/public/wallet-direct/buw/wallet/cex/alpha/all/token/list
+```
+Returns the full list of Alpha tokens with their IDs.
+
+### Get 24hr Ticker for an Alpha Token
+```bash
+GET /bapi/defi/v1/public/alpha-trade/ticker?symbol=ALPHA_175USDT
+```
+
+### Get Exchange Info
+```bash
+GET /bapi/defi/v1/public/alpha-trade/get-exchange-info
+```
+Returns trading rules and available Alpha pairs.
+
+### Get Klines (Candlestick Data)
+```bash
+GET /bapi/defi/v1/public/alpha-trade/klines?symbol=ALPHA_175USDT&interval=1h&limit=100
+```
+
+### Get Aggregated Trades
+```bash
+GET /bapi/defi/v1/public/alpha-trade/agg-trades?symbol=ALPHA_175USDT&limit=50
+```
+
+## Risk Warnings
+
+- **Early-Stage Tokens**: Alpha tokens are early-stage tokens with limited liquidity. Exercise caution and perform due diligence before trading.
+- **High Volatility**: Alpha tokens may experience extreme price swings due to low market capitalization and trading volume.
+- **Limited Information**: Some Alpha tokens may have limited publicly available information. Always verify project details independently.
 
 ## Authentication
 
