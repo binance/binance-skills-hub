@@ -61,7 +61,7 @@ Derivatives-trading-usds-futures request on Binance using authenticated API endp
 | `/fapi/v1/markPriceKlines` (GET) | Mark Price Kline/Candlestick Data | symbol, interval | startTime, endTime, limit | No |
 | `/fapi/v1/premiumIndex` (GET) | Mark Price | None | symbol | No |
 | `/fapi/v1/assetIndex` (GET) | Multi-Assets Mode Asset Index | None | symbol | No |
-| `/fapi/v1/historicalTrades` (GET) | Old Trades Lookup (MARKET_DATA) | symbol | limit, fromId | No |
+| `/fapi/v1/historicalTrades` (GET) | Old Trades Lookup (MARKET_DATA) | symbol | limit, fromId | Yes |
 | `/futures/data/openInterestHist` (GET) | Open Interest Statistics | symbol, period | limit, startTime, endTime | No |
 | `/fapi/v1/openInterest` (GET) | Open Interest | symbol | None | No |
 | `/fapi/v1/rpiDepth` (GET) | RPI Order Book | symbol | limit | No |
