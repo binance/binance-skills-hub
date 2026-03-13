@@ -115,4 +115,4 @@ curl -X GET "${BASE_URL}/sapi/v1/account/apiTradingStatus?${QUERY}&signature=${S
 
 * Never share your secret key
 * Use IP whitelist in Binance API settings
-* Enable only required permissions (spot trading, no withdrawals)
+* Enable only required permissions (wallet and asset management, no withdrawals)
