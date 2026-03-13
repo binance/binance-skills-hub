@@ -352,3 +352,9 @@ Include `User-Agent` header with the following string: `binance-web3/1.0 (Skill)
 2. Percentage fields (progress, holder %, dev sell %, tax rate) are pre-formatted — append `%` directly
 3. `taxRate` for protocol=2001 (Four.meme) only shows on Migrated list; for protocol=2002 (Flap) shows on all lists
 4. Icon URLs require prefix: `https://bin.bnbstatic.com` + path
+
+## Related Skills
+
+- [query-token-audit](../query-token-audit/) — Security audit before trading meme tokens
+- [crypto-market-rank](../crypto-market-rank/) — Broader market rankings and Alpha discovery
+- [trading-signal](../trading-signal/) — Smart money signals for tokens of interest

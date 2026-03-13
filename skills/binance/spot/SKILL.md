@@ -343,3 +343,9 @@ Example: `agent-1a2b3c4d5e6f7g8h9i`
 Include `User-Agent` header with the following string: `binance-spot/1.0.2 (Skill)`
 
 See [`references/authentication.md`](./references/authentication.md) for implementation details.
+
+## Related Skills
+
+- [derivatives-trading-usds-futures](../derivatives-trading-usds-futures/) — Futures trading with leverage for hedging or speculation
+- [margin-trading](../margin-trading/) — Margin trading with borrowed assets
+- [assets](../assets/) — Deposit, withdrawal, and asset management

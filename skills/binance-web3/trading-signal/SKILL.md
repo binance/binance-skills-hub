@@ -245,3 +245,9 @@ curl --location 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/
 5. Signals may timeout (status=timeout), focus on active signals
 6. Higher smartMoneyCount may indicate higher signal reliability
 7. exitRate shows smart money exit status, high exitRate may indicate expired signal
+
+## Related Skills
+
+- [query-token-info](../query-token-info/) — Token details and market data for signal tokens
+- [query-token-audit](../query-token-audit/) — Security audit before acting on signals
+- [crypto-market-rank](../crypto-market-rank/) — Market rankings and smart money inflow data

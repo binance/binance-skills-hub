@@ -157,3 +157,8 @@ Accounts:
 
 1. Only pure text posts are supported currently
 2. Check daily post limit to avoid 220009 error
+
+## Related Skills
+
+- [crypto-market-rank](../../binance-web3/crypto-market-rank/) — Market rankings and trending data for post content
+- [query-token-info](../../binance-web3/query-token-info/) — Token details to enrich posts with market data
