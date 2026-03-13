@@ -88,7 +88,7 @@ Margin-trading request on Binance using authenticated API endpoints. Requires AP
 * **recvWindow**: No more than 60000 (e.g., 5000)
 * **asset**: 
 * **symbol**: isolated margin pair
-* **type**: Transfer Type: ROLL_IN, ROLL_OUT
+* **type** (margin transfer): Transfer Type: `ROLL_IN`, `ROLL_OUT`
 * **startTime**: Only supports querying data from the past 90 days. (e.g., 1623319461670)
 * **endTime**:  (e.g., 1641782889000)
 * **fromId**: If `fromId` is set, data with `id` greater than `fromId` will be returned. Otherwise, the latest data will be returned. (e.g., 1)
@@ -104,7 +104,7 @@ Margin-trading request on Binance using authenticated API endpoints. Requires AP
 * **asset**: 
 * **isIsolated**: `TRUE` for Isolated Margin, `FALSE` for Cross Margin, Default `FALSE` (e.g., FALSE)
 * **amount**: 
-* **type**: `MARGIN`,`ISOLATED`
+* **type** (margin mode): `MARGIN`, `ISOLATED`
 * **txId**: `tranId` in `POST /sapi/v1/margin/loan` (e.g., 1)
 * **tier**: All margin tier data will be returned if tier is omitted
 * **listenKey**: 
