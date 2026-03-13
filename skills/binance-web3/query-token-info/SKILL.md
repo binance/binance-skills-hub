@@ -272,6 +272,7 @@ curl --location 'https://web3.binance.com/bapi/defi/v4/public/wallet-direct/buw/
         "kycHolderCount": "23579",
         "kolHolders": "17",
         "kolHoldingPercent": "0.000059",
+        "devHoldingPercent": "0.0000",
         "proHolders": "138",
         "proHoldingPercent": "0.003357",
         "smartMoneyHolders": "1",
