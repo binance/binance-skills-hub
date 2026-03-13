@@ -336,6 +336,8 @@ Otherwise, do not perform steps 3–5.
 
 For endpoints that include the `newClientOrderId` parameter, the value must always start with `agent-`. If the parameter is not provided, `agent-` followed by 18 random alphanumeric characters will be generated automatically. If a value is provided, it will be prefixed with `agent-`
 
+> **Important:** The `agent-` prefix (6 characters) counts toward the 36-character limit. User-provided values must not exceed 30 characters.
+
 Example: `agent-1a2b3c4d5e6f7g8h9i`
 
 ## User Agent Header
