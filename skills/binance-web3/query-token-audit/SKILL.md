@@ -66,11 +66,7 @@ curl --location 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/secu
 --header 'source: agent' \
 --header 'Accept-Encoding: identity' \
 --header 'User-Agent: binance-web3/1.4 (Skill)' \
---data '{
-    "binanceChainId": "56",
-    "contractAddress": "0x55d398326f99059ff775485246999027b3197955",
-    "requestId": "'$(uuidgen)'"
-}'
+--data "{\"binanceChainId\": \"56\", \"contractAddress\": \"0x55d398326f99059ff775485246999027b3197955\", \"requestId\": \"$(uuidgen)\"}"
 ```
 
 **Response Example**:
