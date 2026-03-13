@@ -190,6 +190,7 @@ Derivatives-trading-usds-futures request on Binance using authenticated API endp
 * **newOrderRespType**: ACK | RESULT
 * **selfTradePreventionMode**: EXPIRE_TAKER | EXPIRE_BOTH | EXPIRE_MAKER
 * **autoCloseType**: LIQUIDATION | ADL
+* **orderType**: `LIMIT` | `MARKET` | `STOP` | `STOP_MARKET` | `TAKE_PROFIT` | `TAKE_PROFIT_MARKET` | `TRAILING_STOP_MARKET`
 
 
 ## Authentication
