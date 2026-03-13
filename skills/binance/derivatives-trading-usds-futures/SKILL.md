@@ -90,7 +90,7 @@ Derivatives-trading-usds-futures request on Binance using authenticated API endp
 | `/fapi/v1/batchOrders` (POST) | Place Multiple Orders(TRADE) | batchOrders | recvWindow | Yes |
 | `/fapi/v1/order` (DELETE) | Cancel Order (TRADE) | symbol | orderId, origClientOrderId, recvWindow | Yes |
 | `/fapi/v1/order` (PUT) | Modify Order (TRADE) | symbol, side, quantity, price | orderId, origClientOrderId, priceMatch, recvWindow | Yes |
-| `/fapi/v1/order` (POST) | New Order(TRADE) | symbol, side, type | positionSide, timeInForce, quantity, reduceOnly, price, newClientOrderId, newOrderRespType, priceMatch, selfTradePreventionMode, goodTillDate, recvWindow | Yes |
+| `/fapi/v1/order` (POST) | New Order(TRADE) | symbol, side, type | positionSide, timeInForce, quantity, reduceOnly, price, newClientOrderId, stopPrice, closePosition, activationPrice, callbackRate, workingType, priceProtect, newOrderRespType, priceMatch, selfTradePreventionMode, goodTillDate, recvWindow | Yes |
 | `/fapi/v1/order` (GET) | Query Order (USER_DATA) | symbol | orderId, origClientOrderId, recvWindow | Yes |
 | `/fapi/v1/leverage` (POST) | Change Initial Leverage(TRADE) | symbol, leverage | recvWindow | Yes |
 | `/fapi/v1/marginType` (POST) | Change Margin Type(TRADE) | symbol, marginType | recvWindow | Yes |
