@@ -120,7 +120,7 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 * **belowClientOrderId**: Arbitrary unique ID among open orders for the below order. Automatically generated if not sent
 * **belowIcebergQty**: Note that this can only be used if `belowTimeInForce` is `GTC`. (e.g., 1)
 * **belowPrice**: Can be used if `belowType` is `STOP_LOSS_LIMIT`, `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price. (e.g., 1)
-* **belowStopPrice**: Can be used if `belowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT, TAKE_PROFIT` or `TAKE_PROFIT_LIMIT`  Either belowStopPrice or belowTrailingDelta or both, must be specified. (e.g., 1)
+* **belowStopPrice**: Can be used if `belowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, or `TAKE_PROFIT_LIMIT`.  Either belowStopPrice or belowTrailingDelta or both, must be specified. (e.g., 1)
 * **belowTrailingDelta**: See Trailing Stop order FAQ. (e.g., 1)
 * **belowStrategyId**: Arbitrary numeric value identifying the below order within an order strategy. (e.g., 1)
 * **belowStrategyType**: Arbitrary numeric value identifying the below order strategy.  Values smaller than 1000000 are reserved and cannot be used. (e.g., 1)
@@ -150,7 +150,7 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 * **pendingAbovePegOffsetValue**:  (e.g., 1)
 * **pendingBelowClientOrderId**: Arbitrary unique ID among open orders for the pending below order. Automatically generated if not sent.
 * **pendingBelowPrice**: Can be used if `pendingBelowType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT` to specify limit price (e.g., 1)
-* **pendingBelowStopPrice**: Can be used if `pendingBelowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT, TAKE_PROFIT or TAKE_PROFIT_LIMIT`. Either `pendingBelowStopPrice` or `pendingBelowTrailingDelta` or both, must be specified. (e.g., 1)
+* **pendingBelowStopPrice**: Can be used if `pendingBelowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, or `TAKE_PROFIT_LIMIT`. Either `pendingBelowStopPrice` or `pendingBelowTrailingDelta` or both, must be specified. (e.g., 1)
 * **pendingBelowTrailingDelta**:  (e.g., 1)
 * **pendingBelowIcebergQty**: This can only be used if `pendingBelowTimeInForce` is `GTC`, or if `pendingBelowType` is `LIMIT_MAKER`. (e.g., 1)
 * **pendingBelowStrategyId**: Arbitrary numeric value identifying the pending below order within an order strategy. (e.g., 1)
