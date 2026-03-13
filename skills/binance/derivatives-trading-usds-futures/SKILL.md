@@ -80,7 +80,7 @@ Derivatives-trading-usds-futures request on Binance using authenticated API endp
 | `/fapi/v1/userTrades` (GET) | Account Trade List (USER_DATA) | symbol | orderId, startTime, endTime, fromId, limit, recvWindow | Yes |
 | `/fapi/v1/allOrders` (GET) | All Orders (USER_DATA) | symbol | orderId, startTime, endTime, limit, recvWindow | Yes |
 | `/fapi/v1/countdownCancelAll` (POST) | Auto-Cancel All Open Orders (TRADE) | symbol, countdownTime | recvWindow | Yes |
-| `/fapi/v1/algoOrder` (DELETE) | Cancel Algo Order (TRADE) | None | algoId, clientAlgoId, recvWindow | Yes |
+| `/fapi/v1/algoOrder` (DELETE) | Cancel Algo Order (TRADE) | algoId or clientAlgoId | recvWindow | Yes |
 | `/fapi/v1/algoOrder` (POST) | New Algo Order(TRADE) | algoType, symbol, side, type | positionSide, timeInForce, quantity, price, triggerPrice, workingType, priceMatch, closePosition, priceProtect, reduceOnly, activatePrice, callbackRate, clientAlgoId, newOrderRespType, selfTradePreventionMode, goodTillDate, recvWindow | Yes |
 | `/fapi/v1/algoOrder` (GET) | Query Algo Order (USER_DATA) | None | algoId, clientAlgoId, recvWindow | Yes |
 | `/fapi/v1/algoOpenOrders` (DELETE) | Cancel All Algo Open Orders (TRADE) | symbol | recvWindow | Yes |
