@@ -76,7 +76,7 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 * **endTime**: Timestamp in ms to get aggregate trades until INCLUSIVE. (e.g., 1735693200000)
 * **limit**: Default: 500; Maximum: 1000. (e.g., 500)
 * **timeZone**: Default: 0 (UTC)
-* **recvWindow**: The value cannot be greater than `60000`.   Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified. (e.g., 5000)
+* **recvWindow**: The value cannot be greater than `60000`. Value in milliseconds. (e.g., 5000)
 * **timestamp**:  (e.g., 1)
 * **quantity**:  (e.g., 1)
 * **quoteOrderQty**:  (e.g., 1)
