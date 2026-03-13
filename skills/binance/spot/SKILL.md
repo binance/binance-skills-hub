@@ -188,7 +188,7 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 * **aboveTimeInForce**: GTC | IOC | FOK
 * **abovePegPriceType**: PRIMARY_PEG | MARKET_PEG
 * **abovePegOffsetType**: PRICE_LEVEL
-* **belowType**: STOP_LOSS | STOP_LOSS_LIMIT | TAKE_PROFIT | TAKE_PROFIT_LIMIT
+* **belowType**: STOP_LOSS | STOP_LOSS_LIMIT | TAKE_PROFIT | TAKE_PROFIT_LIMIT | LIMIT_MAKER
 * **belowTimeInForce**: GTC | IOC | FOK
 * **belowPegPriceType**: PRIMARY_PEG | MARKET_PEG
 * **belowPegOffsetType**: PRICE_LEVEL
