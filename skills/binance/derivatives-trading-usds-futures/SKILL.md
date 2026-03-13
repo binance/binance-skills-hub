@@ -107,9 +107,9 @@ Derivatives-trading-usds-futures request on Binance using authenticated API endp
 | `/fapi/v1/openOrder` (GET) | Query Current Open Order (USER_DATA) | symbol | orderId, origClientOrderId, recvWindow | Yes |
 | `/fapi/v1/stock/contract` (POST) | Futures TradFi Perps Contract(USER_DATA) | None | recvWindow | Yes |
 | `/fapi/v1/forceOrders` (GET) | User's Force Orders (USER_DATA) | None | symbol, autoCloseType, startTime, endTime, limit, recvWindow | Yes |
-| `/fapi/v1/listenKey` (DELETE) | Close User Data Stream (USER_STREAM) | None | None | No |
-| `/fapi/v1/listenKey` (PUT) | Keepalive User Data Stream (USER_STREAM) | None | None | No |
-| `/fapi/v1/listenKey` (POST) | Start User Data Stream (USER_STREAM) | None | None | No |
+| `/fapi/v1/listenKey` (DELETE) | Close User Data Stream (USER_STREAM) | None | None | Yes |
+| `/fapi/v1/listenKey` (PUT) | Keepalive User Data Stream (USER_STREAM) | None | None | Yes |
+| `/fapi/v1/listenKey` (POST) | Start User Data Stream (USER_STREAM) | None | None | Yes |
 
 ---
 
