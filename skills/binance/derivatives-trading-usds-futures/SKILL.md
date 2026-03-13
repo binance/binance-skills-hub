@@ -322,3 +322,11 @@ Example: `agent-1a2b3c4d5e6f7g8h9i`
 Include `User-Agent` header with the following string: `binance-derivatives-trading-usds-futures/1.0.0 (Skill)`
 
 See [`references/authentication.md`](./references/authentication.md) for implementation details.
+
+## Risk Warnings
+
+- **Leverage Risk**: Futures trading with leverage amplifies both gains and losses. Higher leverage increases liquidation risk.
+- **Liquidation**: Positions may be liquidated if margin falls below maintenance margin. Monitor margin ratio closely.
+- **Funding Rate**: Perpetual futures incur funding fees every 8 hours. High funding rates can significantly impact position costs.
+- **Market Orders**: Market orders execute at the best available price, which may differ from the last traded price during high volatility.
+- **Position Mode**: Ensure correct position mode (One-Way or Hedge) is set before placing orders. Switching modes requires closing all positions.

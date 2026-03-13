@@ -295,3 +295,10 @@ Example: `agent-1a2b3c4d5e6f7g8h9i`
 Include `User-Agent` header with the following string: `binance-margin-trading/1.0.0 (Skill)`
 
 See [`references/authentication.md`](./references/authentication.md) for implementation details.
+
+## Risk Warnings
+
+- **Liquidation Risk**: Borrowed assets must be repaid. If collateral value drops below the liquidation threshold, positions will be force-liquidated.
+- **Interest Rates**: Borrowed assets accrue hourly interest. Rates vary by asset and market conditions.
+- **Cross vs Isolated**: Cross margin shares collateral across all positions. Isolated margin limits risk to the specific position but increases per-position liquidation risk.
+- **Auto-Repay**: Some operations may trigger automatic repayment of borrowed assets.

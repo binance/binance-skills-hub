@@ -242,3 +242,9 @@ Otherwise, do not perform steps 3–5.
 Include `User-Agent` header with the following string: `binance-wallet/1.0.0 (Skill)`
 
 See [`references/authentication.md`](./references/authentication.md) for implementation details.
+
+## Risk Warnings
+
+- **Withdrawals are irreversible**: Once a withdrawal is confirmed on the blockchain, it cannot be reversed. Always verify the destination address and network.
+- **Network Selection**: Selecting the wrong network for withdrawals will result in permanent loss of funds. Ensure the destination address supports the selected network.
+- **Minimum Withdrawal**: Each asset has a minimum withdrawal amount. Withdrawals below this threshold will be rejected.
