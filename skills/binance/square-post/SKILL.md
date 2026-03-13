@@ -6,7 +6,7 @@ description: |
   Supports pure text posts.
 metadata:
   author: binance-square
-  version: "1.1"
+  version: 1.1.0
 ---
 
 # Square Post Skill
