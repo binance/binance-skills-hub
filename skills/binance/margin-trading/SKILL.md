@@ -83,7 +83,7 @@ Margin-trading request on Binance using authenticated API endpoints. Requires AP
 
 ### Common Parameters
 
-* **maxLeverage**: Can only adjust 3 , 5 or 10，Example: maxLeverage = 5 or 3 for Cross Margin Classic; maxLeverage=10 for Cross Margin Pro 10x leverage or 20x if compliance allows.
+* **maxLeverage**: Can only adjust 3, 5, or 10. Example: maxLeverage = 5 or 3 for Cross Margin Classic; maxLeverage=10 for Cross Margin Pro 10x leverage or 20x if compliance allows.
 * **symbol**: 
 * **recvWindow**: No more than 60000 (e.g., 5000)
 * **asset**: 
@@ -111,7 +111,7 @@ Margin-trading request on Binance using authenticated API endpoints. Requires AP
 * **apiName**: 
 * **ip**: Can be added in batches, separated by commas. Max 30 for an API key
 * **publicKey**: 1. If publicKey is inputted it will create an RSA or Ed25519 key.  2. Need to be encoded to URL-encoded format
-* **permissionMode**: This parameter is only for the Ed25519 API key, and does not effact for other encryption methods. The value can be TRADE (TRADE for all permissions) or READ (READ for USER_DATA, FIX_API_READ_ONLY). The default value is TRADE. (e.g., value)
+* **permissionMode**: This parameter is only for the Ed25519 API key, and does not affect other encryption methods. The value can be TRADE (TRADE for all permissions) or READ (READ for USER_DATA, FIX_API_READ_ONLY). The default value is TRADE. (e.g., TRADE)
 * **apiName**: 
 * **ip**: Can be added in batches, separated by commas. Max 30 for an API key
 * **current**: Currently querying page. Start from 1. Default:1 (e.g., 1)
