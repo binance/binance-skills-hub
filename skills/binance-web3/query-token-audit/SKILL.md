@@ -53,11 +53,13 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/security/token/audit
 | requestId | string | Yes | Unique request ID (UUID v4 format) |
 
 **Request Headers**:
-```
-Content-Type: application/json
-Accept-Encoding: identity
-User-Agent: binance-web3/1.4 (Skill)
-```
+
+| Header | Required | Description |
+|--------|----------|-------------|
+| Content-Type | Yes | `application/json` |
+| Accept-Encoding | Yes | `identity` |
+| User-Agent | Yes | `binance-web3/1.4 (Skill)` |
+| source | No | Request source identifier (e.g., `agent`) |
 
 **Example Request**:
 ```bash
