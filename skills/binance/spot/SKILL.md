@@ -212,6 +212,16 @@ Spot request on Binance using authenticated API endpoints. Requires API key and 
 * **pendingBelowTimeInForce**: GTC | IOC | FOK
 
 
+## Rate Limits
+
+| Type | Limit |
+|------|-------|
+| Request Weight | 1200/min |
+| Order Rate | 10/s per symbol |
+| Raw Requests | 6100/5min |
+
+Each endpoint has a specific weight. Check `X-MBX-USED-WEIGHT` response header to monitor usage.
+
 ## Authentication
 
 For endpoints that require authentication, you will need to provide Binance API credentials.
