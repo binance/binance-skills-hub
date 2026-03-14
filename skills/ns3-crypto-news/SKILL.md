@@ -60,11 +60,11 @@ Language codes: `en` (English), `zh-CN` (简体中文), `zh-TW` (繁體中文), 
 Replace `lang=en` with the target language code in any feed URL. Example:
 ```bash
 # English
-curl -s "https://api.ns3.ai/feed/news-data?lang=en"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&excludeLevels=4,5"
 # Korean
-curl -s "https://api.ns3.ai/feed/news-data?lang=ko"
+curl -s "https://api.ns3.ai/feed/news-data?lang=ko&excludeLevels=4,5"
 # Japanese
-curl -s "https://api.ns3.ai/feed/news-data?lang=ja"
+curl -s "https://api.ns3.ai/feed/news-data?lang=ja&excludeLevels=4,5"
 ```
 
 ## When to Use Which Feed
@@ -79,7 +79,7 @@ NS3 has two independent pipelines delivering four feeds. Pipeline A reads every 
 | "Important news only" / "What should I know today" | **Top News** | 24h Level 1-2 only, deduplicated by story |
 | "Catch me up" / "Morning briefing" / "What happened overnight" / "Daily summary" | **Daily Briefing** | 24h narrative, 1 item, ~2,000 tokens |
 | "Breaking news" / "What's happening right now" / "Latest alerts" | **Breaking News** | Real-time headlines |
-| "New listings" / "What got listed today" | **Breaking News** (excludeNews=1) | Listing headlines only |
+| "New listings" / "What got listed today" | **Breaking News** (excludeSources=1) | Listing headlines only |
 | Specific coin: "SOL important news" / "Why did ETH price move" | **News RSS** (crypto + filter) | See filter guidance below |
 | "Latest crypto news" / general request | **Top News** first, then suggest **Daily Briefing** for full context | Avoids 100,000+ token consumption |
 
@@ -125,43 +125,42 @@ Parsing: Split the `<insight>` field on `##` headings to extract individual sect
 
 Real-time stream of every article with AI classification and analysis.
 
-**Token warning:** This feed returns 100 items regardless of filters. Without filters, it covers approximately 3-5 hours of all news across all levels and consumes **100,000+ tokens**. With filters, it still returns 100 items matching the filter criteria, which may span a longer time range (e.g., Level 1-2 only could return several days of articles).
+**Token warning:** This feed returns 100 items regardless of filters. Without filters, it covers approximately 3-5 hours of all news across all levels and consumes **100,000+ tokens**. With filters, it still returns 100 items matching the filter criteria, which may span a longer time range (e.g., Level 1-2 only could return several days of articles. Recommended when reviewing important news from the past week).
 
 **Always use filters when calling this feed.** The recommended approach for specific coin requests:
 
 ```bash
-# Best: specific coin + important only (smallest result set)
+# Best: specific coin + important only (The past week or so)
 curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=SOL&newsType=important"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=SOL&excludeLevels=3,4,5"
 
 # Good: specific coin + exclude routine
 curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=BTC&excludeLevels=4,5"
 
-# Acceptable: specific coin only
+# Acceptable: specific coin + all levels (use only when the user explicitly requests all news including routine items)
 curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=ETH"
 ```
 
-**Do not call News RSS without filters for general news requests.** Use Top News or Daily Briefing instead.
+**Never call News RSS without at least one filter (crypto, newsType, or excludeLevels).** The unfiltered base URL returns all levels including routine items and consumes excessive tokens. Use Top News or Daily Briefing instead for general requests.
 
 Base URL:
 ```bash
-curl -s "https://api.ns3.ai/feed/news-data?lang=en"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&excludeLevels=4,5"
 ```
 
 ### Filters
 
-**Token filter** (single token): Returns only news related to a specific token.
+**Token filter** (single token): Returns only news related to a specific token. Always combine with `excludeLevels=4,5` to exclude routine items.
 ```bash
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=BTC"
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=ETH"
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=SOL"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=BTC&excludeLevels=4,5"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=ETH&excludeLevels=4,5"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=SOL&excludeLevels=4,5"
 ```
 
 **News type filter** (single value): Returns only articles of a specific type.
 ```bash
 # Level 2 articles only
 curl -s "https://api.ns3.ai/feed/news-data?lang=en&newsType=important"
-# Level 1 articles only (results may be empty as Level 1 is rare)
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&newsType=breaking"
 ```
 
 **Exclude levels** (multi): Removes articles at specific importance levels.
@@ -296,7 +295,7 @@ Spec: https://docs.ns3.ai/ns3-rss/news-flash-rss
 2. Individual news: headline + summary + relevant insight sections. For Level 1-2, emphasize Opportunities & Risks.
 3. Top 10: numbered list (#1 through #10), headline + 1-line summary each.
 4. Daily briefing: full text, preserve all section headers.
-5. Source: mention "Source: NS3 Crypto News Super App (ns3.ai)" at least once per response.
+5. Source: mention "Source: NS3-Crypto News by AI (ns3.ai)" at least once per response.
 6. Cross-feed: after Top News, suggest Daily Briefing for full narrative context. After breaking news, suggest News Feed for detailed analysis.
 
 ## About NS3
