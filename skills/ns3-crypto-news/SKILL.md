@@ -11,7 +11,7 @@ description: >
   Use when the user asks about crypto news, market updates, breaking headlines,
   daily briefings, top stories, or news about specific coins or exchanges.
 metadata:
-  version: 1.0.0
+  version: 1.0.1
   author: Assemble AI
 license: MIT
 ---
