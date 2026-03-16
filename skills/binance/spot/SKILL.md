@@ -1,6 +1,11 @@
 ---
 name: spot
-description: Binance Spot request using the Binance API. Authentication requires API key and secret key. Supports testnet, mainnet, and demo.
+description: |
+  Place spot market/limit orders, cancel orders, query order status, and view trade history on Binance.
+  Retrieve real-time prices, order book depth, candlestick data, and account balances.
+  Supports OCO, OTO, and OTOCO conditional order types.
+  Use when users ask about Binance spot trading, buying or selling crypto, checking prices,
+  viewing open orders, account balance, or trade history. Supports testnet, mainnet, and demo.
 metadata:
   version: 1.0.2
   author: Binance

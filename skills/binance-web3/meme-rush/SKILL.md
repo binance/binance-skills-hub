@@ -342,6 +342,18 @@ curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/mark
 
 ---
 
+## Common Workflows
+
+### Find trending tokens from hot topics about to migrate
+1. Call **Topic Rush** with `rankType=20` (Rising) to get trending topics
+2. For each topic, check `tokenList[].migrateStatus` and `tokenList[].internal` to find tokens still on bonding curve
+3. Cross-reference with **Meme Rush** `rankType=20` (Finalizing) to confirm migration timing
+
+### Discover new launches with safe dev behavior
+1. Call **Meme Rush** with `rankType=10` (New) and filters: `excludeDevWashTrading=1`, `devPosition=2`
+2. Check `holdersDevPercent` and `devSellPercent` in response to verify dev has sold position
+3. Filter by `tagDevBurnedToken=1` for additional safety
+
 ## User Agent Header
 
 Include `User-Agent` header with the following string: `binance-web3/1.0 (Skill)`

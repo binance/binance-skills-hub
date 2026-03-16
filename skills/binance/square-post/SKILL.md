@@ -1,9 +1,10 @@
 ---
 name: square-post
 description: |
-  Post content to Binance Square (Binance social platform for sharing trading insights).
-  Auto-run on messages like 'post to square', 'square post'.
-  Supports pure text posts.
+  Post content to Binance Square, the Binance social platform for sharing trading insights and market analysis.
+  Composes and publishes text posts with hashtag support, content optimization, and error handling.
+  Use when users ask to post to square, share on Binance, create a square post, publish trading updates,
+  or share market analysis on Binance Square. Supports pure text posts.
 metadata:
   author: binance-square
   version: "1.1"

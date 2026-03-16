@@ -1,6 +1,10 @@
 ---
 name: assets
-description: Binance Assets request using the Binance API. Authentication requires API key and secret key. 
+description: |
+  Query Binance account balances, wallet assets, deposit/withdraw history, trade fees, and asset details via the Binance API.
+  Manage dust conversion, funding wallet, universal transfers, and withdrawal operations.
+  Use when users ask about their Binance balance, crypto holdings, wallet contents, portfolio value,
+  deposit history, withdrawal status, trade fees, or asset transfers.
 metadata:
   version: 1.0.0
   author: Binance

@@ -135,13 +135,17 @@ curl --location 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/secu
 
 **IMPORTANT**: LOW risk does NOT mean "safe." Audit results are point-in-time snapshots. Project teams can modify contracts or restrict liquidity after purchase. These risks cannot be predicted in advance.
 
-**Result Validity**:
+**Result Validity Decision Tree**:
 
-Audit results are ONLY valid when both conditions are met:
-- `hasResult: true` — Audit data is available
-- `isSupported: true` — Token is supported for audit
-
-When invalid, do NOT display risk level or security checks.
+1. Check `hasResult` and `isSupported`:
+   - Both `true` → Proceed to step 2
+   - `hasResult: false` → Report "Audit data not yet available for this token. Try again later."
+   - `isSupported: false` → Report "This token/chain is not supported for security audit."
+2. Check `riskLevel`:
+   - `0-1` (LOW) → Display results with caution note
+   - `2-3` (MEDIUM) → Display results with warning, highlight hit risk items
+   - `4` (HIGH) → Display results with strong warning, recommend avoiding
+   - `5` (HIGH) → Display results, recommend blocking transaction
 
 ---
 
