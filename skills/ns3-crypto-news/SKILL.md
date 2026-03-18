@@ -60,11 +60,11 @@ Language codes: `en` (English), `zh-CN` (简体中文), `zh-TW` (繁體中文), 
 Replace `lang=en` with the target language code in any feed URL. Example:
 ```bash
 # English
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&excludeLevels=4,5"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en"
 # Korean
-curl -s "https://api.ns3.ai/feed/news-data?lang=ko&excludeLevels=4,5"
+curl -s "https://api.ns3.ai/feed/news-data?lang=ko"
 # Japanese
-curl -s "https://api.ns3.ai/feed/news-data?lang=ja&excludeLevels=4,5"
+curl -s "https://api.ns3.ai/feed/news-data?lang=ja"
 ```
 
 ## When to Use Which Feed
@@ -87,13 +87,15 @@ NS3 has two independent pipelines delivering four feeds. Pipeline A reads every 
 
 ## How AI Classification Works
 
-Every article passes through a two-gate system:
+Every article passes through a four-stage classification pipeline:
 
-**Gate 1 (Format/Domain Filter):** Digests, promotions, routine notices, and contextless data points (on-chain movements without stated cause, non-systemic liquidation snapshots, catalyst-free price alerts, notable trader P&L) are classified as Level 4-5 and evaluated no further.
+**Stage 1 (L5 Filter):** Removes off-domain content (no crypto connection, no macro transmission channel) and sponsored/promotional content. Classified as Level 5 and excluded from the feed entirely.
 
-**Gate 2 (Hard Caps):** Pure price analysis, chart patterns, research/forecasts, opinion/commentary, and unexecuted governance proposals are capped at Level 3.
+**Stage 2 (L4 Filter):** Separates routine and analysis-thin content. Digests, routine notices, contextless data points (on-chain movements without stated cause, non-systemic liquidation snapshots, catalyst-free price alerts), opinions, forecasts, chart analysis, and unexecuted governance proposals are classified as Level 4.
 
-**L1/L2 Evaluation:** Only articles passing both gates are scored on three axes: Impact (scope), Actionability (execution stage), Transmission (path to crypto market). When uncertain, AI always downgrades by one level.
+**Stage 3 (L2 Condition Table):** Articles passing Stages 1-2 are checked against a structured condition table across seven categories: (1) Regulation/Legal, (2) Institutional/Product Launch, (3) Macro Data/Policy, (4) Market Structure/Security, (5) Institutional Capital Flows, (6) Geopolitical/Macro Shock, (7) Crypto Ecosystem Shift. If the article matches any condition, Level 2. If no condition matches, Level 3.
+
+**Stage 4 (L1 Override):** Only Level 2 articles are eligible for upgrade to Level 1. All three conditions must be met: systemic scope (can reprice broad risk assets market-wide), already executed (not planned or expected), and immediate transmission (impact reaches participants within hours). When uncertain, AI always downgrades by one level.
 
 | Level | newsType | Meaning | AI Insight |
 |-------|----------|---------|------------|
@@ -101,9 +103,9 @@ Every article passes through a two-gate system:
 | 2 | important | Meaningful market change (e.g., regulatory action with binding next-step, large capital flow with stated magnitude, US/China official data with crypto channel) | Full (5 sections) |
 | 3 | normal | General crypto news: ecosystem issues, governance, institutional pilots, research, price analysis | Full (5 sections) |
 | 4 | normal | Routine: digests, listings/delistings, contextless wallet transfers, small liquidation snapshots | Key Point only |
-| 5 | normal | Off-domain: no stated crypto transmission path | Key Point only |
+| 5 | — | Off-domain: no stated crypto transmission path | Excluded from feed |
 
-Level 1: rare (0 on most days, 1-2 at most during major events). Level 2: 20-30 per weekday. Most articles: Level 3.
+Level 1: rare (0 on most days, 1-2 at most during major events). Level 2: 30-50 per weekday. Most articles: Level 3.
 
 ## AI Insight (Level 1-3)
 
@@ -115,7 +117,7 @@ Five sections per article:
 - **Ripple Effect**: Transmission mechanism: trigger, channel, market behavior.
 - **Opportunities & Risks**: Conditional cues. "If X happens, then Y is a signal to..."
 
-Level 4-5: Key Point only (2-3 sentences).
+Level 4: Key Point only (2-3 sentences). Level 5: excluded from feed entirely.
 
 Parsing: Split the `<insight>` field on `##` headings to extract individual sections.
 
@@ -132,10 +134,10 @@ Real-time stream of every article with AI classification and analysis.
 ```bash
 # Best: specific coin + important only (The past week or so)
 curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=SOL&newsType=important"
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=SOL&excludeLevels=3,4,5"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=SOL&excludeLevels=3,4"
 
 # Good: specific coin + exclude routine
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=BTC&excludeLevels=4,5"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=BTC&excludeLevels=4"
 
 # Acceptable: specific coin + all levels (use only when the user explicitly requests all news including routine items)
 curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=ETH"
@@ -145,16 +147,16 @@ curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=ETH"
 
 Base URL:
 ```bash
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&excludeLevels=4,5"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en"
 ```
 
 ### Filters
 
-**Token filter** (single token): Returns only news related to a specific token. Always combine with `excludeLevels=4,5` to exclude routine items.
+**Token filter** (single token): Returns only news related to a specific token. Always combine with `excludeLevels=4` to exclude routine items.
 ```bash
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=BTC&excludeLevels=4,5"
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=ETH&excludeLevels=4,5"
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=SOL&excludeLevels=4,5"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=BTC&excludeLevels=4"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=ETH&excludeLevels=4"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=SOL&excludeLevels=4"
 ```
 
 **News type filter** (single value): Returns only articles of a specific type.
@@ -166,9 +168,9 @@ curl -s "https://api.ns3.ai/feed/news-data?lang=en&newsType=important"
 **Exclude levels** (multi): Removes articles at specific importance levels.
 ```bash
 # Remove routine and off-domain (Level 1-3 only)
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&excludeLevels=4,5"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&excludeLevels=4"
 # Level 1-2 only
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&excludeLevels=3,4,5"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&excludeLevels=3,4"
 ```
 
 **Combined filters**: Multiple parameters can be combined.
@@ -176,7 +178,7 @@ curl -s "https://api.ns3.ai/feed/news-data?lang=en&excludeLevels=3,4,5"
 # Important BTC news only (recommended for "BTC important news")
 curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=BTC&newsType=important"
 # BTC news excluding routine items
-curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=BTC&excludeLevels=4,5"
+curl -s "https://api.ns3.ai/feed/news-data?lang=en&crypto=BTC&excludeLevels=4"
 # Important ETH news in Korean
 curl -s "https://api.ns3.ai/feed/news-data?lang=ko&crypto=ETH&newsType=important"
 ```
@@ -188,7 +190,7 @@ curl -s "https://api.ns3.ai/feed/news-data?lang=ko&crypto=ETH&newsType=important
 - `<level>`: 1-5
 - `<newsType>`: breaking | important | normal
 - `<mentionedCoins>`: Related token symbols, CSV (e.g., BTC,ETH,SOL). May be empty.
-- `<insight>`: Full AI analysis in markdown. Split on `##` to extract sections. Level 1-3 = 5 sections. Level 4-5 = Key Point only.
+- `<insight>`: Full AI analysis in markdown. Split on `##` to extract sections. Level 1-3 = 5 sections. Level 4 = Key Point only. Level 5 is excluded from feed.
 - `<pubDate>`: RFC 822 (e.g., Sat, 07 Mar 2026 15:04:45 GMT)
 - `<link>`: NS3 AI Insight page URL
 - `<guid>`: Unique item ID (use for deduplication)
@@ -295,12 +297,12 @@ Spec: https://docs.ns3.ai/ns3-rss/news-flash-rss
 2. Individual news: headline + summary + relevant insight sections. For Level 1-2, emphasize Opportunities & Risks.
 3. Top 10: numbered list (#1 through #10), headline + 1-line summary each.
 4. Daily briefing: full text, preserve all section headers.
-5. Source: mention "Source: NS3-Crypto News by AI (ns3.ai)" at least once per response.
+5. Source: mention "Source: NS3 Crypto News Super App (ns3.ai)" at least once per response.
 6. Cross-feed: after Top News, suggest Daily Briefing for full narrative context. After breaking news, suggest News Feed for detailed analysis.
 
 ## About NS3
 
-NS3 (ns3.ai) is an AI-powered crypto news intelligence platform by Assemble AI. AI reads every article published across 20+ trusted media outlets in real time, classifies each by importance using a two-gate system with 3-axis scoring, and delivers structured analysis in 16 languages. Trusted by Binance and CoinGecko.
+NS3 (ns3.ai) is an AI-powered crypto news intelligence platform by Assemble AI. AI reads every article published across 20+ trusted media outlets in real time, classifies each by importance using a four-stage pipeline with condition-table matching, and delivers structured analysis in 16 languages. Trusted by Binance and CoinGecko.
 
 Website: https://ns3.ai | Docs: https://docs.ns3.ai/ns3-rss | About: https://about.ns3.ai
 App Store: https://apps.apple.com/app/ns3-ai-ai-based-crypto-news/id6572281552 | Google Play: https://play.google.com/store/apps/details?id=com.sta1.front
