@@ -1,6 +1,10 @@
 ---
 name: alpha
-description: Binance Alpha request using the Binance API. Authentication requires API key and secret key. 
+description: |
+  Query Binance Alpha token prices, candlestick charts, aggregated trades, exchange info, and token listings.
+  Retrieve 24hr price statistics, kline data, and available Alpha tokens via the Binance API.
+  Use when users ask about Binance Alpha tokens, Alpha token prices, Alpha market data,
+  or want to view Alpha token charts and trade history.
 metadata:
   version: 1.0.0
   author: Binance

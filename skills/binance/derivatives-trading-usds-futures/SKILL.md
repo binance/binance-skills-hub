@@ -1,6 +1,11 @@
 ---
 name: derivatives-trading-usds-futures
-description: Binance Derivatives-trading-usds-futures request using the Binance API. Authentication requires API key and secret key. Supports testnet and mainnet.
+description: |
+  Trade USDS-margined perpetual futures on Binance: place orders, manage positions, adjust leverage, and set margin type.
+  Query account balances, open orders, position risk, funding rates, mark prices, and order book data.
+  Supports algo orders, batch operations, and convert functionality.
+  Use when users ask about Binance futures trading, perpetual contracts, leverage, liquidation prices,
+  funding rates, futures positions, or USDT-margined derivatives. Supports testnet and mainnet.
 metadata:
   version: 1.0.0
   author: Binance

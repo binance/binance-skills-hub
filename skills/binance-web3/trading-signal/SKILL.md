@@ -3,7 +3,8 @@ name: trading-signal
 description: |
   Subscribe and retrieve on-chain Smart Money signals. Monitor trading activities of smart money addresses,
   including buy/sell signals, trigger price, current price, max gain, and exit rate.
-  Use this skill when users are looking for investment opportunities — smart money signals can serve as valuable references for potential trades.
+  Use this skill when users ask about smart money signals, whale tracking, wallet monitoring, crypto signals,
+  on-chain analysis, or are looking for investment opportunities based on professional investor behavior.
 metadata:
   author: binance-web3-team
   version: "1.0"
@@ -215,26 +216,6 @@ Include `User-Agent` header with the following string: `binance-web3/1.0 (Skill)
 3. **Risk Alert**: Receive alerts when smart money starts selling
 4. **Performance Analysis**: Analyze historical signal performance and max gains
 5. **Strategy Validation**: Evaluate signal quality via exitRate and maxGain
-
-## Example Requests
-
-### Get Smart Money Signals on Solana
-```bash
-curl --location 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/web/signal/smart-money' \
---header 'Content-Type: application/json' \
---header 'Accept-Encoding: identity' \
---header 'User-Agent: binance-web3/1.0 (Skill)' \
---data '{"smartSignalType":"","page":1,"pageSize":50,"chainId":"CT_501"}'
-```
-
-### Get Signals on BSC
-```bash
-curl --location 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/web/signal/smart-money' \
---header 'Content-Type: application/json' \
---header 'Accept-Encoding: identity' \
---header 'User-Agent: binance-web3/1.0 (Skill)' \
---data '{"smartSignalType":"","page":1,"pageSize":50,"chainId":"56"}'
-```
 
 ## Notes
 

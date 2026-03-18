@@ -1,6 +1,11 @@
 ---
 name: margin-trading
-description: Binance Margin-trading request using the Binance API. Authentication requires API key and secret key. 
+description: |
+  Place margin orders, borrow and repay assets, manage cross and isolated margin accounts on Binance.
+  Query margin balances, interest rates, liquidation records, collateral ratios, and max borrowable amounts.
+  Supports OCO, OTO, and OTOCO order types with auto-borrow/repay.
+  Use when users ask about margin trading, leverage on Binance, borrowing crypto, margin account balance,
+  cross margin, isolated margin, or margin loan interest rates.
 metadata:
   version: 1.0.0
   author: Binance
