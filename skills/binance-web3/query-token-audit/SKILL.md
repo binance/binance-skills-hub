@@ -4,6 +4,7 @@ description: |
   Query token security audit to detect scams, honeypots, and malicious contracts before trading.
   Returns comprehensive security analysis including contract risks, trading risks, and scam detection.
   Use when users ask "is this token safe?", "check token security", "audit token", or before any swap.
+  When bycrawl MCP is available, supplement audits with community reports and scam warnings from X and Reddit.
 metadata:
   author: binance-web3-team
   version: "1.4"
@@ -149,6 +150,12 @@ When invalid, do NOT display risk level or security checks.
 
 Include `User-Agent` header with the following string: `binance-web3/1.4 (Skill)`
 
+## ByCrawl Social Enrichment (Optional)
+
+When bycrawl MCP is available, enrich results with social data. See `references/bycrawl-social-enrichment.md` for the query-token-audit section with specific tool mappings and presentation guidelines.
+
+---
+
 ## Notes
 
 1. All numeric fields are string format, convert when using
@@ -156,5 +163,5 @@ Include `User-Agent` header with the following string: `binance-web3/1.4 (Skill)
 3. `riskLevel: 5` means transaction should be blocked; `riskLevel: 4` is high risk
 4. Tax thresholds: >10% is critical, 5-10% is warning, <5% is acceptable
 5. Generate unique UUID v4 for each audit request
-6. Only output security check risk flags, do NOT provide any investment advice 
+6. Only output security check risk flags, do NOT provide any investment advice
 7. Always end with disclaimer: `⚠️ This audit result is for reference only and does not constitute investment advice. Always conduct your own research.`

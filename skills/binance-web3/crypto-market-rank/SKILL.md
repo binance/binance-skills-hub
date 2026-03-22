@@ -5,6 +5,7 @@ description: |
   tokenized stocks, social hype sentiment ranks, smart money inflow token rankings,
   top meme token rankings from Pulse launchpad, and top trader PnL leaderboards.
   Use this skill when users ask about token rankings, market trends, social buzz, meme rankings, breakout meme tokens, or top traders.
+  When bycrawl MCP is available, enrich rankings with real-time social volume from X, Reddit, YouTube, and TikTok.
 metadata:
   author: binance-web3-team
   version: "2.1"
@@ -430,6 +431,12 @@ curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/market/leaderbo
 ## User Agent Header
 
 Include `User-Agent` header with the following string: `binance-web3/2.1 (Skill)`
+
+## ByCrawl Social Enrichment (Optional)
+
+When bycrawl MCP is available, enrich results with social data. See `references/bycrawl-social-enrichment.md` for the crypto-market-rank section with specific tool mappings and presentation guidelines.
+
+---
 
 ## Notes
 

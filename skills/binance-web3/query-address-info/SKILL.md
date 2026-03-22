@@ -4,6 +4,7 @@ description: |
   Query any on-chain wallet address token balances and positions. Retrieves all token holdings for a specified wallet address on a given chain,
   including token name, symbol, price, 24h price change, and holding quantity.
   Use this skill when users ask about wallet balance, token holds, portfolio, or asset positions for any blockchain address.
+  When bycrawl MCP is available, identify known wallet owners via social profiles on X and LinkedIn.
 metadata:
   author: binance-web3-team
   version: "1.1"
@@ -115,6 +116,12 @@ curl --location 'https://web3.binance.com/bapi/defi/v3/public/wallet-direct/buw/
 ## User Agent Header
 
 Include `User-Agent` header with the following string: `binance-web3/1.1 (Skill)`
+
+## ByCrawl Social Enrichment (Optional)
+
+When bycrawl MCP is available, enrich results with social data. See `references/bycrawl-social-enrichment.md` for the query-address-info section with specific tool mappings and presentation guidelines.
+
+---
 
 ## Notes
 

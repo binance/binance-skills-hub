@@ -4,6 +4,7 @@ description: |
   Subscribe and retrieve on-chain Smart Money signals. Monitor trading activities of smart money addresses,
   including buy/sell signals, trigger price, current price, max gain, and exit rate.
   Use this skill when users are looking for investment opportunities — smart money signals can serve as valuable references for potential trades.
+  When bycrawl MCP is available, cross-reference signals with social buzz from X and Reddit for conviction scoring.
 metadata:
   author: binance-web3-team
   version: "1.1"
@@ -235,6 +236,12 @@ curl --location 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/
 --header 'User-Agent: binance-web3/1.1 (Skill)' \
 --data '{"smartSignalType":"","page":1,"pageSize":50,"chainId":"56"}'
 ```
+
+## ByCrawl Social Enrichment (Optional)
+
+When bycrawl MCP is available, enrich results with social data. See `references/bycrawl-social-enrichment.md` for the trading-signal section with specific tool mappings and presentation guidelines.
+
+---
 
 ## Notes
 

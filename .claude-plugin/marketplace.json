@@ -1,213 +1,46 @@
 {
   "name": "binance-skills-hub",
-  "description": "Open skills marketplace for crypto — native access to Binance CEX trading and Web3 DeFi via AI agents",
   "owner": {
-    "name": "Binance",
-    "email": "skills@binance.com"
-  },
-  "metadata": {
-    "version": "1.0.0",
-    "description": "Official Binance skills marketplace for Claude Code"
+    "name": "Binance"
   },
   "plugins": [
     {
       "name": "binance-web3-defi",
       "source": "./skills/binance-web3",
       "description": "On-chain DeFi skills — token search, security audits, wallet queries, smart money signals, market rankings, and meme token tracking",
-      "version": "1.0.0",
-      "author": {
-        "name": "binance-web3-team"
-      },
-      "category": "defi",
-      "tags": ["web3", "defi", "tokens", "on-chain", "signals"],
-      "keywords": ["token-info", "token-audit", "wallet", "smart-money", "meme", "ranking"]
+      "skills": [
+        "./skills/binance-web3/crypto-market-rank",
+        "./skills/binance-web3/meme-rush",
+        "./skills/binance-web3/query-address-info",
+        "./skills/binance-web3/query-token-audit",
+        "./skills/binance-web3/query-token-info",
+        "./skills/binance-web3/trading-signal",
+        "./skills/binance-web3/web3-social-research"
+      ]
     },
     {
-      "name": "binance-spot-trading",
-      "source": "./skills/binance/spot",
-      "description": "Binance spot trading — orders, order book, klines, tickers, and account management",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "trading",
-      "tags": ["cex", "spot", "trading"]
-    },
-    {
-      "name": "binance-derivatives-usds-futures",
-      "source": "./skills/binance/derivatives-trading-usds-futures",
-      "description": "USDS-margined futures trading on Binance",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "trading",
-      "tags": ["cex", "futures", "derivatives"]
-    },
-    {
-      "name": "binance-derivatives-coin-futures",
-      "source": "./skills/binance/derivatives-trading-coin-futures",
-      "description": "Coin-margined futures trading on Binance",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "trading",
-      "tags": ["cex", "futures", "derivatives"]
-    },
-    {
-      "name": "binance-derivatives-options",
-      "source": "./skills/binance/derivatives-trading-options",
-      "description": "Options trading on Binance",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "trading",
-      "tags": ["cex", "options", "derivatives"]
-    },
-    {
-      "name": "binance-derivatives-portfolio-margin",
-      "source": "./skills/binance/derivatives-trading-portfolio-margin",
-      "description": "Portfolio margin trading on Binance",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "trading",
-      "tags": ["cex", "portfolio-margin", "derivatives"]
-    },
-    {
-      "name": "binance-derivatives-portfolio-margin-pro",
-      "source": "./skills/binance/derivatives-trading-portfolio-margin-pro",
-      "description": "Portfolio margin pro trading on Binance",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "trading",
-      "tags": ["cex", "portfolio-margin", "derivatives"]
-    },
-    {
-      "name": "binance-margin-trading",
-      "source": "./skills/binance/margin-trading",
-      "description": "Margin trading — borrow, repay, and margin orders on Binance",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "trading",
-      "tags": ["cex", "margin", "trading"]
-    },
-    {
-      "name": "binance-algo-trading",
-      "source": "./skills/binance/algo",
-      "description": "Algorithmic trading (TWAP, VP) on Binance",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "trading",
-      "tags": ["cex", "algo", "twap"]
-    },
-    {
-      "name": "binance-alpha",
-      "source": "./skills/binance/alpha",
-      "description": "Binance Alpha token discovery and early-stage opportunities",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "discovery",
-      "tags": ["cex", "alpha", "tokens"]
-    },
-    {
-      "name": "binance-assets",
-      "source": "./skills/binance/assets",
-      "description": "Asset management — deposits, withdrawals, and balance queries on Binance",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "assets",
-      "tags": ["cex", "assets", "deposits", "withdrawals"]
-    },
-    {
-      "name": "binance-convert",
-      "source": "./skills/binance/convert",
-      "description": "Convert between crypto assets on Binance",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "trading",
-      "tags": ["cex", "convert", "swap"]
-    },
-    {
-      "name": "binance-fiat",
-      "source": "./skills/binance/fiat",
-      "description": "Fiat on-ramp and off-ramp on Binance",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "fiat",
-      "tags": ["cex", "fiat", "onramp"]
-    },
-    {
-      "name": "binance-simple-earn",
-      "source": "./skills/binance/simple-earn",
-      "description": "Earn products — flexible and locked savings on Binance",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "earn",
-      "tags": ["cex", "earn", "savings", "staking"]
-    },
-    {
-      "name": "binance-sub-account",
-      "source": "./skills/binance/sub-account",
-      "description": "Sub-account management on Binance",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "account",
-      "tags": ["cex", "sub-account", "management"]
-    },
-    {
-      "name": "binance-vip-loan",
-      "source": "./skills/binance/vip-loan",
-      "description": "VIP loan services on Binance",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "lending",
-      "tags": ["cex", "loan", "vip"]
-    },
-    {
-      "name": "binance-onchain-pay",
-      "source": "./skills/binance/onchain-pay",
-      "description": "On-chain payment processing via Binance",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "payments",
-      "tags": ["payments", "on-chain"]
-    },
-    {
-      "name": "binance-square-post",
-      "source": "./skills/binance/square-post",
-      "description": "Create and manage Binance Square social posts",
-      "version": "1.0.0",
-      "author": {
-        "name": "Binance"
-      },
-      "category": "social",
-      "tags": ["social", "square", "posts"]
+      "name": "binance-cex-trading",
+      "source": "./skills/binance",
+      "description": "Binance CEX trading skills — spot, margin, futures, options, portfolio margin, algo trading, earn, convert, fiat, assets, sub-accounts, VIP loans, on-chain pay, and Square social posts",
+      "skills": [
+        "./skills/binance/algo",
+        "./skills/binance/alpha",
+        "./skills/binance/assets",
+        "./skills/binance/convert",
+        "./skills/binance/derivatives-trading-coin-futures",
+        "./skills/binance/derivatives-trading-options",
+        "./skills/binance/derivatives-trading-portfolio-margin",
+        "./skills/binance/derivatives-trading-portfolio-margin-pro",
+        "./skills/binance/derivatives-trading-usds-futures",
+        "./skills/binance/fiat",
+        "./skills/binance/margin-trading",
+        "./skills/binance/onchain-pay",
+        "./skills/binance/simple-earn",
+        "./skills/binance/spot",
+        "./skills/binance/square-post",
+        "./skills/binance/sub-account",
+        "./skills/binance/vip-loan"
+      ]
     }
   ]
 }

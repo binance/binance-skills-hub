@@ -6,6 +6,7 @@ description: |
   2. Topic Rush - AI-powered market hot topics with associated tokens ranked by net inflow
   Use this skill when users ask about new meme tokens, meme launches, bonding curve, migration status,
   pump.fun tokens, four.meme tokens, fast meme trading, market hot topics, or trending narratives.
+  When bycrawl MCP is available, enhance meme discovery with viral social signals from X, TikTok, and Reddit.
 metadata:
   author: binance-web3-team
   version: "1.1"
@@ -344,6 +345,12 @@ curl 'https://web3.binance.com/bapi/defi/v2/public/wallet-direct/buw/wallet/mark
 ## User Agent Header
 
 Include `User-Agent` header with the following string: `binance-web3/1.1 (Skill)`
+
+## ByCrawl Social Enrichment (Optional)
+
+When bycrawl MCP is available, enrich results with social data. See `references/bycrawl-social-enrichment.md` for the meme-rush section with specific tool mappings and presentation guidelines.
+
+---
 
 ## Notes
 

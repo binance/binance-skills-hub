@@ -4,6 +4,7 @@ description: |
   Query token details by keyword, contract address, or chain. Search tokens, get metadata and social links,
   retrieve real-time market data (price, price trend, volume, holders, liquidity), and fetch K-Line candlestick charts.
   Use this skill when users search tokens, check token prices, view market data, or request kline/candlestick charts.
+  When bycrawl MCP is available, enrich token research with social sentiment from X, Reddit, and Telegram.
 metadata:
   author: binance-web3-team
   version: "1.1"
@@ -442,6 +443,12 @@ Each candle is an array with 7 elements in order:
 ## User Agent Header
 
 Include `User-Agent` header with the following string: `binance-web3/1.1 (Skill)`
+
+## ByCrawl Social Enrichment (Optional)
+
+When bycrawl MCP is available, enrich results with social data. See `references/bycrawl-social-enrichment.md` for the query-token-info section with specific tool mappings and presentation guidelines.
+
+---
 
 ## Notes
 
