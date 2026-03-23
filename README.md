@@ -26,20 +26,74 @@ Before installing Binance Skills Hub, ensure you have the following prerequisite
 
 * **Node.js** (version 22 or higher)
 
-### Install with Claude Code
+### Via Plugin Marketplace (recommended)
 
 ```bash
-claude install github:binance/binance-skills-hub
+/plugin marketplace add binance/binance-skills-hub
+/plugin install binance-web3-defi@binance-skills-hub
+/plugin install binance-cex-trading@binance-skills-hub
+```
+
+### Via npx skills
+
+```bash
+npx skills add binance/binance-skills-hub
 ```
 
 Once installed, Claude Code auto-discovers all 24 skills. Ask Claude to query tokens, check security audits, track wallets, execute trades, and more — all through natural language.
 
-### Install with npx
+---
 
-Run the following command to add Binance Skills Hub to your project:
+## Updating
+
+### Via Plugin Marketplace
 
 ```bash
-npx skills add https://github.com/binance/binance-skills-hub
+/plugin marketplace update binance-web3-defi@binance-skills-hub
+/plugin marketplace update binance-cex-trading@binance-skills-hub
+```
+
+### Via npx skills
+
+```bash
+npx skills update binance/binance-skills-hub
+```
+
+### Manual update
+
+If you installed by cloning the repo, pull the latest changes:
+
+```bash
+cd ~/.claude/skills/binance-skills-hub  # or wherever you cloned
+git pull origin main
+```
+
+After updating, restart Claude Code to pick up the new skills.
+
+---
+
+## MCP Setup
+
+### ByCrawl MCP (required for all skills)
+
+```bash
+claude mcp add bycrawl -- npx -y @bycrawl/mcp
+```
+
+Or add to your `.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "bycrawl": {
+      "command": "npx",
+      "args": ["-y", "@bycrawl/mcp"],
+      "env": {
+        "BYCRAWL_API_KEY": "your-api-key-here"
+      }
+    }
+  }
+}
 ```
 
 ### Authentication
