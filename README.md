@@ -96,6 +96,43 @@ Or add to your `.claude/settings.json`:
 }
 ```
 
+### Manual update
+
+If you installed by cloning the repo, pull the latest changes:
+
+```bash
+cd ~/.claude/skills/binance-skills-hub  # or wherever you cloned
+git pull origin main
+```
+
+After updating, restart Claude Code to pick up the new skills.
+
+---
+
+## MCP Setup
+
+### ByCrawl MCP (required for all skills)
+
+```bash
+claude mcp add bycrawl -- npx -y @bycrawl/mcp
+```
+
+Or add to your `.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "bycrawl": {
+      "command": "npx",
+      "args": ["-y", "@bycrawl/mcp"],
+      "env": {
+        "BYCRAWL_API_KEY": "your-api-key-here"
+      }
+    }
+  }
+}
+```
+
 ### Authentication
 
 For Binance Skills, certain endpoints require you to provide Binance API credentials. You can do this by setting environment variables, using a secrets file (such as `.env` or `.openclaw/secrets.env`) , or sending them directly to the agent in the chat. For more details, see the [Security](./skills/binance/spot/SKILL.md#security) section in each skill.
