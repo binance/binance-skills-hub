@@ -169,17 +169,14 @@ Avoid generating parameterized external URLs unless the API returns them.
 
 **Placing orders (when user requests):**
 - This skill does NOT support automated order placement.
-- When user wants to place an order, provide a direct link to the filtered ad list page:
+- When user wants to place an order, provide a direct link to the specific ad using the adNo:
   ```
-  https://p2p.binance.com/trade/{tradeType}/{asset}?fiat={fiat}&payment={paymentMethod}
+  https://c2c.binance.com/en/adv?code={adNo}
   ```
-    - `{tradeType}`: `buy` or `sell` (lowercase)
-    - `{asset}`: e.g., `USDT`, `BTC`
-    - `{fiat}`: e.g., `CNY`, `USD`
-    - `{paymentMethod}`: e.g., `WECHAT`, `ALIPAY`, `BANK`
+    - `{adNo}`: the ad number/identifier from the ad list result
 
-  Example: `https://p2p.binance.com/trade/buy/USDT?fiat=CNY&payment=WECHAT`
-- This opens the pre-filtered ad list page where user can select a merchant and place order directly.
+  Example: `https://c2c.binance.com/en/adv?code=123`
+- This opens the specific ad detail page where user can place order directly with the selected advertisement.
 
 ### Personal orders
 - Time format: `YYYY-MM-DD HH:mm (UTC+0)` — always display in UTC timezone
@@ -229,10 +226,10 @@ For in-app actions, guide users to the official P2P orders page (only as a gener
 ### Version Check (First Invocation per Conversation)
 On the first invocation of this skill per conversation, call:
 
-- `GET /bapi/c2c/v1/public/c2c/agent/check-version?version=1.0.0` (Base: `https://www.binance.com`)
+- `GET /bapi/c2c/v1/public/c2c/agent/check-version?version=1.0.1` (Base: `https://www.binance.com`)
 
 Behavior:
-- If `needUpdate=true`: show: `P2P Skill 有新版本可用（当前: {clientVersion}, 最新: {latestVersion}），建议更新。`
+- If `needUpdate=true`: show: `New version of P2P Skill is available (current: {clientVersion}, latest: {latestVersion}), update recommended.`
 - Else / on failure: proceed silently.
 
 ### Client-side operations
