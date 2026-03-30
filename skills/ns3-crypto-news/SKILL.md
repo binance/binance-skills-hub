@@ -1,22 +1,26 @@
 ---
-title: NS3 Crypto News Intelligence
+title: Crypto News Ranked by AI
 description: >
-  Real-time AI-classified crypto and macro news intelligence from NS3.AI.
-  Trusted by Binance and CoinGecko. AI reads every article published across 20+ trusted media
-  outlets (CoinDesk, Cointelegraph, Bloomberg Crypto, Reuters Crypto, and more) in real time,
-  classifies each by importance (Level 1-5) and delivers structured 5-section analysis.
-  Four feeds: real-time news stream with filters, importance-ranked Top 10, 24-hour desk briefing,
-  and breaking headlines from premium wire services.
-  All feeds available in 16 languages. No API key required. No setup.
-  Use when the user asks about crypto news, market updates, breaking headlines,
-  daily briefings, top stories, or news about specific coins or exchanges.
+  AI reads 20+ crypto media outlets in real time and ranks every article
+  by importance. No API key, instant access. Binance and CoinGecko use
+  our data. Market sentiment indicators optimized for trading signals
+  and trigger data. Breaking news, coin-level filters, and exchange
+  listing news from CoinMarketCap, Coinbase, Bybit, OKX, Hyperliquid,
+  and Robinhood. Bitcoin (BTC), Ethereum (ETH), Solana (SOL), XRP,
+  Dogecoin (DOGE), BNB, stablecoin (USDT, USDC), DeFi, ETF news, and
+  whale alerts. 16 languages. Four feeds: real-time crypto news ranked
+  by AI, daily market briefing, top stories ranking, and breaking
+  headlines. Built for trading bots, TradingView workflows, and AI
+  agents. Use when the user asks about crypto news, portfolio updates,
+  market briefings, breaking headlines, top stories, or news about
+  specific coins.
 metadata:
-  version: 1.0.4
+  version: 1.0.5
   author: Assemble AI
 license: MIT
 ---
 
-# NS3 Crypto News Intelligence
+# Crypto News Ranked by AI - NS3
 
 AI reads every article published across 20+ trusted media outlets in real time, classifies each by importance (Level 1-5), and delivers structured analysis. No API key required. No setup. All feeds available in 16 languages.
 
@@ -343,7 +347,7 @@ Spec: https://docs.ns3.ai/ns3-rss/news-flash-rss
 
 ## About NS3
 
-NS3 (ns3.ai) is an AI-powered crypto news intelligence platform by Assemble AI. AI reads every article published across 20+ trusted media outlets in real time, classifies each by importance using a four-stage pipeline with condition-table matching, and delivers structured analysis in 16 languages. Trusted by Binance and CoinGecko.
+NS3 (ns3.ai) is an AI-powered crypto news intelligence platform by Assemble AI. AI reads every article published across 20+ trusted media outlets in real time, classifies each by importance using a four-stage pipeline with condition-table matching, and delivers structured analysis in 16 languages. Binance and CoinGecko use our data.
 
 Website: https://ns3.ai | Docs: https://docs.ns3.ai/ns3-rss | About: https://about.ns3.ai
-App Store: https://apps.apple.com/app/ns3-ai-ai-based-crypto-news/id6572281552 | Google Play: https://play.google.com/store/apps/details?id=com.sta1.front
+App Store: https://apps.apple.com/us/app/ns3-crypto-news-ranked-by-ai/id6572281552 | Google Play: https://play.google.com/store/apps/details?id=com.sta1.front
