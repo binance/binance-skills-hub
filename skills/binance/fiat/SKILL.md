@@ -1,217 +1,169 @@
 ---
 name: fiat
-description: Binance Fiat request using the Binance API. Authentication requires API key and secret key. 
+description: Query Binance fiat payment capabilities — supported countries, currencies, payment methods, limits, and crypto prices — via public APIs, plus authenticated order/payment history lookup. Use whenever users ask about buying or selling crypto with fiat, depositing or withdrawing fiat, fiat-crypto exchange rates, payment options in a specific country, or their fiat order history — even if they don't explicitly mention Binance APIs.
 metadata:
   version: 1.1.0
   author: Binance
-  openclaw:
-    requires:
-      bins:
-        - curl
-        - openssl
-        - date
-    homepage: https://github.com/binance/binance-skills-hub/tree/main/skills/binance/fiat/SKILL.md
 license: MIT
 ---
 
 # Binance Fiat Skill
 
-Fiat request on Binance using authenticated API endpoints. Requires API key and secret key for certain endpoints. Return the result in JSON format.
+Query Binance fiat payment capabilities, available payment methods, pricing, and supported currencies/countries using **public APIs** (no authentication required). For order and payment history, see [Authenticated Endpoints](./references/sapi-endpoints.md).
 
-## Quick Reference
+## Base URL
 
-| Endpoint | Description | Required | Optional | Authentication |
-|----------|-------------|----------|----------|----------------|
-| `/sapi/v1/fiat/deposit` (POST) | Deposit(TRADE) | None | recvWindow | Yes |
-| `/sapi/v2/fiat/withdraw` (POST) | Fiat Withdraw(WITHDRAW) | None | recvWindow | Yes |
-| `/sapi/v1/fiat/orders` (GET) | Get Fiat Deposit/Withdraw History (USER_DATA) | transactionType | beginTime, endTime, page, rows, recvWindow | Yes |
-| `/sapi/v1/fiat/payments` (GET) | Get Fiat Payments History (USER_DATA) | transactionType | beginTime, endTime, page, rows, recvWindow | Yes |
-| `/sapi/v1/fiat/get-order-detail` (GET) | Get Order Detail(USER_DATA) | orderNo | recvWindow | Yes |
-
----
-
-## Parameters
-
-### Common Parameters
-
-* **recvWindow**:  (e.g., 5000)
-* **transactionType**: 0-buy,1-sell
-* **beginTime**: 
-* **endTime**:  (e.g., 1641782889000)
-* **page**: default 1 (e.g., 1)
-* **rows**: default 100, max 500 (e.g., 100)
-* **orderNo**: order id retrieved from the api call of withdrawal
-
-
-## Authentication
-
-For endpoints that require authentication, you will need to provide Binance API credentials.
-Required credentials:
-
-* apiKey: Your Binance API key (for header)
-* secretKey: Your Binance API secret (for signing)
-
-Base URLs:
-* Mainnet: https://api.binance.com
-
-## Security
-
-### Share Credentials
-
-Users can provide Binance API credentials in different ways. The agent will try to retrieve automatically with the two first ways the credentials, but users can also explicitly tell the agent that they have set the credentials or stored them in a `.env` file, and the agent should re-read that file when they do. The agent can also make http requests with the two first methods without user confirmation.
-
-1. **Environment variables**
-
-Search for the following specific variables only (never dump the full environment):
-
-**Authorized environment variables**
-- Mainnet: `BINANCE_API_KEY` and `BINANCE_SECRET_KEY`
-
-Read and use in a single exec call so the raw key never enters the agent's context:
-```bash
-KEY="$BINANCE_API_KEY"
-SECRET="$BINANCE_SECRET_KEY"
-
-response=$(curl -s -X GET "$URL" \
-  -H "X-MBX-APIKEY: $KEY" \
-  --data-urlencode "param1=value1")
-
-echo "$response"
+```
+https://www.binance.com/bapi/fiat/v1/public/fiatpayment/agent
 ```
 
-Environment variables must be set before OpenClaw starts. They are inherited at process startup and cannot be injected into a running instance. If you need to add or update credentials without restarting, use a secrets file (see option 2).
+## Available APIs
 
-2. **Secrets file (.env)**
+### 1. get_capabilities
 
-Check `~/.openclaw/secrets.env` , `~/.env`, or a `.env` file in the workspace. Read individual keys with `grep`, never source the full file:
-```bash
-# Try all credential locations in order
-API_KEY=$(grep '^BINANCE_API_KEY=' ~/.openclaw/secrets.env 2>/dev/null | cut -d= -f2-)
-SECRET_KEY=$(grep '^BINANCE_SECRET_KEY=' ~/.openclaw/secrets.env 2>/dev/null | cut -d= -f2-)
-
-# Fallback: search .env in known directories (KEY=VALUE then raw line format)
-for dir in ~/.openclaw ~; do
-  [ -n "$API_KEY" ] && break
-  env_file="$dir/.env"
-  [ -f "$env_file" ] || continue
-
-  # Read first two lines
-  line1=$(sed -n '1p' "$env_file")
-  line2=$(sed -n '2p' "$env_file")
-
-  # Check if lines contain '=' indicating KEY=VALUE format
-  if [[ "$line1" == *=* && "$line2" == *=* ]]; then
-    API_KEY=$(grep '^BINANCE_API_KEY=' "$env_file" 2>/dev/null | cut -d= -f2-)
-    SECRET_KEY=$(grep '^BINANCE_SECRET_KEY=' "$env_file" 2>/dev/null | cut -d= -f2-)
-  else
-    # Treat lines as raw values
-    API_KEY="$line1"
-    SECRET_KEY="$line2"
-  fi
-done
-```
-
-This file can be updated at any time without restarting OpenClaw, keys are read fresh on each invocation. Users can tell you the variables are now set or stored in a `.env` file, and you should re-read that file when they do.
-
-3. **Inline file**
-
-Sending a file where the content is in the following format:
+Query supported fiat currencies, cryptos, and business types for a country.
 
 ```bash
-abc123...xyz
-secret123...key
+curl "https://www.binance.com/bapi/fiat/v1/public/fiatpayment/agent/get-capabilities?country={COUNTRY_CODE}"
 ```
 
-* Never run `printenv`, `env`, `export`, or set without a specific variable name
-* Never run `grep` on `env` files without anchoring to a specific key ('`^VARNAME='`)
-* Never source a secrets file into the shell environment (`source .env` or `. .env`)
-* Only read credentials explicitly needed for the current task
-* Never echo or log raw credentials in output or replies
-* Never commit `TOOLS.md` to version control if it contains real credentials — add it to `.gitignore`
+Optional: `businessType` (BUY, SELL, DEPOSIT, WITHDRAW) to filter.
 
-### Never Disclose API Key and Secret
+**Response:** `data.supportedBusinessTypes`, `data.fiatCurrencies[]` (with `code`, `name`, `supportedBusinessTypes`), `data.cryptoCurrencies[]`
 
-Never disclose the location of the API key and secret file.
-
-Never send the API key and secret to any website other than Mainnet and Testnet.
-
-### Never Display Full Secrets
-
-When showing credentials to users:
-- **API Key:** Show first 5 + last 4 characters: `su1Qc...8akf`
-- **Secret Key:** Always mask, show only last 5: `***...aws1`
-
-Example response when asked for credentials:
-Account: main
-API Key: su1Qc...8akf
-Secret: ***...aws1
-
-### Listing Accounts
-
-When listing accounts, show names and environment only — never keys:
-Binance Accounts:
-* main (Mainnet)
-* futures-keys (Mainnet)
-
-### Transactions in Mainnet
-
-When performing transactions in mainnet, always confirm with the user before proceeding by asking them to write "CONFIRM" to proceed.
-
----
-
-## Binance Accounts
-
-### main
-- API Key: your_mainnet_api_key
-- Secret: your_mainnet_secret
-
-### TOOLS.md Structure
+### 2. get_buy_and_sell_payment_methods
 
 ```bash
-## Binance Accounts
-
-### main
-- API Key: abc123...xyz
-- Secret: secret123...key
-- Description: Primary trading account
-
-
-### futures-keys
-- API Key: futures789...def
-- Secret: futuressecret...uvw
-- Description: Futures trading account
+curl "https://www.binance.com/bapi/fiat/v1/public/fiatpayment/agent/get-buy-and-sell-payment-methods?businessType={BUY|SELL}&fiatCurrency={FIAT}&cryptoCurrency={CRYPTO}&country={COUNTRY_CODE}"
 ```
 
-## Agent Behavior
+All 4 parameters required.
 
-1. Credentials requested: Mask secrets (show last 5 chars only)
-2. Listing accounts: Show names and environment, never keys
-3. Account selection: Ask if ambiguous, default to main
-4. When doing a transaction in mainnet, confirm with user before by asking to write "CONFIRM" to proceed
-5. New credentials: Prompt for name, environment, signing mode
+**Response:** `data.paymentMethods[]` and `data.p2pPaymentMethods[]`, each with `code`, `paymentMethodName`, `fiatMinLimit`, `fiatMaxLimit`, `cryptoMinLimit`, `cryptoMaxLimit`, `quotation`, `suspended`
 
-## Adding New Accounts
+### 3. get_deposit_and_withdraw_payment_methods
 
-When user provides new credentials by Inline file or message:
+```bash
+curl "https://www.binance.com/bapi/fiat/v1/public/fiatpayment/agent/get-deposit-and-withdraw-payment-methods?businessType={DEPOSIT|WITHDRAW}&fiatCurrency={FIAT}&country={COUNTRY_CODE}"
+```
 
-* Ask for account name
-* Store in `TOOLS.md` with masked display confirmation 
+All 3 parameters required. No `cryptoCurrency`, no `quotation`, no P2P methods.
 
-## Signing Requests
+**Response:** `data.paymentMethods[]` with `code`, `paymentMethodName`, `fiatMinLimit`, `fiatMaxLimit`, `suspended`
 
-For trading endpoints that require a signature:
+### 4. get_price
 
-1. **Detect key type first**, inspect the secret key format before signing.
-2. Build query string with all parameters, including the timestamp (Unix ms).
-3. Percent-encode the parameters using UTF-8 according to RFC 3986.
-4. Sign query string with secretKey using HMAC SHA256, RSA, or Ed25519 (depending on the account configuration).
-5. Append signature to query string.
-6. Include `X-MBX-APIKEY` header.
+```bash
+curl "https://www.binance.com/bapi/fiat/v1/public/fiatpayment/agent/get-price?fiatCurrency={FIAT}&cryptoCurrency={CRYPTO}&country={COUNTRY_CODE}"
+```
 
-Otherwise, do not perform steps 4–6.
+Optional: `businessType` (BUY or SELL, defaults to BUY).
 
-## User Agent Header
+**Response:** `data.bestPrice` — indicative reference price, may differ from execution price
 
-Include `User-Agent` header with the following string: `binance-fiat/1.1.0 (Skill)`
+## Recommended Workflow
 
-See [`references/authentication.md`](./references/authentication.md) for implementation details.
+1. **`get_capabilities`** first — confirms what's supported before making other calls
+2. **Payment methods API** — BUY/SELL → `get_buy_and_sell_payment_methods`; DEPOSIT/WITHDRAW → `get_deposit_and_withdraw_payment_methods`
+3. **`get_price`** — add if the user wants exchange rate info
+
+Skip step 1 for simple price queries (e.g., "What's BTC in USD?").
+
+## Calling APIs
+
+Use `WebFetch` or `Bash` (curl). All responses follow:
+
+```json
+{ "code": "000000", "message": null, "data": { ... }, "success": true }
+```
+
+`code: "000000"` = success; otherwise check `message`.
+
+## Action Links
+
+After presenting API results, always include a relevant action link so the user can proceed directly on Binance. Build the URL dynamically based on the fiat currency, crypto currency, and business type from the conversation context.
+
+### URL Templates
+
+| Business Type | URL Template | Example |
+|---|---|---|
+| BUY | `https://www.binance.com/en/crypto/buy/{FIAT}/{CRYPTO}` | [Buy BTC with USD](https://www.binance.com/en/crypto/buy/USD/BTC) |
+| SELL | `https://www.binance.com/en/crypto/sell/{FIAT}/{CRYPTO}` | [Sell BTC for USD](https://www.binance.com/en/crypto/sell/USD/BTC) |
+| DEPOSIT | `https://www.binance.com/en/fiat/deposit/{FIAT}` | [Deposit USD](https://www.binance.com/en/fiat/deposit/USD) |
+| WITHDRAW | `https://www.binance.com/en/fiat/withdraw/{FIAT}` | [Withdraw USD](https://www.binance.com/en/fiat/withdraw/USD) |
+
+### Language-aware URL
+
+Replace the `/en/` locale segment to match the user's language. Supported locales:
+
+```
+en, zh-CN, zh-TC, ru, es, es-LA, fr, vi, en-TR, it, pl, id, uk-UA, ar,
+en-AU, pt-BR, en-IN, en-NG, ro, bg, cs, lv, sv, pt, es-MX, el, sk, sl,
+es-AR, fr-AF, en-KZ, en-ZA, en-NZ, en-BH, ar-BH, ru-UA, de, kk-KZ,
+ru-KZ, ja, da-DK, en-AE, en-JP, hu, lo-LA, si-LK, az-AZ, uz-UZ, pt-AO
+```
+
+Common mapping examples:
+
+| User language | Locale | Example URL |
+|---|---|---|
+| English | `en` | `https://www.binance.com/en/crypto/buy/USD/BTC` |
+| 简体中文 | `zh-CN` | `https://www.binance.com/zh-CN/crypto/buy/CNY/BTC` |
+| Português (BR) | `pt-BR` | `https://www.binance.com/pt-BR/crypto/buy/BRL/BTC` |
+| Türkçe | `en-TR` | `https://www.binance.com/en-TR/crypto/buy/TRY/BTC` |
+
+For regional English variants (en-AU, en-IN, en-NG, en-AE, en-NZ, etc.), use the specific regional locale rather than plain `en` — this ensures the user sees region-appropriate content.
+
+Default to `en` if the user's language is unclear.
+
+Always include at least one action link when the conversation involves a specific fiat/crypto pair or business type. For general questions, include all relevant links from `get_capabilities`. Format as a call-to-action, e.g.: "Ready to buy? [Buy BTC with USD on Binance](https://www.binance.com/en/crypto/buy/USD/BTC)"
+
+## Presenting Results
+
+- Table format for payment methods (names, limits, pricing); flag suspended methods
+- Note that prices are indicative/reference prices
+- Respond in the user's language
+- **Always end with the relevant action link(s)**
+
+### Price Sorting and Best Value Logic
+
+Price direction depends on the business type — always apply the correct comparison:
+
+| Business Type | Better price direction | Rationale |
+|---|---|---|
+| **BUY** | **Lower price is better** | You pay less fiat per unit of crypto — same fiat buys more crypto |
+| **SELL** | **Higher price is better** | You receive more fiat per unit of crypto sold |
+
+When summarizing: for BUY highlight the **lowest** `quotation`; for SELL highlight the **highest** `quotation`. Example (BUY USD/BTC): $70,236 beats $74,291 — more BTC per dollar.
+
+### Wallet Payment Method (BUY)
+
+If the BUY response includes a payment method with `code` containing `WALLET` (case-insensitive), it represents buying crypto using the user's Binance fiat wallet balance.
+
+When this occurs, proactively mention:
+> "One of the available payment methods is your Binance fiat wallet balance. If your wallet doesn't have sufficient funds, you'll need to deposit fiat first. Would you like me to look up the available deposit methods for you?"
+
+If the user confirms, call `get_deposit_and_withdraw_payment_methods` with `businessType=DEPOSIT` using the same fiat currency and country, and present the results along with the [Deposit action link](#url-templates).
+
+## Order & Payment History (Authenticated)
+
+See [`references/sapi-endpoints.md`](./references/sapi-endpoints.md) for authenticated endpoints (order/payment history, deposit/withdraw records). Requires Binance API key and secret.
+
+## Country Code Reference
+
+Use ISO 3166-1 alpha-2 codes: BR, GB, DE, FR, JP, KR, AU, etc. **Never use `US` as the country parameter** — US users are not supported by Binance fiat payment APIs.
+
+### Country Inference Rules
+
+Determine the `country` parameter using this priority order:
+
+1. **Explicit context** — If the country is already known from the conversation (user stated it, or inferred in a prior turn), reuse it without re-inferring.
+
+2. **Fiat currency → country mapping** — Map directly from currency. Examples:
+   - `SGD` → `SG`, `BRL` → `BR`, `JPY` → `JP`, `KRW` → `KR`, `AUD` → `AU`, `GBP` → `GB`, `CAD` → `CA`, `INR` → `IN`, `TRY` → `TR`, `MXN` → `MX`, `NGN` → `NG`
+   - `EUR` → `FR` (since the user did not specify a country, use `FR` as the default for EUR)
+   - `USD` → `SG` (since the user did not specify a country, use `SG` as the default for USD)
+
+   > **MANDATORY**: `US` MUST NEVER be used as the country parameter under any circumstances. 
+
+3. **Empty results** — If the API returns no payment methods or an unsupported combination, ask: *"No results found for your current settings. Would you like to try a different country? If so, please tell me which country."* Then use the country the user provides.
