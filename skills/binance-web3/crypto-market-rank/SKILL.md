@@ -7,7 +7,7 @@ description: |
   Use this skill when users ask about token rankings, market trends, social buzz, meme rankings, breakout meme tokens, or top traders.
 metadata:
   author: binance-web3-team
-  version: "2.0"
+  version: "2.1"
 ---
 
 # Crypto Market Rank Skill
@@ -50,7 +50,7 @@ metadata:
 
 **URL**:
 ```
-https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/social/hype/rank/leaderboard
+https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/social/hype/rank/leaderboard/ai
 ```
 
 **Request Parameters**:
@@ -67,9 +67,9 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/tok
 
 **Example**:
 ```bash
-curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/social/hype/rank/leaderboard?chainId=56&sentiment=All&socialLanguage=ALL&targetLanguage=en&timeRange=1' \
+curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/social/hype/rank/leaderboard/ai?chainId=56&sentiment=All&socialLanguage=ALL&targetLanguage=en&timeRange=1' \
 -H 'Accept-Encoding: identity' \
--H 'User-Agent: binance-web3/2.0 (Skill)'
+-H 'User-Agent: binance-web3/2.1 (Skill)'
 ```
 
 **Response** (`data.leaderBoardList[]`):
@@ -98,7 +98,7 @@ curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/mark
 
 **URL**:
 ```
-https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/unified/rank/list
+https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/unified/rank/list/ai
 ```
 
 **Headers**: `Content-Type: application/json`, `Accept-Encoding: identity`
@@ -173,10 +173,10 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/tok
 ### Example Request
 
 ```bash
-curl -X POST 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/unified/rank/list' \
+curl -X POST 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/unified/rank/list/ai' \
 -H 'Content-Type: application/json' \
 -H 'Accept-Encoding: identity' \
--H 'User-Agent: binance-web3/2.0 (Skill)' \
+-H 'User-Agent: binance-web3/2.1 (Skill)' \
 -d '{"rankType":10,"chainId":"1","period":50,"sortBy":70,"orderAsc":false,"page":1,"size":20}'
 ```
 
@@ -230,7 +230,7 @@ curl -X POST 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wal
 
 **URL**:
 ```
-https://web3.binance.com/bapi/defi/v1/public/wallet-direct/tracker/wallet/token/inflow/rank/query
+https://web3.binance.com/bapi/defi/v1/public/wallet-direct/tracker/wallet/token/inflow/rank/query/ai
 ```
 
 **Headers**: `Content-Type: application/json`, `Accept-Encoding: identity`
@@ -246,10 +246,10 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/tracker/wallet/token/
 ### Example Request
 
 ```bash
-curl -X POST 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/tracker/wallet/token/inflow/rank/query' \
+curl -X POST 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/tracker/wallet/token/inflow/rank/query/ai' \
 -H 'Content-Type: application/json' \
 -H 'Accept-Encoding: identity' \
--H 'User-Agent: binance-web3/2.0 (Skill)' \
+-H 'User-Agent: binance-web3/2.1 (Skill)' \
 -d '{"chainId":"56","period":"24h","tagType":2}'
 ```
 
@@ -286,7 +286,7 @@ curl -X POST 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/tracker
 
 **URL**:
 ```
-https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/exclusive/rank/list
+https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/exclusive/rank/list/ai
 ```
 
 **Headers**: `Accept-Encoding: identity`
@@ -302,9 +302,9 @@ Returns top 100 meme tokens launched via Pulse platform, scored and ranked by an
 ### Example Request
 
 ```bash
-curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/exclusive/rank/list?chainId=56' \
+curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/exclusive/rank/list/ai?chainId=56' \
 -H 'Accept-Encoding: identity' \
--H 'User-Agent: binance-web3/2.0 (Skill)'
+-H 'User-Agent: binance-web3/2.1 (Skill)'
 ```
 
 ### Response (`data.tokens[]`)
@@ -352,7 +352,7 @@ curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/mark
 
 **URL**:
 ```
-https://web3.binance.com/bapi/defi/v1/public/wallet-direct/market/leaderboard/query
+https://web3.binance.com/bapi/defi/v1/public/wallet-direct/market/leaderboard/query/ai
 ```
 
 **Headers**: `Accept-Encoding: identity`
@@ -381,9 +381,9 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/market/leaderboard/qu
 ### Example Request
 
 ```bash
-curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/market/leaderboard/query?tag=ALL&pageNo=1&chainId=CT_501&pageSize=25&sortBy=0&orderBy=0&period=30d' \
+curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/market/leaderboard/query/ai?tag=ALL&pageNo=1&chainId=CT_501&pageSize=25&sortBy=0&orderBy=0&period=30d' \
 -H 'Accept-Encoding: identity' \
--H 'User-Agent: binance-web3/2.0 (Skill)'
+-H 'User-Agent: binance-web3/2.1 (Skill)'
 ```
 
 ### Response
@@ -429,7 +429,7 @@ curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/market/leaderbo
 
 ## User Agent Header
 
-Include `User-Agent` header with the following string: `binance-web3/2.0 (Skill)`
+Include `User-Agent` header with the following string: `binance-web3/2.1 (Skill)`
 
 ## Notes
 

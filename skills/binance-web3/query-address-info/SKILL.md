@@ -6,7 +6,7 @@ description: |
   Use this skill when users ask about wallet balance, token holds, portfolio, or asset positions for any blockchain address.
 metadata:
   author: binance-web3-team
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Query Address Info Skill
@@ -27,7 +27,7 @@ This skill queries any on-chain wallet address for token holdings, supporting:
 
 **URL**: 
 ```
-https://web3.binance.com/bapi/defi/v3/public/wallet-direct/buw/wallet/address/pnl/active-position-list
+https://web3.binance.com/bapi/defi/v3/public/wallet-direct/buw/wallet/address/pnl/active-position-list/ai
 ```
 
 **Request Parameters**:
@@ -43,16 +43,16 @@ https://web3.binance.com/bapi/defi/v3/public/wallet-direct/buw/wallet/address/pn
 clienttype: web
 clientversion: 1.2.0
 Accept-Encoding: identity
-User-Agent: binance-web3/1.0 (Skill)
+User-Agent: binance-web3/1.1 (Skill)
 ```
 
 **Example Request**:
 ```bash
-curl --location 'https://web3.binance.com/bapi/defi/v3/public/wallet-direct/buw/wallet/address/pnl/active-position-list?address=0x0000000000000000000000000000000000000001&chainId=56&offset=0' \
+curl --location 'https://web3.binance.com/bapi/defi/v3/public/wallet-direct/buw/wallet/address/pnl/active-position-list/ai?address=0x0000000000000000000000000000000000000001&chainId=56&offset=0' \
 --header 'clienttype: web' \
 --header 'clientversion: 1.2.0' \
 --header 'Accept-Encoding: identity' \
---header 'User-Agent: binance-web3/1.0 (Skill)'
+--header 'User-Agent: binance-web3/1.1 (Skill)'
 ```
 
 **Response Example**:
@@ -114,7 +114,7 @@ curl --location 'https://web3.binance.com/bapi/defi/v3/public/wallet-direct/buw/
 
 ## User Agent Header
 
-Include `User-Agent` header with the following string: `binance-web3/1.0 (Skill)`
+Include `User-Agent` header with the following string: `binance-web3/1.1 (Skill)`
 
 ## Notes
 

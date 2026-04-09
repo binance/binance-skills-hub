@@ -6,7 +6,7 @@ description: |
   Use this skill when users are looking for investment opportunities — smart money signals can serve as valuable references for potential trades.
 metadata:
   author: binance-web3-team
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Trading Signal Skill
@@ -28,14 +28,14 @@ This skill retrieves on-chain Smart Money trading signals to help users track pr
 
 **URL**: 
 ```
-https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/web/signal/smart-money
+https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/web/signal/smart-money/ai
 ```
 
 **Request Headers**:
 ```
 Content-Type: application/json
 Accept-Encoding: identity
-User-Agent: binance-web3/1.0 (Skill)
+User-Agent: binance-web3/1.1 (Skill)
 ```
 
 **Request Body**:
@@ -58,10 +58,10 @@ User-Agent: binance-web3/1.0 (Skill)
 
 **Example Request**:
 ```bash
-curl --location 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/web/signal/smart-money' \
+curl --location 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/web/signal/smart-money/ai' \
 --header 'Content-Type: application/json' \
 --header 'Accept-Encoding: identity' \
---header 'User-Agent: binance-web3/1.0 (Skill)' \
+--header 'User-Agent: binance-web3/1.1 (Skill)' \
 --data '{"page":1,"pageSize":100,"chainId":"CT_501"}'
 ```
 
@@ -206,7 +206,7 @@ curl --location 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/
 
 ## User Agent Header
 
-Include `User-Agent` header with the following string: `binance-web3/1.0 (Skill)`
+Include `User-Agent` header with the following string: `binance-web3/1.1 (Skill)`
 
 ## Use Cases
 
@@ -220,19 +220,19 @@ Include `User-Agent` header with the following string: `binance-web3/1.0 (Skill)
 
 ### Get Smart Money Signals on Solana
 ```bash
-curl --location 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/web/signal/smart-money' \
+curl --location 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/web/signal/smart-money/ai' \
 --header 'Content-Type: application/json' \
 --header 'Accept-Encoding: identity' \
---header 'User-Agent: binance-web3/1.0 (Skill)' \
+--header 'User-Agent: binance-web3/1.1 (Skill)' \
 --data '{"smartSignalType":"","page":1,"pageSize":50,"chainId":"CT_501"}'
 ```
 
 ### Get Signals on BSC
 ```bash
-curl --location 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/web/signal/smart-money' \
+curl --location 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/web/signal/smart-money/ai' \
 --header 'Content-Type: application/json' \
 --header 'Accept-Encoding: identity' \
---header 'User-Agent: binance-web3/1.0 (Skill)' \
+--header 'User-Agent: binance-web3/1.1 (Skill)' \
 --data '{"smartSignalType":"","page":1,"pageSize":50,"chainId":"56"}'
 ```
 

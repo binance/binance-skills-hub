@@ -1,6 +1,7 @@
 # Binance Authentication
 
-All trading endpoints require HMAC SHA256 signed requests.
+All trading endpoints require either HMAC SHA256, RSA, or Ed25519 signed requests.
+**Always detect the key type before signing**, do not assume HMAC.
 
 ## Base URLs
 
@@ -12,7 +13,7 @@ All trading endpoints require HMAC SHA256 signed requests.
 ## Required Headers
 
 * `X-MBX-APIKEY`: your_api_key
-* `User-Agent`: binance-derivatives-trading-usds-futures/1.0.0 (Skill)
+* `User-Agent`: binance-derivatives-trading-usds-futures/1.1.0 (Skill)
 
 ## Signing Process
 
@@ -68,8 +69,7 @@ Create Ed25519 signature of the query string using your private key:
 ```bash
 # Example using openssl
 echo -n "symbol=BTCUSDT&side=BUY&type=MARKET&quantity=0.001&timestamp=1234567890123" | \
-  openssl pkeyut -pubout -in private_key.pem -outform DER | \
-  openssl dgst -sha256 -sign private_key.pem | base64
+  openssl pkeyutl -sign -inkey private_key.pem | base64
 ```
 
 ### Step 4: Append Signature
@@ -79,7 +79,7 @@ Add signature parameter to the query string:
 
 ### Step 5: Add Product User Agent Header
 
-Include `User-Agent` header with the following string: `binance-derivatives-trading-usds-futures/1.0.0 (Skill)`
+Include `User-Agent` header with the following string: `binance-derivatives-trading-usds-futures/1.1.0 (Skill)`
 
 #### Complete Example
 
@@ -87,7 +87,7 @@ Request:
 ```bash
 curl -X POST "https://fapi.binance.com/fapi/v1/order" \
   -H "X-MBX-APIKEY: your_api_key" \
-  -H "User-Agent: binance-derivatives-trading-usds-futures/1.0.0 (Skill)" \
+  -H "User-Agent: binance-derivatives-trading-usds-futures/1.q.0 (Skill)" \
   -d "symbol=BTCUSDT&side=BUY&type=MARKET&quantity=0.001&timestamp=1234567890123&signature=..."
 ```
 
@@ -104,12 +104,20 @@ TIMESTAMP=$(date +%s000)
 QUERY="symbol=BTCUSDT&side=BUY&type=MARKET&quantity=0.001&timestamp=${TIMESTAMP}"
 
 # Generate signature
+# For HMAC SHA256:
 SIGNATURE=$(echo -n "$QUERY" | openssl dgst -sha256 -hmac "$SECRET_KEY" | cut -d' ' -f2)
+
+# For RSA or Ed25519, replace the above line with the appropriate signing command.
+##  RSA:
+# SIGNATURE=$(echo -n "$QUERY" | openssl dgst -sha256 -sign private_key.pem | base64)
+
+##  Ed25519:
+# SIGNATURE=$(echo -n "$QUERY" | openssl pkeyutl -sign -inkey private_key.pem | base64)
 
 # Make request
 curl -X POST "${BASE_URL}/fapi/v1/order?${QUERY}&signature=${SIGNATURE}" \
   -H "X-MBX-APIKEY: ${API_KEY}"\
-  -H "User-Agent: binance-derivatives-trading-usds-futures/1.0.0 (Skill)"
+  -H "User-Agent: binance-derivatives-trading-usds-futures/1.1.0 (Skill)"
 ```
 
 If you get -1021 Timestamp outside recvWindow:

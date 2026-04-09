@@ -6,7 +6,7 @@ description: |
   Supports pure text posts.
 metadata:
   author: binance-square
-  version: "1.1"
+  version: "1.2"
 ---
 
 # Square Post Skill
@@ -38,7 +38,7 @@ https://www.binance.com/bapi/composite/v1/public/pgc/openApi/content/add
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| bodyTextOnly | string | Yes | Post content text (supports #hashtags) |
+| bodyTextOnly | string | Yes | Post content text |
 
 ### Example Request
 
@@ -147,6 +147,7 @@ Accounts:
 5. **Store provided keys**: When user provides a new key, update the Accounts section in this file
 6. **Optimize content before posting**:
    - Polish user's raw input for better readability
+   - Do NOT auto-add hashtags (#xxx) during optimization — keep any hashtags the user wrote, but never add new ones
    - Show optimized content and ask user to choose: use optimized version or post original text
 7. **Return post URL on success**: After successful post, return the URL `https://www.binance.com/square/post/{id}`
 8. **Handle missing id**: If code is `000000` but `data.id` is empty or missing, inform user that post may have succeeded but URL is unavailable, suggest checking Square page manually

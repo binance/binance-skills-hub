@@ -8,7 +8,7 @@ description: |
   pump.fun tokens, four.meme tokens, fast meme trading, market hot topics, or trending narratives.
 metadata:
   author: binance-web3-team
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Meme Rush Skill
@@ -29,7 +29,6 @@ metadata:
 |----------|-------|-------------|
 | 10 | Latest | Newest hot topics |
 | 20 | Rising | Rising topics with all-time high inflow between $1k–$20k |
-| 30 | Viral | Viral topics with all-time high inflow above $20k |
 
 ## Use Cases
 
@@ -80,7 +79,7 @@ metadata:
 
 **URL**:
 ```
-https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/rank/list
+https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/rank/list/ai
 ```
 
 **Headers**: `Content-Type: application/json`, `Accept-Encoding: identity`
@@ -158,10 +157,10 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/tok
 ### Example Request
 
 ```bash
-curl -X POST 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/rank/list' \
+curl -X POST 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/pulse/rank/list/ai' \
 -H 'Content-Type: application/json' \
 -H 'Accept-Encoding: identity' \
--H 'User-Agent: binance-web3/1.0 (Skill)' \
+-H 'User-Agent: binance-web3/1.1 (Skill)' \
 -d '{"chainId":"CT_501","rankType":10,"limit":20}'
 ```
 
@@ -258,7 +257,7 @@ curl -X POST 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wal
 
 **URL**:
 ```
-https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/social-rush/rank/list
+https://web3.binance.com/bapi/defi/v2/public/wallet-direct/buw/wallet/market/token/social-rush/rank/list/ai
 ```
 
 **Headers**: `Accept-Encoding: identity`
@@ -270,10 +269,10 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/tok
 | Field | Type | Description |
 |-------|------|-------------|
 | chainId | string | Chain ID: `56`, `CT_501` |
-| rankType | integer | `10`=Latest, `20`=Rising, `30`=Viral |
-| sort | integer | Sort by: `10`=create time, `20`=net inflow, `30`=viral time |
+| rankType | integer | `10`=Latest, `20`=Rising |
+| sort | integer | Sort by: `10`=create time, `20`=net inflow |
 
-> **Sort convention**: When the user does not specify a sort preference, use `sort=10` (create time) for Latest/Rising, and `sort=30` (viral time) for Viral.
+> **Sort convention**: When the user does not specify a sort preference, use `sort=10` (create time) for Latest/Rising.
 
 **Optional Parameters**:
 
@@ -288,9 +287,9 @@ https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/tok
 ### Example Request
 
 ```bash
-curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/market/token/social-rush/rank/list?chainId=CT_501&rankType=30&sort=30&asc=false' \
+curl 'https://web3.binance.com/bapi/defi/v2/public/wallet-direct/buw/wallet/market/token/social-rush/rank/list/ai?chainId=CT_501&rankType=10&sort=10&asc=false' \
 -H 'Accept-Encoding: identity' \
--H 'User-Agent: binance-web3/1.0 (Skill)'
+-H 'User-Agent: binance-web3/1.1 (Skill)'
 ```
 
 ### Response (`data[]`)
@@ -344,7 +343,7 @@ curl 'https://web3.binance.com/bapi/defi/v1/public/wallet-direct/buw/wallet/mark
 
 ## User Agent Header
 
-Include `User-Agent` header with the following string: `binance-web3/1.0 (Skill)`
+Include `User-Agent` header with the following string: `binance-web3/1.1 (Skill)`
 
 ## Notes
 
