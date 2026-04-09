@@ -1,9 +1,9 @@
 # Binance Auth
 
-API Keys (required)
+API Key and Secret
 
 - `BINANCE_API_KEY `: Binance API Key
-- `BINANCE_API_SECRET`: Binance API Secret or Private Key
+- `BINANCE_SECRET_KEY`: Binance API Secret or Private Key
 
 API Environment (optional)
 
@@ -16,6 +16,8 @@ API Environment (optional)
 binance-cli profile create --name <name> --api-key <key> --api-secret <secret> --env <prod|testnet|demo>
 # Switch
 binance-cli profile change --name <name>
+# List all profiles
+binance-cli profile list
 # View active
 binance-cli profile view
 ```

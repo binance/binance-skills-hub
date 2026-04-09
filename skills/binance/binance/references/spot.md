@@ -17,7 +17,7 @@
 | `get-trades` | `symbol` [`limit`] | Recent trades |
 | `agg-trades` | `symbol` [`fromId` `startTime` `endTime` `limit`] | Aggregated trades |
 
-### Account
+### Account (auth required)
 
 | Endpoint | Key params | Description |
 |---|---|---|
@@ -26,7 +26,7 @@
 | `my-trades` | `symbol` [`orderId` `startTime` `endTime` `fromId` `limit`] | Trade history |
 | `rate-limit-order` | — | Unfilled order count |
 
-### Orders
+### Orders (auth required)
 
 | Endpoint | Key params | Description |
 |---|---|---|

@@ -2,15 +2,12 @@
 name: binance
 description: Use binance-cli for Binance Spot, Futures (USD-S), and Convert. Requires auth.
 metadata:
-  version: 1.0.0
+  version: 1.0.1
   author: Binance
   openclaw:
     requires:
       bins:
         - binance-cli
-      env:
-        - BINANCE_API_KEY
-        - BINANCE_API_SECRET
     install:
       - kind: node
         package: '@binance/binance-cli'
