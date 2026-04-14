@@ -19,9 +19,19 @@ Promise.all([
   const current = await idx.json();
   const rates = await history.json();
   const stats = await ticker.json();
-  
+
+  if (!current || typeof current.lastFundingRate !== 'string') {
+    throw new Error('Invalid premiumIndex response: missing lastFundingRate');
+  }
+  if (!Array.isArray(rates)) {
+    throw new Error('Invalid fundingRate response: expected array');
+  }
+  if (!stats || typeof stats.lastPrice !== 'string') {
+    throw new Error('Invalid 24hr ticker response: missing lastPrice');
+  }
+
   const rate = parseFloat(current.lastFundingRate) * 100;
-  
+
   console.log(`=== ${coin.toUpperCase()} Analysis ===`);
   console.log('');
   console.log('Current Rate:', rate.toFixed(4) + '%');
@@ -38,14 +48,31 @@ Promise.all([
     const time = new Date(r.fundingTime).toISOString().slice(5,16).replace('T',' ');
     console.log(' ', time, rt.toFixed(4) + '%');
   });
+}).catch(err => {
+  console.error('Error:', err.message);
+  process.exit(1);
 });
 
 function fetch(url) {
   return new Promise((resolve, reject) => {
-    https.get(url, res => {
+    const req = https.get(url, res => {
       let data = '';
+      if (res.statusCode < 200 || res.statusCode >= 300) {
+        reject(new Error(`HTTP ${res.statusCode} from ${url}`));
+        return;
+      }
       res.on('data', chunk => data += chunk);
-      res.on('end', () => resolve({ json: () => JSON.parse(data) }));
-    }).on('error', reject);
+      res.on('end', () => resolve({
+        json: () => {
+          try {
+            return JSON.parse(data);
+          } catch (e) {
+            throw new Error(`Invalid JSON from ${url}: ${e.message}`);
+          }
+        }
+      }));
+    });
+    req.setTimeout(10000, () => reject(new Error(`Timeout fetching ${url}`)));
+    req.on('error', reject);
   });
 }

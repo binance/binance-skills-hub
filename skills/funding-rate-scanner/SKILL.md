@@ -44,14 +44,14 @@ console.log(opportunities);
 Symbol: BTCUSDT
 Funding Rate: -0.05%
 Next Funding: 2h 30m
-Daily Earnings: 0.15% (3 payments)
-Recommendation: Open long position
+Indicative funding per day at current rate: 0.15% (3 payments)
+Observation: Negative funding currently favors longs receiving funding, subject to market risk
 
 Symbol: ETHUSDT
 Funding Rate: -0.03%
 Next Funding: 2h 30m
-Daily Earnings: 0.09% (3 payments)
-Recommendation: Open long position
+Indicative funding per day at current rate: 0.09% (3 payments)
+Observation: Negative funding currently favors longs receiving funding, subject to market risk
 ```
 
 ## Installation
@@ -71,6 +71,10 @@ Use this skill when:
 - Read-only API calls (no trading)
 - No API key required
 - Rate limit: 1200 requests/minute (Binance public API)
+
+## Disclaimer
+
+This tool is for informational purposes only and does not constitute investment advice. Funding rates can change rapidly, and trading cryptocurrency involves significant risk. Always do your own research before making any financial decisions.
 
 ## Metadata
 
