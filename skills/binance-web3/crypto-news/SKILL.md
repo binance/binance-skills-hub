@@ -351,3 +351,7 @@ NS3 (ns3.ai) is an AI-powered crypto news intelligence platform by Assemble AI. 
 
 Website: https://ns3.ai | Docs: https://docs.ns3.ai/ns3-api | About: https://about.ns3.ai
 App Store: https://apps.apple.com/us/app/ns3-crypto-news-ranked-by-ai/id6572281552 | Google Play: https://play.google.com/store/apps/details?id=com.sta1.front
+
+## Disclaimer
+
+NS3 data and any analysis derived from it are provided for informational purposes only and do not constitute financial, investment, trading, or tax advice. Nothing in NS3 feeds should be interpreted as a recommendation to buy, sell, or hold any asset. Users are responsible for their own decisions and should consult a qualified professional before acting on any information.
