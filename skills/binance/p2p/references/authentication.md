@@ -2,11 +2,9 @@
 
 All P2P personal order endpoints (SAPI) require HMAC SHA256 signed requests.
 
-## Base URLs
+## Base URL
 
-| Environment | URL |
-|-------------|-----|
-| Mainnet | https://api.binance.com |
+`https://api.binance.com`
 
 ## Required Headers
 
@@ -88,7 +86,8 @@ QUERY="page=1&rows=20&recvWindow=60000&timestamp=${TIMESTAMP}"
 SIGNATURE=$(echo -n "$QUERY" | openssl dgst -sha256 -hmac "$SECRET_KEY" | cut -d' ' -f2)
 
 # Make request
-curl -X GET "${BASE_URL}/sapi/v1/c2c/orderMatch/listUserOrderHistory?${QUERY}&signature=${SIGNATURE}" \
+curl -X GET \
+  "${BASE_URL}/sapi/v1/c2c/orderMatch/listUserOrderHistory?${QUERY}&signature=${SIGNATURE}" \
   -H "X-MBX-APIKEY: ${API_KEY}" \
   -H "User-Agent: binance-wallet/1.0.0 (Skill)"
 ```
