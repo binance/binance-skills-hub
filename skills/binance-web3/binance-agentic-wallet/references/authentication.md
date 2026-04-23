@@ -4,8 +4,8 @@
 
 Authentication flow:
 
-1. **Initiate sign-in** — run `auth signin --json` and display the returned `pairingCode` to the user.
-2. **Open the link for the user** — open the returned `urlForWeb` in the browser directly (e.g., `open "<urlForWeb>"` on macOS). Also display the `urlForWeb` as a clickable link so the user can open it manually if the browser fails to launch.
+1. **Initiate sign-in** — run `auth signin --json` and display the returned `pairingCode` to the user. The `pairingCode` must be displayed verbatim.
+2. **Open the link for the user** — open the returned `urlForWeb` in the browser directly (e.g., `open "<urlForWeb>"` on macOS). The `urlForWeb` must be used verbatim from the JSON response — never modify, truncate, or reconstruct it. Also display the `urlForWeb` as a clickable link so the user can open it manually if the browser fails to launch.
 3. **Confirm in Binance App** — the user verifies the `pairingCode` matches and confirms sign-in in the Binance Wallet App.
 4. **Verify** — run `auth verify --qrCodeId <qrCodeId> --json`. This blocks until the user confirms in the Binance App (or times out after 5 minutes).
 
