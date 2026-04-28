@@ -5,8 +5,8 @@ Extensions are checked in order — first match wins.
 PIX is checked before C2C because C2C is the catch-all fallback.
 """
 from .base import PaymentExtension
-from .c2c_extension import C2cExtension
-from .pix_extension import PixExtension
+from .c2c import C2cExtension
+from .pix import PixExtension
 
 # Ordered list: specific detectors first, fallback last
 EXTENSIONS = [PixExtension(), C2cExtension()]
