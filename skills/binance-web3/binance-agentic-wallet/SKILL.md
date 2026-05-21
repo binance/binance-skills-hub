@@ -5,11 +5,13 @@ description: |
   check balance, how much crypto do I have, send BNB/USDT/crypto, transfer tokens, swap tokens,
   buy/sell token, DEX trade, limit order, market order, cancel order, get a quote, transaction history,
   wallet settings, daily limit, slippage, MEV protection, supported chains, available networks,
+  prediction market, predict.fun, YES/NO market, place a prediction,
+  redeem winnings, claim payout, prediction portfolio, prediction PnL,
   or any on-chain wallet operation.
 metadata:
   author: binance-web3-team
-  version: "1.0.1"
-  requiredCliVersion: "1.0.9"
+  version: "1.1.0"
+  requiredCliVersion: "1.1.0"
   openclaw:
     requires:
       bins:
@@ -23,30 +25,45 @@ metadata:
 
 # Binance Agentic Wallet Skill
 
-This skill drives the `baw` CLI to manage a Binance Web3 wallet — sign-in/sign-out, balance and history queries, security settings, token transfers, DEX swaps (market orders), limit orders, and order management.
+This skill drives the `baw` CLI to manage a Binance Web3 wallet — sign-in/sign-out, balance and history queries, security settings, token transfers, DEX swaps (market orders), limit orders, order management, and prediction market trading.
 
 ## Command Routing
 
-| User Intent                                                          | Command                       | Reference                                         |
-|----------------------------------------------------------------------|-------------------------------|---------------------------------------------------|
-| Sign in / connect wallet                                             | `auth signin` → `auth verify` | [authentication.md](references/authentication.md) |
-| Sign out / disconnect wallet                                         | `auth signout`                | [authentication.md](references/authentication.md) |
-| Check if wallet is connected                                         | `wallet status`               | [wallet-view.md](references/wallet-view.md)       |
-| List supported chains / available networks                           | `wallet chains`               | [wallet-view.md](references/wallet-view.md)       |
-| Get my wallet address                                                | `wallet address`              | [wallet-view.md](references/wallet-view.md)       |
-| Check token balances                                                 | `wallet balance`              | [wallet-view.md](references/wallet-view.md)       |
-| View transaction history                                             | `wallet tx-history`           | [wallet-view.md](references/wallet-view.md)       |
-| View security settings                                               | `wallet settings`             | [wallet-setting.md](references/wallet-setting.md) |
-| Check remaining daily quota                                          | `wallet left-quota`           | [wallet-view.md](references/wallet-view.md)       |
-| Check if any transactions are pending or require double-confirmation | `wallet tx-lock`              | [wallet-view.md](references/wallet-view.md)       |
-| Send / transfer tokens                                               | `wallet send`                 | [send.md](references/send.md)                     |
-| Swap tokens at market price                                          | `market-order swap`           | [market-order.md](references/market-order.md)     |
-| Get a swap quote without trading                                     | `market-order quote`          | [market-order.md](references/market-order.md)     |
-| List or check market order status                                    | `market-order list`           | [market-order.md](references/market-order.md)     |
-| Buy a token at a target price (limit order)                          | `limit-order buy`             | [limit-order.md](references/limit-order.md)       |
-| Sell a token at a target price (limit order)                         | `limit-order sell`            | [limit-order.md](references/limit-order.md)       |
-| List or check limit order status                                     | `limit-order list`            | [limit-order.md](references/limit-order.md)       |
-| Cancel a limit order                                                 | `limit-order cancel`          | [limit-order.md](references/limit-order.md)       |
+| User Intent                                                          | Command                               | Reference                                         |
+|----------------------------------------------------------------------|---------------------------------------|---------------------------------------------------|
+| Sign in / connect wallet                                             | `auth signin` → `auth verify`         | [authentication.md](references/authentication.md) |
+| Sign out / disconnect wallet                                         | `auth signout`                        | [authentication.md](references/authentication.md) |
+| Check if wallet is connected                                         | `wallet status`                       | [wallet-view.md](references/wallet-view.md)       |
+| List supported chains / available networks                           | `wallet chains`                       | [wallet-view.md](references/wallet-view.md)       |
+| Get my wallet address                                                | `wallet address`                      | [wallet-view.md](references/wallet-view.md)       |
+| Check token balances                                                 | `wallet balance`                      | [wallet-view.md](references/wallet-view.md)       |
+| View transaction history                                             | `wallet tx-history`                   | [wallet-view.md](references/wallet-view.md)       |
+| View security settings and remaining daily quota                     | `wallet settings`                     | [wallet-setting.md](references/wallet-setting.md) |
+| Check if any transactions are pending or require double-confirmation | `wallet tx-lock`                      | [wallet-view.md](references/wallet-view.md)       |
+| Send / transfer tokens                                               | `wallet send`                         | [send.md](references/send.md)                     |
+| Swap tokens at market price                                          | `market-order swap`                   | [market-order.md](references/market-order.md)     |
+| Get a swap quote without trading                                     | `market-order quote`                  | [market-order.md](references/market-order.md)     |
+| List or check market order status                                    | `market-order list`                   | [market-order.md](references/market-order.md)     |
+| Buy a token at a target price (limit order)                          | `limit-order buy`                     | [limit-order.md](references/limit-order.md)       |
+| Sell a token at a target price (limit order)                         | `limit-order sell`                    | [limit-order.md](references/limit-order.md)       |
+| List or check limit order status                                     | `limit-order list`                    | [limit-order.md](references/limit-order.md)       |
+| Cancel a limit order                                                 | `limit-order cancel`                  | [limit-order.md](references/limit-order.md)       |
+| List prediction market categories                                    | `prediction category list`            | [prediction.md](references/prediction.md)         |
+| Browse / list prediction markets                                     | `prediction market list`              | [prediction.md](references/prediction.md)         |
+| Get prediction market details                                        | `prediction market detail`            | [prediction.md](references/prediction.md)         |
+| Search prediction markets by keyword                                 | `prediction market search`            | [prediction.md](references/prediction.md)         |
+| Get prediction order book                                            | `prediction market order-book`        | [prediction.md](references/prediction.md)         |
+| Get last trade price for a prediction market                         | `prediction market last-trade-price`  | [prediction.md](references/prediction.md)         |
+| List my prediction positions                                         | `prediction position list`            | [prediction.md](references/prediction.md)         |
+| Look up a prediction position by token ID                            | `prediction position token`           | [prediction.md](references/prediction.md)         |
+| View settled prediction history (win/lose/draw)                      | `prediction position settled-history` | [prediction.md](references/prediction.md)         |
+| Query prediction PnL records                                         | `prediction position pnl`             | [prediction.md](references/prediction.md)         |
+| Prediction portfolio summary / unrealized PnL                        | `prediction position portfolio`       | [prediction.md](references/prediction.md)         |
+| View prediction order history                                        | `prediction order history`            | [prediction.md](references/prediction.md)         |
+| Get a prediction trade quote                                         | `prediction trade quote`              | [prediction.md](references/prediction.md)         |
+| Place a prediction order (bet on an outcome)                         | `prediction trade place-order`        | [prediction.md](references/prediction.md)         |
+| Cancel a prediction order                                            | `prediction trade cancel`             | [prediction.md](references/prediction.md)         |
+| Redeem / claim winning prediction positions                          | `prediction trade redeem`             | [prediction.md](references/prediction.md)         |
 
 ---
 

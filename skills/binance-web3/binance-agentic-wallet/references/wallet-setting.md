@@ -1,6 +1,6 @@
 # Wallet Settings
 
-View the wallet's current security configuration. Settings can only be changed in the Binance App — this command is read-only.
+View the wallet's current security configuration and daily quota. Settings can only be changed in the Binance App — this command is read-only.
 
 ## `wallet settings`
 
@@ -31,6 +31,11 @@ baw wallet settings --json
     "dailyLimit": 50000,
     "abnormalTxnHandling": "AutoReject",
     "tradeAllTokens": false,
+    "predictionEnabled": true,
+    "predictionDailyLimit": 50000,
+    "predictionQuotaUsed": 0,
+    "predictionQuotaLeft": 50000,
+    "predictionQuotaDate": "2026-04-03",
     "quotaUsed": 0,
     "quotaLeft": 50000,
     "quotaDate": "2026-04-03",
@@ -48,11 +53,16 @@ Returns the current security settings:
     - `AutoReject` — automatically block abnormal transactions without prompting the user.
     - `NeedConfirmation` — send a double-confirm request to the Binance App and wait for the user to approve or reject.
 - **tradeAllTokens** — whether the wallet can trade any token or only those on the allowed list.
+- **predictionEnabled** — whether prediction-market trading (see [`prediction`](./prediction.md) commands) is enabled for this wallet. When `false`, `prediction trade *` calls will be rejected by policy.
+- **predictionDailyLimit** — maximum total prediction-trade value (in USD) allowed in a 24-hour period. **Independent from `dailyLimit`**: prediction trades only consume `predictionQuotaUsed`.
 
 The response also includes current status information:
 - **quotaUsed** — how much of the daily limit (in USD) has been consumed so far today.
 - **quotaLeft** — remaining daily limit (in USD) available for transactions today.
 - **quotaDate** — the date these quota figures apply to.
+- **predictionQuotaUsed** — how much of `predictionDailyLimit` has been consumed by prediction trades today.
+- **predictionQuotaLeft** — remaining prediction-trade quota available today.
+- **predictionQuotaDate** — the date these prediction-quota figures apply to.
 - **inactiveSignOutTime** - when the agent will sign out due to the inactive signout duration settings.
 - **sessionExpireTime** — when the current session will expire and the wallet will automatically sign out.
 
@@ -65,4 +75,4 @@ Settings cannot be changed via the CLI. To update them, follow these steps in th
 3. Tap the **settings icon** in the top-right corner to enter wallet Settings.
 4. Adjust the desired security settings.
 
-When a transaction is rejected because of a security policy (e.g., token not on the allowed list, daily limit exceeded), use `wallet settings` to explain the restriction and guide the user to the App to make adjustments.
+When a transaction is rejected because of a security policy (e.g., token not on the allowed list, daily limit exceeded, prediction disabled, prediction daily limit exceeded), use `wallet settings` to explain the restriction and guide the user to the App to make adjustments.

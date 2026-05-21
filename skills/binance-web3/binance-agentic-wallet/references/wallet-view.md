@@ -269,42 +269,6 @@ baw wallet tx-history --tx 0xabc123... --json
 
 ---
 
-## `wallet left-quota`
-
-Check how much of the daily trading quota is still available.
-
-### Syntax
-
-```bash
-baw wallet left-quota --json
-```
-
-### Parameters
-
-No command-specific parameters.
-
-### Example
-
-```bash
-baw wallet left-quota --json
-```
-
-### Response
-
-```json
-{
-  "success": true,
-  "data": {
-    "quotaUsed": 0,
-    "quotaLeft": 50000,
-    "dailyLimit": 50000,
-    "date": "2026-04-01"
-  }
-}
-```
-
----
-
 ## `wallet tx-lock`
 
 Check whether the wallet is currently locked from sending new transactions.
