@@ -29,7 +29,7 @@
 | get-detail-on-sub-accounts-futures-account | `email` [] | Get Detail on Sub-account\'s Futures Account (For Master Account) |
 | get-detail-on-sub-accounts-futures-account-v2 | `email` `futures-type` [] | Get Detail on Sub-account\'s Futures Account V2 (For Master Account) |
 | get-detail-on-sub-accounts-margin-account | `email` [] | Get Detail on Sub-account\'s Margin Account (For Master Account) |
-| get-move-position-history-for-sub-account | `symbol` `page` `row` [`start-time` `end-time`] | Get Move Position History for Sub-account (For Master Account) |
+| get-move-position-history-for-sub-account | `symbol` `page` `rows` [`start-time` `end-time`] | Get Move Position History for Sub-account (For Master Account) |
 | get-sub-account-deposit-address | `email` `coin` [`network` `amount`] | Get Sub-account Deposit Address (For Master Account) |
 | get-sub-account-deposit-history | `email` [`coin` `status` `start-time` `end-time` `limit` `offset`  `tx-id`] | Get Sub-account Deposit History (For Master Account) |
 | get-summary-of-sub-accounts-futures-account | `page` `limit` [] | Get Summary of Sub-account\'s Futures Account (For Master Account) |

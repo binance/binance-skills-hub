@@ -36,6 +36,7 @@
 | avg-price | `symbol` [] | Current average price |
 | depth | `symbol` [`limit` `symbol-status`] | Order book |
 | get-trades | `symbol` [`limit`] | Recent trades list |
+| historical-block-trades | `symbol` `from-id` [`limit`] | Historical Block Trades |
 | historical-trades | `symbol` [`limit` `from-id`] | Old trade lookup |
 | klines | `symbol` `interval` [`start-time` `end-time` `time-zone` `limit`] | Kline/Candlestick data |
 | reference-price | `symbol` [] | Query Reference Price |
@@ -98,7 +99,7 @@
 **pending-side:** `BUY` `SELL`
 **pending-time-in-force:** `GTC` `IOC` `FOK`
 **pending-type:** `LIMIT` `MARKET` `STOP_LOSS` `STOP_LOSS_LIMIT` `TAKE_PROFIT` `TAKE_PROFIT_LIMIT` `LIMIT_MAKER`
-**self-trade-prevention-mode:** `NONE` `EXPIRE_TAKER` `EXPIRE_MAKER` `EXPIRE_BOTH` `DECREMENT` `NON_REPRESENTABLE`
+**self-trade-prevention-mode:** `NONE` `EXPIRE_TAKER` `EXPIRE_MAKER` `EXPIRE_BOTH` `DECREMENT` `TRANSFER` `NON_REPRESENTABLE`
 **side:** `BUY` `SELL`
 **stop-limit-time-in-force:** `GTC` `IOC` `FOK`
 **symbol-status:** `TRADING` `END_OF_DAY` `HALT` `BREAK` `NON_REPRESENTABLE`
