@@ -40,7 +40,7 @@
 | Endpoint | Key params | Description |
 |---|---|---|
 | adl-risk | [`symbol`] | ADL Risk |
-| basis | `pair` `contract-type` `period` `limit` [`start-time` `end-time`] | Basis |
+| basis | `pair` `contract-type` `period` [`limit` `start-time` `end-time`] | Basis |
 | check-server-time | [] | Check Server Time |
 | composite-index-symbol-information | [`symbol`] | Composite Index Symbol Information |
 | compressed-aggregate-trades-list | `symbol` [`from-id` `start-time` `end-time` `limit`] | Compressed/Aggregate Trades List |
@@ -106,14 +106,14 @@
 | modify-isolated-position-margin | `symbol` `amount` `type` [`position-side`] | Modify Isolated Position Margin |
 | modify-multiple-orders | `batch-orders` [] | Modify Multiple Orders |
 | modify-order | `symbol` `side` `quantity` `price` [`order-id` `orig-client-order-id` `price-match`] | Modify Order |
-| new-algo-order | `algo-type` `symbol` `side` `type` [`position-side` `time-in-force` `quantity` `price` `trigger-price` `working-type` `price-match` `close-position` `price-protect` `reduce-only` `activate-price` `callback-rate` `client-algo-id` `new-order-resp-type` `self-trade-prevention-mode` `good-till-date`] | New Algo Order |
+| new-algo-order | `algo-type` `symbol` `side` `type` [`position-side` `time-in-force` `quantity` `price` `trigger-price` `working-type` `price-match` `close-position` `price-protect` `reduce-only` `activate-price` `callback-rate` `client-algo-id` `new-order-resp-type` `self-trade-prevention-mode` `good-till-date`] | New Algo Order<br>Use this endpoint to place  TP/SL (Take Profit / Stop Loss) and trailing stop orders |
 | new-order | `symbol` `side` `type` [`position-side` `time-in-force` `quantity` `reduce-only` `price` `new-client-order-id` `new-order-resp-type` `price-match` `self-trade-prevention-mode` `good-till-date`] | New Order |
 | place-multiple-orders | `batch-orders` [] | Place Multiple Orders |
 | position-adl-quantile-estimation | [`symbol`] | Position ADL Quantile Estimation |
 | position-information-v2 | [`symbol`] | Position Information V2 |
 | position-information-v3 | [`symbol`] | Position Information V3 |
 | query-algo-order | [`algo-id` `client-algo-id`] | Query Algo Order |
-| query-all-algo-orders | `symbol` [`algo-id` `start-time` `end-time` `page` `limit`] | Query All Algo Orders |
+| query-all-algo-orders | `symbol` [`algo-id` `start-time` `end-time` `limit`] | Query All Algo Orders |
 | query-current-open-order | `symbol` [`order-id` `orig-client-order-id`] | Query Current Open Order |
 | query-order | `symbol` [`order-id` `orig-client-order-id`] | Query Order |
 | test-order | `symbol` `side` `type` [`position-side` `time-in-force` `quantity` `reduce-only` `price` `new-client-order-id` `stop-price` `close-position` `activation-price` `callback-rate` `working-type` `price-protect` `new-order-resp-type` `price-match` `self-trade-prevention-mode` `good-till-date`] | Test Order |
@@ -132,7 +132,7 @@
 
 **auto-close-type:** `LIQUIDATION` `ADL`
 **contract-type:** `PERPETUAL` `CURRENT_MONTH` `NEXT_MONTH` `CURRENT_QUARTER` `NEXT_QUARTER` `PERPETUAL_DELIVERING`
-**interval:** `1m` `3m` `5m` `15m` `30m` `1h` `2h` `4h` `6h` `8h` `12h` `1d` `3d` `1w` `1M`
+**interval:** `1s` `1m` `3m` `5m` `15m` `30m` `1h` `2h` `4h` `6h` `8h` `12h` `1d` `3d` `1w` `1M`
 **margin-type:** `ISOLATED` `CROSSED`
 **new-order-resp-type:** `ACK` `RESULT`
 **period:** `5m` `15m` `30m` `1h` `2h` `4h` `6h` `12h` `1d`
