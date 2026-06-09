@@ -7,11 +7,12 @@ description: |
   wallet settings, daily limit, slippage, MEV protection, supported chains, available networks,
   prediction market, predict.fun, YES/NO market, place a prediction,
   redeem winnings, claim payout, prediction portfolio, prediction PnL,
+  x402 payment, HTTP 402 Payment Required, pay a known x402 API,
   or any on-chain wallet operation.
 metadata:
   author: binance-web3-team
-  version: "1.1.1"
-  requiredCliVersion: "1.1.1"
+  version: "1.2.0"
+  requiredCliVersion: "1.2.1"
   openclaw:
     requires:
       bins:
@@ -25,7 +26,7 @@ metadata:
 
 # Binance Agentic Wallet Skill
 
-This skill drives the `baw` CLI to manage a Binance Web3 wallet — sign-in/sign-out, balance and history queries, security settings, token transfers, DEX swaps (market orders), limit orders, order management, and prediction market trading.
+This skill drives the `baw` CLI to manage a Binance Web3 wallet — sign-in/sign-out, balance and history queries, security settings, token transfers, DEX swaps (market orders), limit orders, order management, prediction market trading, and x402 payments.
 
 ## Command Routing
 
@@ -64,6 +65,8 @@ This skill drives the `baw` CLI to manage a Binance Web3 wallet — sign-in/sign
 | Place a prediction order (bet on an outcome)                         | `prediction trade place-order`        | [prediction.md](references/prediction.md)         |
 | Cancel a prediction order                                            | `prediction trade cancel`             | [prediction.md](references/prediction.md)         |
 | Redeem / claim winning prediction positions                          | `prediction trade redeem`             | [prediction.md](references/prediction.md)         |
+| Preview x402 payment options from an HTTP 402 response               | `x402-payment preview`                | [x402-payment.md](references/x402-payment.md)     |
+| Sign a selected x402 payment option                                  | `x402-payment sign`                   | [x402-payment.md](references/x402-payment.md)     |
 
 ---
 
@@ -116,6 +119,8 @@ When a `baw` command returns an error message, follow these guidelines:
 ## Common Token Addresses
 
 When the user refers to any of these tokens by name (e.g., "send USDT", "swap BNB to USDT"), use the corresponding address from the following tables. For token names not listed here, use the `query-token-info` skill to look up the contract address. If that skill is not installed, ask the user: "Install `query-token-info` from https://github.com/binance/binance-skills-hub to look up this token?" and install only after a clear "yes" (or another clear affirmative).
+
+If the user refers to a US stock by ticker or company name, use the `binance-tokenized-securities-info` skill to resolve the contract and fetch on-chain price / market status. If not installed, ask: "Install `binance-tokenized-securities-info` from https://github.com/binance/binance-skills-hub to look up its info?" and install only after a clear "yes".
 
 ### BNB Smart Chain (BSC)
 | Token        | Address                                      |
