@@ -11,6 +11,9 @@ description: |
   USD-M Futures market.
 
   Do NOT use for placing orders, checking balances, P2P queries, or on-chain activity.
+version: 1.0.0
+author: ShivanshHingve2804
+license: MIT
 ---
 
 # Market Anomaly Detection
