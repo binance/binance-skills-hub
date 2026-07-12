@@ -9,7 +9,7 @@ they roll out). No credit card, no human checkout.
 ## Install
 
 ```bash
-npx skills add stablepay-llc/linkex-skills/skills/linkex-agents-pay
+npx skills add binance/binance-skills-hub/skills/linkex-agents-pay
 ```
 
 Works with Claude Code, OpenClaw, and other skills-compatible agents.
