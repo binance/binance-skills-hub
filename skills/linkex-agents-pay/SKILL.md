@@ -33,10 +33,13 @@ stablecoins on-chain — no credit card, no human checkout flow.
 | `LINKEX_API_KEY`  | Yes      | A Linkex API key (`sk-...`), created in the Linkex console. Used for both model calls and top-up order management. |
 | `LINKEX_BASE_URL` | No       | Gateway origin. Defaults to `https://linkex.ai`.          |
 
-If `LINKEX_API_KEY` is not set, guide the user: register at https://linkex.ai,
-create an API key in the console, and export it as an environment variable.
-Never ask the user to paste the key into chat if an environment variable or
-secrets file is available.
+If `LINKEX_API_KEY` is not present in the environment, check the agent's
+own configuration before asking the user — e.g. for Claude Code, the `env`
+block of `~/.claude/settings.json` or `.claude/settings.local.json` (offer
+to store the key there so every future session inherits it). Only if no
+stored key exists, guide the user: register at https://linkex.ai, create an
+API key in the console, and save it via the agent's settings or a secrets
+file. Never echo the key back into chat.
 
 ## Command Routing
 
