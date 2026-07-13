@@ -7,8 +7,6 @@ description: |
   creating or resuming a Linkex top-up order, paying a Linkex x402
   PaymentRequired challenge, or calling AI models (GPT, Claude, Gemini, ...)
   through the Linkex gateway.
-title: Linkex Agents Pay
-version: 0.1.0
 license: MIT
 metadata:
   author: cosmasu-blip
