@@ -10,7 +10,7 @@ description: |
 license: MIT
 metadata:
   author: cosmasu-blip
-  version: '0.1.0'
+  version: '0.2.0'
 ---
 
 # Linkex Agents Pay Skill
@@ -161,6 +161,24 @@ default 5):
 
 This keeps agents funded before calls start failing, instead of reacting to
 quota errors after the fact.
+
+### Optional: proactive guard (hook)
+
+The rule above only fires when a balance read happens. For agents that
+support lifecycle hooks (e.g. Claude Code), [scripts/balance-guard.sh](scripts/balance-guard.sh)
+can check the key after every conversation turn and print a warning when
+the balance is low — no keywords needed.
+
+- **Consent first**: NEVER register the hook silently. Offer it once
+  ("Want me to set up an automatic low-balance guard that runs after each
+  turn?") and install only on a clear "yes".
+- Claude Code install: add to the `hooks.Stop` array of
+  `~/.claude/settings.json`:
+  `{"type": "command", "command": "bash <absolute-skill-path>/scripts/balance-guard.sh"}`
+- The script is read-only (one debounce timestamp file aside), debounced to
+  one API check per 10 minutes, fails silent, and never creates orders or
+  spends anything.
+- To uninstall, remove that entry from `hooks.Stop`.
 
 ## Error Handling
 
