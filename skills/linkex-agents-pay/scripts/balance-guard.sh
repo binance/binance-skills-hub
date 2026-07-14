@@ -19,6 +19,15 @@ set -u
 
 KEY="${LINKEX_API_KEY:-}"
 [ -z "$KEY" ] && exit 0
+# Read the hook input from stdin (Claude Code passes JSON). If this firing
+# was itself caused by a previous stop-hook block, do nothing (loop guard).
+STDIN_JSON=$(cat 2>/dev/null || echo '{}')
+ACTIVE=$(printf '%s' "$STDIN_JSON" | python3 -c "
+import sys, json
+try: print(1 if json.load(sys.stdin).get('stop_hook_active') else 0)
+except Exception: print(0)" 2>/dev/null)
+[ "$ACTIVE" = "1" ] && exit 0
+
 BASE="${LINKEX_BASE_URL:-https://linkex.ai}"
 THRESHOLD="${LINKEX_LOW_BALANCE_USD:-5}"
 
@@ -54,9 +63,10 @@ PY
 
 is_low=$(python3 -c "print(1 if $remaining < $THRESHOLD else 0)" 2>/dev/null) || exit 0
 if [ "$is_low" = "1" ]; then
-  # Claude Code hook protocol: plain stdout from a Stop hook is not shown in
-  # the chat UI; a JSON object with "systemMessage" is rendered to the user.
-  # Other harnesses can still read the message field as plain text.
-  printf '{"systemMessage":"Low Linkex balance: this API key has $%s left (threshold $%s). Ask me to top up via x402."}\n' "$remaining" "$THRESHOLD"
+  # Stop-hook "block" protocol: the reason is handed to the model, which
+  # relays the warning to the user — plain stdout/systemMessage may not
+  # be rendered by every client. stop_hook_active + debounce prevent loops.
+  printf '{"decision":"block","reason":"Low Linkex balance: the API key has only $%s left (threshold $%s). Relay this warning to the user and offer the x402 top-up flow."}
+' "$remaining" "$THRESHOLD"
 fi
 exit 0
