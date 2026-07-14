@@ -32,6 +32,7 @@ stablecoins on-chain — no credit card, no human checkout flow.
 |-------------------|----------|----------------------------------------------------------|
 | `LINKEX_API_KEY`  | Yes      | A Linkex API key (`sk-...`), created in the Linkex console. Used for both model calls and top-up order management. |
 | `LINKEX_BASE_URL` | No       | Gateway origin. Defaults to `https://linkex.ai`.          |
+| `LINKEX_LOW_BALANCE_USD` | No | Low-balance warning threshold in USD. Defaults to `5`. |
 
 If `LINKEX_API_KEY` is not present in the environment, check the agent's
 own configuration before asking the user — e.g. for Claude Code, the `env`
@@ -143,6 +144,20 @@ and submit it as the JSON body of `POST /api/x402/pay/{orderId}` — see
   advice.
 - **Fail closed**: if the balance or config endpoint is unreachable, say so
   and stop; do not proceed to payment on stale data.
+
+## Low-Balance Warning
+
+Whenever a balance check runs — whether the user asked for it or it happened
+as part of another flow — compare `quota_usd` against the threshold
+(`LINKEX_LOW_BALANCE_USD`, default 5):
+
+- Below the threshold: tell the user the remaining balance and **offer** the
+  x402 top-up flow ("Your Linkex balance is $3.20 — top up with stablecoins
+  now?"). Do NOT create an order without consent (Confirm Before Spend).
+- At or above the threshold: report the balance normally; no upsell.
+
+This keeps agents funded before calls start failing, instead of reacting to
+quota errors after the fact.
 
 ## Error Handling
 
