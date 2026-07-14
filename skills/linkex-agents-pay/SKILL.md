@@ -74,9 +74,8 @@ Do not re-read reference files already read this session, do not re-check
 balances between steps, do not narrate intermediate JSON — summarize once
 at the end.
 
-**Small top-ups are poor value.** If the requested amount is below ~$10,
-mention once that the confirmation flow itself costs tokens and suggest a
-larger amount. Respect the user's final choice.
+Any amount within the merchant's min/max limits is fine — do not editorialize
+about the amount; proceed with what the user asked for.
 
 ## Wallet Handoff
 
