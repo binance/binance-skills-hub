@@ -38,10 +38,27 @@ export LINKEX_BASE_URL="https://linkex.ai"
 
 | Ask your agent...                          | It runs...                                  |
 |--------------------------------------------|---------------------------------------------|
-| "How much Linkex quota do I have left?"    | Balance query                               |
-| "Top up $10 with USDT on BSC"              | x402 order → wallet sign → settle → verify  |
-| "Which networks can I pay on?"             | Live top-up config query                    |
+| "How much Linkex quota do I have left?"    | `scripts/status.sh` — key quota + wallet + top-up config in one call |
+| "Top up $10 with USDT on BSC"              | `scripts/x402-topup.sh` prepare → your confirmation → execute |
+| "Which networks can I pay on?"             | Part of the same status call                |
 | "Call gpt-4o through Linkex"               | OpenAI-compatible chat completion           |
+
+**Script-first design**: the bundled scripts condense the multi-step
+API/wallet flows into single calls, so a full top-up takes 3 agent turns —
+agent turns cost you tokens, and a chatty flow can cost more than a small
+top-up itself.
+
+### Scripts
+
+| Script | What it does | Writes anything? |
+|--------|--------------|------------------|
+| `scripts/status.sh` | Key quota + x402 config + wallet state, one JSON | No (read-only) |
+| `scripts/x402-topup.sh prepare` | Create order + preview payment options | Creates one pending order (no funds move) |
+| `scripts/x402-topup.sh execute` | Sign + submit + poll settlement | Yes — one payment, only after your confirmation |
+| `scripts/balance-guard.sh` | Optional post-turn low-balance warning (hook) | No (a debounce timestamp aside) |
+
+Dependencies: `bash`, `curl`, `python3` (standard on macOS/Linux); `baw`
+CLI from the binance-agentic-wallet skill for payment steps.
 
 The skill never holds private keys. Payment signing happens in the user's own
 x402 wallet (e.g. Binance Agentic Wallet with MPC + per-day limits), and the

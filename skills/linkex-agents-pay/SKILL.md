@@ -10,21 +10,21 @@ description: |
 license: MIT
 metadata:
   author: cosmasu-blip
-  version: '0.2.0'
+  version: '0.3.0'
 ---
 
 # Linkex Agents Pay Skill
 
-This skill lets an AI agent fund its own AI usage: it checks the agent's
-Linkex balance, creates a stablecoin top-up order via the x402 protocol
-(v2, `exact` scheme), hands the payment signature to an x402-capable wallet
-(e.g. the `binance-agentic-wallet` skill), submits the settlement, and
-verifies the credited quota. Model calls through the Linkex gateway
-(OpenAI-compatible) are a background capability.
+Let an AI agent fund its own AI usage: check the Linkex API key's remaining
+quota, top it up with stablecoins via the x402 protocol (v2, `exact`
+scheme), signing with an x402-capable wallet such as the
+`binance-agentic-wallet` skill. Linkex (https://linkex.ai) is a unified AI
+API gateway: one key routes to 40+ AI providers with per-token billing.
 
-Linkex (https://linkex.ai) is a unified AI API gateway: one API key routes to
-40+ AI providers with per-token billing. Quota can be topped up with
-stablecoins on-chain — no credit card, no human checkout flow.
+**Script-first.** The bundled scripts condense multi-step API/wallet flows
+into single calls so a top-up takes 3 agent turns, not 10 — every extra
+turn costs the user real tokens. Use the scripts; the manual HTTP steps in
+`references/` are the fallback when scripts cannot run (e.g. no bash).
 
 ## Configuration
 
@@ -44,33 +44,49 @@ file. Never echo the key back into chat.
 
 ## Command Routing
 
-All commands are plain HTTPS calls with
-`Authorization: Bearer $LINKEX_API_KEY`. Read the reference file before
-constructing any request — do not guess field names.
+`<skill>` below means this skill's directory (where this SKILL.md lives).
 
-| User Intent                                      | Operation                                             | Reference                                     |
-|--------------------------------------------------|-------------------------------------------------------|-----------------------------------------------|
-| Check Linkex balance / remaining key quota       | `GET /v1/dashboard/billing/subscription` + `usage`    | [api.md](references/api.md)                   |
-| Which networks/tokens can I pay with?            | `GET /api/user/topup/x402/config`                     | [api.md](references/api.md)                   |
-| Top up quota with stablecoins                    | `scripts/x402-topup.sh prepare` / `execute`           | [x402-topup.md](references/x402-topup.md)     |
-| List my pending top-up orders                    | `GET /api/user/topup/x402/orders`                     | [x402-topup.md](references/x402-topup.md)     |
-| Resume an unpaid order (re-issue the challenge)  | `POST /api/user/topup/x402/orders/{id}/resume`        | [x402-topup.md](references/x402-topup.md)     |
-| Sign the payment                                 | Hand off to an x402 wallet (see below)                | [x402-topup.md](references/x402-topup.md)     |
-| Submit the signed payment                        | `POST /api/x402/pay/{orderId}` (no auth)              | [x402-topup.md](references/x402-topup.md)     |
-| List available models                            | `GET /v1/models`                                      | [api.md](references/api.md)                   |
-| Call a model through Linkex                      | `POST /v1/chat/completions` (OpenAI-compatible)       | [api.md](references/api.md)                   |
+| User Intent                                   | Command                                                | Reference |
+|-----------------------------------------------|--------------------------------------------------------|-----------|
+| Check Linkex balance / status / can I top up? | `bash <skill>/scripts/status.sh`                       | [api.md](references/api.md) |
+| Top up quota — step 1 (order + preview)       | `bash <skill>/scripts/x402-topup.sh prepare <usd> [network] [symbol]` | [x402-topup.md](references/x402-topup.md) |
+| Top up quota — step 2 (after user confirms)   | `bash <skill>/scripts/x402-topup.sh execute <order_id> <payment_id> <index>` | [x402-topup.md](references/x402-topup.md) |
+| Set up automatic low-balance warnings         | consent-gated hook, see below                          | — |
+| List available models                         | `GET $LINKEX_BASE_URL/v1/models` (Bearer auth)         | [api.md](references/api.md) |
+| Call a model through Linkex                   | `POST $LINKEX_BASE_URL/v1/chat/completions` (OpenAI-compatible) | [api.md](references/api.md) |
 
-## Payment signing (wallet handoff)
+Script outputs are compact JSON with an `ok` field; on `ok: false`, report
+`error` verbatim. All scripts are read-only except `x402-topup.sh execute`
+(which signs and submits one payment, only ever after user confirmation).
 
-This skill does not hold keys and cannot sign payments. The top-up order
-response contains an x402 v2 `PaymentRequired` challenge. To sign it:
+## The 3-Turn Top-Up
 
-- **Preferred**: the `binance-agentic-wallet` skill
-  (`baw x402-payment preview` → user confirms → `baw x402-payment sign`).
-  If it is not installed, ask: "Install `binance-agentic-wallet` from
-  https://github.com/binance/binance-skills-hub to sign the payment?" and
-  install only after a clear "yes".
-- Any other x402 v2 `exact`-scheme client also works.
+1. **Turn 1**: `status.sh` (if not already run this session) →
+   `x402-topup.sh prepare <usd> [network] [symbol]`. Networks/tokens come
+   from the status output — never hardcode them.
+2. **Turn 2**: show the options as a table (token, chain, amount, wallet
+   balance, status) and ask for confirmation. This is the
+   Confirm-Before-Spend gate; never skip it, never pre-answer it.
+3. **Turn 3**: `x402-topup.sh execute <order_id> <payment_id> <index>` →
+   report the settle result and the new balance once.
+
+Do not re-read reference files already read this session, do not re-check
+balances between steps, do not narrate intermediate JSON — summarize once
+at the end.
+
+**Small top-ups are poor value.** If the requested amount is below ~$10,
+mention once that the confirmation flow itself costs tokens and suggest a
+larger amount. Respect the user's final choice.
+
+## Wallet Handoff
+
+This skill holds no keys and cannot sign. Signing happens in an x402
+wallet — preferred: the `binance-agentic-wallet` skill (its `baw` CLI is
+what `x402-topup.sh` drives). If it is not installed, ask: "Install
+`binance-agentic-wallet` from https://github.com/binance/binance-skills-hub
+to sign the payment?" and install only after a clear "yes". Any other
+x402 v2 `exact`-scheme client works via the manual steps in
+[x402-topup.md](references/x402-topup.md).
 
 **First-use wallet onboarding — follow these rules, they prevent the most
 common failures:**
@@ -89,30 +105,37 @@ common failures:**
    `npx -y qrcode -o /tmp/wallet-qr.png -w 480 "<urlForWeb>" && open /tmp/wallet-qr.png`
    (delete the file afterwards).
 4. **The agentic wallet starts EMPTY.** It is a fresh MPC wallet isolated
-   from the user's main Binance funds — that isolation is by design. After
-   sign-in, check `baw wallet balance` BEFORE creating any top-up order.
-   If the balance on the intended network cannot cover the payment, get the
-   address from `baw wallet address`, show the user the address for that
-   chain, and ask them to fund it (suggest the payment amount plus a small
-   buffer) — only create the order after funds have arrived, because orders
-   and signatures have short expiry windows.
+   from the user's main Binance funds — that isolation is by design.
+   `status.sh` reports the wallet balances; if the target network cannot
+   cover the payment, get the address from `baw wallet address`, show the
+   user the address for that chain, and ask them to fund it (amount plus a
+   small buffer) — only create the order after funds arrive, because
+   orders and signatures have short expiry windows.
 5. The session then persists: subsequent payments only need a chat
    confirmation, no more scanning.
 
-The signer returns a base64 payment payload (`paymentHeaderValue`). Decode it
-and submit it as the JSON body of `POST /api/x402/pay/{orderId}` — see
-[x402-topup.md](references/x402-topup.md) for the exact steps.
+## Low-Balance Warning
 
-## Build the Request
+Whenever a balance is read (`status.sh` sets `low_balance: true` against
+`LINKEX_LOW_BALANCE_USD`, default 5): tell the user the remaining balance
+and **offer** the top-up flow. Never create an order without consent.
+At or above the threshold, report normally — no upsell.
 
-1. **Read the reference file first.** Use the exact endpoint paths, field
-   names, and response shapes documented there.
-2. **Never hardcode addresses.** Recipient (`payTo`) and token contract
-   (`asset`) addresses come from the live API responses (config / challenge)
-   only. Do not copy addresses from examples — example addresses are
-   placeholders.
-3. **Show amounts before acting.** Present the USD amount, network, and token
-   to the user before creating an order.
+### Optional: proactive guard (hook)
+
+For agents with lifecycle hooks (e.g. Claude Code),
+[scripts/balance-guard.sh](scripts/balance-guard.sh) checks the key after
+each conversation turn and prints a warning when low — no keywords needed.
+
+- **Consent first**: NEVER register the hook silently. Offer it once
+  ("Want me to set up an automatic low-balance guard that runs after each
+  turn?") and install only on a clear "yes".
+- Claude Code install: add to the `hooks.Stop` array of
+  `~/.claude/settings.json`:
+  `{"type": "command", "command": "bash <skill>/scripts/balance-guard.sh"}`
+- Read-only (one debounce timestamp file aside), debounced to one API
+  check per 10 minutes, fails silent, never creates orders or spends.
+- To uninstall, remove that entry from `hooks.Stop`.
 
 ## Confirm Before Spend
 
@@ -124,31 +147,10 @@ and submit it as the JSON body of `POST /api/x402/pay/{orderId}` — see
 - **Never auto-retry a payment with different parameters.** If a payment
   fails, report the error and let the user decide.
 
-## Token Efficiency (the flow costs the user money too)
-
-Every agent turn costs the user tokens; a chatty 10-turn top-up can cost
-more than a small top-up itself. Keep the whole flow to **3 turns**:
-
-1. One turn: `scripts/x402-topup.sh prepare <amount> [network] [symbol]`
-   — creates the order, previews options, returns compact JSON.
-2. One turn: show the options table and ask for confirmation (this is the
-   Confirm-Before-Spend gate; do not skip it).
-3. One turn: `scripts/x402-topup.sh execute <order_id> <payment_id> <index>`
-   — signs, submits, polls, returns the settle result.
-
-Do not re-read reference files you have already read this session, do not
-re-check balances between these steps, and do not narrate intermediate
-JSON — summarize once at the end.
-
-**Small top-ups are poor value.** If the requested amount is below ~$10,
-mention once that the conversation itself costs tokens and suggest a larger
-amount (e.g. "$1 works, but the confirmation flow costs a similar order of
-magnitude in tokens — consider $10+"). Respect the user's final choice.
-
 ## Display Rules
 
-- Show token symbols together with the full contract address returned by the
-  API (truncated addresses cannot be verified).
+- Show token symbols together with the full contract address returned by
+  the API (truncated addresses cannot be verified).
 - Format USD values with 2 decimal places.
 - Present balances, orders, and payment options as markdown tables.
 
@@ -166,47 +168,12 @@ magnitude in tokens — consider $10+"). Respect the user's final choice.
 - **Fail closed**: if the balance or config endpoint is unreachable, say so
   and stop; do not proceed to payment on stale data.
 
-## Low-Balance Warning
-
-Whenever a balance check runs — whether the user asked for it or it happened
-as part of another flow — compare the key's **remaining quota in USD**
-(computed per [api.md](references/api.md): `hard_limit_usd -
-total_usage / 100`) against the threshold (`LINKEX_LOW_BALANCE_USD`,
-default 5):
-
-- Below the threshold: tell the user the remaining balance and **offer** the
-  x402 top-up flow ("Your Linkex key has $3.20 left — top up with
-  stablecoins now?"). Do NOT create an order without consent (Confirm
-  Before Spend).
-- At or above the threshold: report the balance normally; no upsell.
-
-This keeps agents funded before calls start failing, instead of reacting to
-quota errors after the fact.
-
-### Optional: proactive guard (hook)
-
-The rule above only fires when a balance read happens. For agents that
-support lifecycle hooks (e.g. Claude Code), [scripts/balance-guard.sh](scripts/balance-guard.sh)
-can check the key after every conversation turn and print a warning when
-the balance is low — no keywords needed.
-
-- **Consent first**: NEVER register the hook silently. Offer it once
-  ("Want me to set up an automatic low-balance guard that runs after each
-  turn?") and install only on a clear "yes".
-- Claude Code install: add to the `hooks.Stop` array of
-  `~/.claude/settings.json`:
-  `{"type": "command", "command": "bash <absolute-skill-path>/scripts/balance-guard.sh"}`
-- The script is read-only (one debounce timestamp file aside), debounced to
-  one API check per 10 minutes, fails silent, and never creates orders or
-  spends anything.
-- To uninstall, remove that entry from `hooks.Stop`.
-
 ## Error Handling
 
-- Report API errors exactly as returned (`message` field). Do not rephrase
-  or speculate about causes the response does not state.
-- `success: false` with `ORDER_NOT_FOUND` / `X402_*` codes: relay the code
-  and consult [x402-topup.md](references/x402-topup.md) for the documented
-  remediation (e.g. expired order → resume or recreate).
-- HTTP 429 on `/v1/*`: the account may be out of quota — check the balance
+- Report API/script errors exactly as returned. Do not rephrase or
+  speculate about causes the output does not state.
+- `X402_SETTLE_PENDING` after the script's built-in retries: funds are
+  safe — the merchant reconciles against on-chain state; check the order
+  later rather than re-paying.
+- HTTP 429 on `/v1/*`: the account may be out of quota — run `status.sh`
   and offer the top-up flow.
