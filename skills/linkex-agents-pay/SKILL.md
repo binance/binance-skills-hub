@@ -50,7 +50,7 @@ constructing any request — do not guess field names.
 
 | User Intent                                      | Operation                                             | Reference                                     |
 |--------------------------------------------------|-------------------------------------------------------|-----------------------------------------------|
-| Check Linkex balance / remaining quota           | `GET /api/user/self/balance`                          | [api.md](references/api.md)                   |
+| Check Linkex balance / remaining key quota       | `GET /v1/dashboard/billing/subscription` + `usage`    | [api.md](references/api.md)                   |
 | Which networks/tokens can I pay with?            | `GET /api/user/topup/x402/config`                     | [api.md](references/api.md)                   |
 | Top up quota with stablecoins (create an order)  | `POST /api/user/topup/x402/orders`                    | [x402-topup.md](references/x402-topup.md)     |
 | List my pending top-up orders                    | `GET /api/user/topup/x402/orders`                     | [x402-topup.md](references/x402-topup.md)     |
@@ -148,12 +148,15 @@ and submit it as the JSON body of `POST /api/x402/pay/{orderId}` — see
 ## Low-Balance Warning
 
 Whenever a balance check runs — whether the user asked for it or it happened
-as part of another flow — compare `quota_usd` against the threshold
-(`LINKEX_LOW_BALANCE_USD`, default 5):
+as part of another flow — compare the key's **remaining quota in USD**
+(computed per [api.md](references/api.md): `hard_limit_usd -
+total_usage / 100`) against the threshold (`LINKEX_LOW_BALANCE_USD`,
+default 5):
 
 - Below the threshold: tell the user the remaining balance and **offer** the
-  x402 top-up flow ("Your Linkex balance is $3.20 — top up with stablecoins
-  now?"). Do NOT create an order without consent (Confirm Before Spend).
+  x402 top-up flow ("Your Linkex key has $3.20 left — top up with
+  stablecoins now?"). Do NOT create an order without consent (Confirm
+  Before Spend).
 - At or above the threshold: report the balance normally; no upsell.
 
 This keeps agents funded before calls start failing, instead of reacting to

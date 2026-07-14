@@ -14,22 +14,36 @@ On failure `success` is `false` and `message` carries an error code
 
 ---
 
-## `GET /api/user/self/balance`
+## Balance: remaining quota for THIS key
 
-Current quota for the key's account.
+What the user means by "my Linkex balance" is almost always the spending
+power of the API key in use — not the whole account. Two OpenAI-compatible
+endpoints together give that:
+
+```bash
+curl -s "$LINKEX_BASE_URL/v1/dashboard/billing/subscription" \
+  -H "Authorization: Bearer $LINKEX_API_KEY"
+# -> { "hard_limit_usd": 25.35, ... }   # key's total limit, USD
+
+curl -s "$LINKEX_BASE_URL/v1/dashboard/billing/usage" \
+  -H "Authorization: Bearer $LINKEX_API_KEY"
+# -> { "total_usage": 1840.98 }         # key's usage, in CENTS
+```
+
+**`remaining_usd = hard_limit_usd - total_usage / 100`** (note the unit
+mismatch: usage is cents). Report as e.g. "$6.94 of $25.35 left".
+
+Special case — unlimited keys: `hard_limit_usd` comes back as a sentinel
+`100000000` when the key has no per-key limit. In that case the key draws
+from the account balance instead; read it from:
 
 ```bash
 curl -s "$LINKEX_BASE_URL/api/user/self/balance" \
   -H "Authorization: Bearer $LINKEX_API_KEY"
+# -> { "success": true, "data": { "quota_usd": 196.62, ... } }
 ```
 
-Response `data`:
-
-```json
-{ "quota": 98308639, "quota_usd": 196.617278 }
-```
-
-Use `quota_usd` for display (2 decimals). `quota` is the internal unit.
+and report `data.quota_usd` as the balance.
 
 ---
 
