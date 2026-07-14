@@ -54,6 +54,9 @@ PY
 
 is_low=$(python3 -c "print(1 if $remaining < $THRESHOLD else 0)" 2>/dev/null) || exit 0
 if [ "$is_low" = "1" ]; then
-  echo "Low Linkex balance: this API key has \$${remaining} left (threshold \$${THRESHOLD}). Ask me to top up via x402."
+  # Claude Code hook protocol: plain stdout from a Stop hook is not shown in
+  # the chat UI; a JSON object with "systemMessage" is rendered to the user.
+  # Other harnesses can still read the message field as plain text.
+  printf '{"systemMessage":"Low Linkex balance: this API key has $%s left (threshold $%s). Ask me to top up via x402."}\n' "$remaining" "$THRESHOLD"
 fi
 exit 0
