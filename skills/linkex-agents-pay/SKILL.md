@@ -52,7 +52,7 @@ constructing any request — do not guess field names.
 |--------------------------------------------------|-------------------------------------------------------|-----------------------------------------------|
 | Check Linkex balance / remaining key quota       | `GET /v1/dashboard/billing/subscription` + `usage`    | [api.md](references/api.md)                   |
 | Which networks/tokens can I pay with?            | `GET /api/user/topup/x402/config`                     | [api.md](references/api.md)                   |
-| Top up quota with stablecoins (create an order)  | `POST /api/user/topup/x402/orders`                    | [x402-topup.md](references/x402-topup.md)     |
+| Top up quota with stablecoins                    | `scripts/x402-topup.sh prepare` / `execute`           | [x402-topup.md](references/x402-topup.md)     |
 | List my pending top-up orders                    | `GET /api/user/topup/x402/orders`                     | [x402-topup.md](references/x402-topup.md)     |
 | Resume an unpaid order (re-issue the challenge)  | `POST /api/user/topup/x402/orders/{id}/resume`        | [x402-topup.md](references/x402-topup.md)     |
 | Sign the payment                                 | Hand off to an x402 wallet (see below)                | [x402-topup.md](references/x402-topup.md)     |
@@ -123,6 +123,27 @@ and submit it as the JSON body of `POST /api/x402/pay/{orderId}` — see
   gate; do not bypass or pre-answer it.
 - **Never auto-retry a payment with different parameters.** If a payment
   fails, report the error and let the user decide.
+
+## Token Efficiency (the flow costs the user money too)
+
+Every agent turn costs the user tokens; a chatty 10-turn top-up can cost
+more than a small top-up itself. Keep the whole flow to **3 turns**:
+
+1. One turn: `scripts/x402-topup.sh prepare <amount> [network] [symbol]`
+   — creates the order, previews options, returns compact JSON.
+2. One turn: show the options table and ask for confirmation (this is the
+   Confirm-Before-Spend gate; do not skip it).
+3. One turn: `scripts/x402-topup.sh execute <order_id> <payment_id> <index>`
+   — signs, submits, polls, returns the settle result.
+
+Do not re-read reference files you have already read this session, do not
+re-check balances between these steps, and do not narrate intermediate
+JSON — summarize once at the end.
+
+**Small top-ups are poor value.** If the requested amount is below ~$10,
+mention once that the conversation itself costs tokens and suggest a larger
+amount (e.g. "$1 works, but the confirmation flow costs a similar order of
+magnitude in tokens — consider $10+"). Respect the user's final choice.
 
 ## Display Rules
 

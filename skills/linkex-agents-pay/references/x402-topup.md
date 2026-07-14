@@ -1,7 +1,21 @@
 # x402 Top-Up Flow
 
 End-to-end flow for funding a Linkex account with stablecoins via the x402
-protocol (v2, `exact` scheme). Five steps: create order → get challenge →
+protocol (v2, `exact` scheme).
+
+**Fast path (preferred — saves the user tokens):** use the bundled script
+instead of running the steps below one by one:
+
+```bash
+scripts/x402-topup.sh prepare 10 eip155:56 USDT   # order + challenge + preview
+# -> {"ok":true,"order_id":220,"payment_id":"...","options":[...]}
+# show options, get the user's explicit confirmation, then:
+scripts/x402-topup.sh execute 220 <payment_id> <index>
+# -> signs, submits, polls; {"ok":true,"status":"settled",...}
+```
+
+The manual steps below are the reference for what the script does, and the
+fallback when it is unavailable. Five steps: create order → get challenge →
 sign with a wallet → submit settlement → verify quota.
 
 Confirm with the user before step 1 (amount, network, token) and let the
