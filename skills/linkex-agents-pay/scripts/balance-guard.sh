@@ -29,6 +29,22 @@ except Exception: print(0)" 2>/dev/null)
 [ "$ACTIVE" = "1" ] && exit 0
 
 BASE="${LINKEX_BASE_URL:-https://linkex.ai}"
+
+# Relevance gate: only warn when THIS session's model traffic actually goes
+# through Linkex — i.e. the agent's ANTHROPIC_BASE_URL host matches the
+# Linkex gateway host. Sessions routed elsewhere don't burn this key, so a
+# warning there is noise.
+AB_URL="${ANTHROPIC_BASE_URL:-}"
+if [ -n "$AB_URL" ]; then
+  AB_HOST=$(printf '%s' "$AB_URL" | python3 -c "
+import sys, urllib.parse
+print(urllib.parse.urlparse(sys.stdin.read().strip()).hostname or '')" 2>/dev/null)
+  LX_HOST=$(printf '%s' "$BASE" | python3 -c "
+import sys, urllib.parse
+print(urllib.parse.urlparse(sys.stdin.read().strip()).hostname or '')" 2>/dev/null)
+  [ -n "$AB_HOST" ] && [ "$AB_HOST" != "$LX_HOST" ] && exit 0
+fi
+
 THRESHOLD="${LINKEX_LOW_BALANCE_USD:-5}"
 
 # Debounce: at most one API check per 10 minutes.
