@@ -10,7 +10,7 @@ description: |
 license: MIT
 metadata:
   author: cosmasu-blip
-  version: '0.3.0'
+  version: '0.3.1'
 ---
 
 # Linkex Agents Pay Skill
@@ -25,6 +25,26 @@ API gateway: one key routes to 40+ AI providers with per-token billing.
 into single calls so a top-up takes 3 agent turns, not 10 — every extra
 turn costs the user real tokens. Use the scripts; the manual HTTP steps in
 `references/` are the fallback when scripts cannot run (e.g. no bash).
+
+## Installation & Session Availability
+
+This skill only helps if the agent can actually **discover and load** it. If
+the low-balance guard hook (below) is installed but this skill is not, the
+agent receives a top-up warning it has no first-class flow to act on, and
+falls back to ad-hoc HTTP calls that miss what the bundled scripts already
+handle for you:
+
+- The payment body submitted to `/api/x402/pay/<order_id>` is the
+  **base64-decoded** `paymentHeaderValue` JSON from the wallet's `sign`
+  step — not the raw header string.
+- The Permit2 signature is short-lived (~120s). `sign` and submit must run
+  back-to-back; `x402-topup.sh execute` does both in one call.
+
+To install: place this skill where your agent discovers skills. For Claude
+Code that is `~/.claude/skills/` (symlink or copy the skill directory
+there). Verify a fresh session recognizes "Linkex" before relying on it.
+**Install the balance-guard hook and this skill together, or neither** — the
+hook is only useful when the skill is present to handle the top-up.
 
 ## Configuration
 
@@ -125,6 +145,9 @@ At or above the threshold, report normally — no upsell.
 For agents with lifecycle hooks (e.g. Claude Code),
 [scripts/balance-guard.sh](scripts/balance-guard.sh) checks the key after
 each conversation turn and prints a warning when low — no keywords needed.
+The warning is only actionable when this skill is installed too (see
+**Installation & Session Availability**); install the hook and the skill
+together.
 
 - **Consent first**: NEVER register the hook silently. Offer it once
   ("Want me to set up an automatic low-balance guard that runs after each
