@@ -1,0 +1,15 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc = "0.8.26"
+evm_version = "cancun"
+optimizer = true
+optimizer_runs = 800
+via_ir = true
+
+# remappings (also mirror these in remappings.txt):
+#   @uniswap/v4-core/=lib/v4-core/
+#   @uniswap/v4-periphery/=lib/v4-periphery/
+#   v4-periphery/=lib/v4-periphery/
+#   forge-std/=lib/forge-std/src/
