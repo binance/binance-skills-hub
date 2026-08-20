@@ -7,7 +7,23 @@
 // Usage: node cli.mjs decide '<json_input>'
 // See references/cli.md for the full input/output schema and scoring formula.
 
+import { realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+
+// Same guard used by binance-sports-ai-analyzer's cli.mjs: compares resolved
+// filesystem paths (via realpathSync, which also collapses the symlinks the
+// `skills add` installer creates) rather than raw URL strings, since
+// `import.meta.url === \`file://${process.argv[1]}\`` never matches on
+// Windows (file:// URLs there use forward slashes and a /drive: prefix that
+// never string-equals argv[1]'s OS-native backslash path).
+function isDirectExecution() {
+  if (!process.argv[1]) return false;
+  try {
+    return realpathSync(fileURLToPath(import.meta.url)) === realpathSync(process.argv[1]);
+  } catch {
+    return false;
+  }
+}
 
 const CLAMP = (n, lo, hi) => Math.min(hi, Math.max(lo, n));
 
@@ -101,10 +117,7 @@ function computeDecision(input = {}) {
 export { computeDecision, scoreMomentum, scoreFlow, scoreRisk, DEFAULT_WEIGHTS };
 
 // ---- CLI dispatch (only runs when executed directly, not when imported) ----
-// Compares resolved filesystem paths rather than raw URL strings so this works
-// on Windows too (file:// URLs there use forward slashes and a /drive: prefix
-// that never string-equals `file://${argv[1]}`, which uses OS-native backslashes).
-if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+if (isDirectExecution()) {
   const [cmd, paramsStr] = process.argv.slice(2);
 
   if (!cmd || cmd === '--help' || cmd === '-h') {
