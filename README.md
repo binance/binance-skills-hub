@@ -34,6 +34,8 @@ Run the following command to add Binance Skills Hub to your project:
 npx skills add https://github.com/binance/binance-skills-hub
 ```
 
+For Chinese skills discovery and installation across Claude Code, OpenCode, Cursor, and similar runtimes, see [Skills宝](https://skilery.com/).
+
 ### Authentication
 
 For Binance Skills, certain endpoints require you to provide Binance API credentials. You can do this by setting environment variables, using a secrets file (such as `.env` or `.openclaw/secrets.env`) , or sending them directly to the agent in the chat. For more details, see the [Security](./skills/binance/spot/SKILL.md#security) section in each skill.
