@@ -1,13 +1,6 @@
 ---
 name: payment-assistant
-description: >
-  Binance Pay Assistant - Send and Receive crypto payments.
-  Send: QR code payment from Funding Wallet (C2C + PIX). Use when user wants to
-  buy/purchase/pay/transfer/send, confirm/cancel payment, or query order status.
-  Requires QR code data. PIX QR codes (pix, br.gov.bcb.pix) are auto-detected.
-  Receive: Generate QR codes and payment links to collect crypto. Use when user wants to
-  receive/collect payment (generate receive link, receive QR).
-  Do NOT use for earning, buying/selling crypto, or digital goods.
+description: "Binance Pay Assistant - Send and Receive crypto payments. Send: QR code payment from Funding Wallet (C2C + PIX). Use when user wants to buy/purchase/pay/transfer/send, confirm/cancel payment, or query order status. Requires QR code data. PIX QR codes (pix, br.gov.bcb.pix) are auto-detected. Receive: Generate QR codes and payment links to collect crypto. Use when user wants to receive/collect payment (generate receive link, receive QR). Do NOT use for earning, buying/selling crypto, or digital goods."
 metadata:
   version: 2.0.0
   author: Binance
@@ -60,56 +53,19 @@ python3 payment_skill.py --action decode_qr --clipboard
 **✅ REQUIRED after decode_qr succeeds:**
 - Tell user the image source (e.g., "Decoded from clipboard" or "Decoded from file: xxx.jpg")
 - Include `source_type` from response in your message to user
+- **IMMEDIATELY proceed to purchase** — do NOT stop and ask "Would you like to proceed?" (the user already said they want to pay). You MUST still ask for explicit user confirmation before calling `pay_confirm`.
+
+### decode_qr Input Modes (Mutually Exclusive)
+
+| Mode | Command | When to Use |
+|------|---------|-------------|
+| `--image <path>` | `--action decode_qr --image "/path/to/file.jpg"` | File path from message attachment |
+| `--base64 <data>` | `--action decode_qr --base64 "iVBORw0KGgo..."` | Platform provides base64 image data |
+| `--clipboard` | `--action decode_qr --clipboard` | User explicitly says "use my clipboard" |
+
+No input = error. The skill will NOT auto-detect or fallback.
 
 ---
-
-## 🚀 Quick Start - Agent MUST Execute
-
-**When user sends a QR code image or asks to pay:**
-
-### Step 1 - Get QR Data (Choose ONE method)
-
-**Method A: AI Vision (BEST - if your platform supports it)**
-```
-1. Use your vision capability to read the QR code content directly from the image
-2. Skip decode_qr entirely, go straight to purchase with the QR data
-```
-```bash
-python3 payment_skill.py --action purchase --raw_qr "https://app.binance.com/uni-qr/xxx"
-```
-
-**Method B: decode_qr with explicit image path (RECOMMENDED)**
-```bash
-# Use the attachment path your platform provides
-python3 payment_skill.py --action decode_qr --image "/path/to/attachment.jpg"
-```
-
-**Method C: decode_qr from clipboard (Only when user explicitly says "use clipboard")**
-```bash
-python3 payment_skill.py --action decode_qr --clipboard
-```
-
-**Method D: decode_qr with base64 (For platforms that provide base64 image data)**
-```bash
-python3 payment_skill.py --action decode_qr --base64 "iVBORw0KGgo..."
-```
-
-### Step 2 - Purchase (IMMEDIATELY after getting QR data)
-```bash
-python3 payment_skill.py --action purchase --raw_qr "DECODED_QR_DATA"
-```
-
-### Step 3 - Set amount (if needed)
-```bash
-python3 payment_skill.py --action set_amount --amount NUMBER
-```
-
-### Step 4 - Confirm payment (after user confirms)
-```bash
-python3 payment_skill.py --action confirm
-```
-
-⚠️ **IMPORTANT**: After decode succeeds, IMMEDIATELY proceed to purchase. Do NOT stop and ask "Would you like to proceed?" - the user already said they want to pay. (Note: This applies to the `decode → purchase` transition only. You MUST still ask for explicit user confirmation before calling `pay_confirm`.)
 
 ---
 
@@ -168,164 +124,6 @@ If you see "No QR decoder available", ensure both Python packages and system dep
 
 ---
 
-## 🌍 Language Matching (CRITICAL)
-
-**The AI MUST respond in the same language the user uses.**
-
-The script outputs are in English only. The AI agent must translate/localize responses based on user's language. The agent already has this capability built in — no hardcoded translations are needed here.
-
-### Language Detection
-
-Detect the user's language from their input and respond in the same language throughout the conversation. If the user switches language mid-conversation, follow the switch.
-
-### Response Templates
-
-When the script outputs status/messages, present them naturally in the user's language:
-
-#### Order Created (AWAITING_CONFIRMATION)
-
-```
-Order created
-Payee: 「{payee}」
-Amount: {amount} {currency}
-
-Confirm payment?
-```
-
-#### Order Created (AWAITING_AMOUNT)
-
-```
-Order created
-Payee: 「{payee}」
-Currency: {currency}
-
-Please enter the payment amount (e.g., "100" or "100 USDT").
-```
-
-#### Payment Success
-
-```
-Payment successful!
-Pay Order: {pay_order_id}
-Amount Sent: {amount} {currency}
-Paid With: {paid_with}
-Daily Usage: {daily_used_before} → {daily_used_after} / {daily_limit} USD
-```
-
-#### QR Decode Failed
-
-```
-I cannot read the QR code data directly. Please:
-1. Copy the QR image to clipboard, then say "use clipboard"
-2. Or tell me the QR code content directly
-```
-
-> **Note:** All templates above are in English. The AI agent should translate them to match the user's language automatically.
-
----
-
-## 📷 QR Code Image Handling (IMPORTANT)
-
-### Three Input Modes (Mutually Exclusive, No Fallback)
-
-The skill requires **explicit input** to avoid ambiguity. You must choose ONE of these modes:
-
-| Mode | Command | When to Use |
-|------|---------|-------------|
-| `--image <path>` | `--action decode_qr --image "/path/to/file.jpg"` | You have the file path from message attachment |
-| `--base64 <data>` | `--action decode_qr --base64 "iVBORw0KGgoAAAANSUhEUg..."` | Platform provides base64 image data |
-| `--clipboard` | `--action decode_qr --clipboard` | User explicitly says "use my clipboard" |
-
-⚠️ **No input = Error.** The skill will NOT auto-detect or fallback to avoid decoding the wrong image.
-
-### Mode 1: Image Path (RECOMMENDED)
-
-```bash
-python3 payment_skill.py --action decode_qr --image "/path/to/qr_image.jpg"
-```
-
-**Output:**
-```json
-{
-  "success": true,
-  "qr_data": "https://app.binance.com/...",
-  "source_type": "image_path",
-  "source_info": {
-    "path": "/path/to/image.jpg",
-    "filename": "image.jpg",
-    "size_bytes": 12345,
-    "modified_time": "2026-03-24 13:18:49"
-  }
-}
-```
-
-### Mode 2: Base64 Data
-
-```bash
-python3 payment_skill.py --action decode_qr --base64 "iVBORw0KGgoAAAANSUhEUg..."
-```
-
-**Output:**
-```json
-{
-  "success": true,
-  "qr_data": "https://app.binance.com/...",
-  "source_type": "base64",
-  "source_info": {
-    "data_length": 1234,
-    "decoded_size": 5678
-  }
-}
-```
-
-### Mode 3: Clipboard (Explicit)
-
-```bash
-python3 payment_skill.py --action decode_qr --clipboard
-```
-
-**Output:**
-```json
-{
-  "success": true,
-  "qr_data": "https://app.binance.com/...",
-  "source_type": "clipboard",
-  "source_info": {
-    "method": "system_clipboard",
-    "note": "Image was read from current system clipboard"
-  }
-}
-```
-
-### Error: No Input Specified
-
-```bash
-python3 payment_skill.py --action decode_qr
-```
-
-**Output:**
-```json
-{
-  "success": false,
-  "error": "no_input",
-  "message": "No image input specified. You must provide one of: --image, --base64, or --clipboard",
-  "hint": "AI should use --image with the attachment path from the user message, or use Vision to read QR directly and pass --raw_qr to purchase action."
-}
-```
-
-### How AI Should Get the Image Path
-
-Different platforms provide image attachments differently. The AI should:
-
-1. **Check message metadata** for attachment paths (platform-specific)
-2. **Use AI Vision** to read QR directly if available (skip decode_qr entirely)
-3. **Ask the user** if no attachment path is found
-
-**Do NOT:**
-- Guess or search for image files in directories
-- Use hardcoded paths like `inbox/qr_clipboard.png`
-- Assume clipboard has the right image without user confirmation
-
 ---
 
 # Payment Assistant Skill (C2C + PIX)
@@ -345,7 +143,7 @@ The skill **auto-detects** the QR type and routes to the correct API endpoints.
 
 This skill is invoked by AI agents. The AI should:
 
-1. **Language Matching**: Respond in the same language the user uses
+1. **Language Matching**: Respond in the same language the user uses. Script outputs are English-only — translate/localize all responses to match the user's language.
 
 2. **Intent Recognition**: Map user intent to actions (in any language)
    - buy/purchase/pay + QR → `purchase`
@@ -481,13 +279,7 @@ PIX QR codes follow strict amount rules:
 2. **PIX QR without amount**: The `purchase` step returns `AWAITING_AMOUNT` status. The AI must ask the user to provide the payment amount.
 3. **If user tries to change a locked amount**: `set_amount` returns `AMOUNT_LOCKED` status with the fixed amount. `pay_confirm` with `--amount` silently ignores the user value and uses the QR amount.
 
-### AI Behavior for PIX Amount
-
-- When `pix_amount_locked: true` → Tell user: "This QR has a fixed amount of X BRL. Confirm payment?"
-- When `pix_amount_locked: true` and user says "pay 100 BRL" → Tell user: "This QR has a fixed amount of X BRL and cannot be changed. Confirm payment with X BRL?"
-- When `pix_amount_locked: false` and no amount → Ask user: "Please enter the payment amount in BRL."
-
-> **Note:** C2C QR codes are NOT affected by this rule. C2C amount handling remains unchanged.
+> **Note:** C2C QR codes are NOT affected by PIX amount locking. C2C amount handling remains unchanged.
 
 ## Duplicate Payment Protection
 
@@ -512,48 +304,9 @@ The skill implements multiple layers of protection:
 
 ## Configuration
 
-The script uses `config.json` for all settings.
+The script uses `config.json` for all settings. Run `python payment_skill.py --action config` to check status.
 
-### Auto-Configuration Behavior
-
-**When `config.json` is missing:**
-- Script automatically creates a template config with `configured: false`
-- User MUST fill in required fields and set `configured: true`
-- Script blocks execution until configuration is complete
-
-**When API key/secret not configured:**
-- Script shows: `Payment API key & secret not configured. Please set your API key & secret in Binance App first.`
-
-**Configuration Steps:**
-1. Fill in: `api_key`, `api_secret`
-2. Set `configured: true`
-
-> `base_url` is pre-configured to `https://bpay.binanceapi.com` by default. Do not modify unless instructed.
-
-### Configuration Example
-
-```json
-{
-  "configured": true,
-  "api_key": "YOUR_API_KEY",
-  "api_secret": "YOUR_API_SECRET"
-}
-```
-
-### Environment Variables (Alternative)
-
-```bash
-export PAYMENT_API_KEY='your_key'
-export PAYMENT_API_SECRET='your_secret'
-```
-
-### Check Configuration Status
-
-```bash
-python payment_skill.py --action config
-```
-
-> For detailed setup instructions including how to obtain API credentials and configure payment limits, see [references/setup-guide.md](./references/setup-guide.md).
+For setup instructions (API credentials, payment limits, environment variables), see [references/setup-guide.md](./references/setup-guide.md).
 
 ---
 
@@ -622,8 +375,6 @@ Payer can tap link or scan QR to pay (requires Binance App)
 ```
 ❌ {message}
 ```
-
-> **Note:** Template above is in English. The AI agent should translate to match the user's language automatically.
 
 ### ⚠️ Receive Display Rules
 
