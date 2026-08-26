@@ -11,9 +11,8 @@ description: |
   Skills Hub for execution. Read-only — never places an order. Tutorial:
   https://algovault.com/docs/integrations/binance
 metadata:
-  version: 1.0.0
+  version: 1.1.0
   author: AlgoVaultFi
-license: MIT
 ---
 
 # AlgoVault Signal Intelligence — Composite Verdict for Crypto Perps
@@ -21,6 +20,34 @@ license: MIT
 > The Brain Layer for AI Trading Agents. AlgoVault returns the analytics verdict; your agent and its risk policy decide execution. It is **additive to Binance execution, not a competitor** — read-only, never submits an order.
 
 Call this whenever an agent needs a single, backtested trading verdict for a crypto perpetual-futures asset instead of computing dozens of raw indicators itself. One MCP call returns direction, confidence, market regime, and the cross-venue factors behind it.
+
+## Pairing with Binance Agent OS
+
+Binance Agent OS gives an agent execution on Binance: OAuth at connect time, no API keys on the
+machine, and trading confined to an isolated Agentic sub-account. It has no withdrawal scope.
+
+What it does not have is a second venue. A cross-venue funding spread needs two, and a composite
+verdict needs more. That is the layer this skill supplies — the decision layer for an agent that
+is already executing through Binance Agent OS.
+
+Add both servers to one MCP client:
+
+```bash
+claude mcp add binance-mcp-server --transport http https://agent.binance.com/mcp/agentic
+
+claude mcp add --transport http --scope project algovault \
+  https://api.algovault.com/mcp?src=binance_agent_os
+```
+
+Then name the tool you want. With two servers connected an exchange-shaped prompt is ambiguous,
+and this skill exposes no exchange-operation tools, so nothing about that phrasing points at the
+verdict:
+
+> "Use AlgoVault's `get_trade_call` for BTC 15m on Binance. Show me signal, confidence and
+> regime. If signal is BUY and confidence is above 70, place a $100 market buy on Binance spot —
+> confirm with me before sending."
+
+Full walkthrough: https://algovault.com/integrations/binance-agent-os
 
 ## When to call
 
@@ -107,7 +134,7 @@ The script aborts unless `BINANCE_TESTNET=true`; `/api/v3/order/test` validates 
 
 ## Track record & links (live)
 
-91.7% PFE Win Rate across 349,000+ calls, each Merkle-anchored on Base L2 (92 batches). PFE Win Rate = peak-favorable-excursion directional accuracy, evaluated against public exchange prices. Current figures and the free tier are live at:
+91.7% PFE Win Rate across 512,000+ calls, each Merkle-anchored on Base L2 (100 batches). PFE Win Rate = peak-favorable-excursion directional accuracy, evaluated against public exchange prices. Current figures and the free tier are live at:
 
 - Track record: https://algovault.com/track-record
 - Docs: https://algovault.com/docs.html
