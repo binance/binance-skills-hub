@@ -404,7 +404,7 @@ Note on units — `amountIn`, `amountOut`, `feeAmount`, and `minReceive` swap un
 
 ## `prediction trade place-order`
 
-Place an order using a `quoteId` obtained from `prediction trade quote`. This is a **state-changing** command — always confirm with the user first.
+Place an order using a `quoteId` obtained from `prediction trade quote`. This is a **state-changing** command — confirm with the user first, unless the user explicitly asks to skip confirmation.
 
 ### Syntax
 

@@ -4,7 +4,7 @@ Query DeFi protocols, investment opportunities, and the user's DeFi positions. E
 
 > **Sign-in required**: All DeFi commands require an active Agentic Wallet session. If the user is not signed in, ask them to sign in first (`auth signin`) before running any `defi` command.
 
-> **Always preview before executing**: Before running any state-changing command (`deposit`, `redeem`, `lp-add`, `lp-remove`, `claim`), call `defi preview --action <action> ...` with the same parameters first. Show the user the estimated fee, balance changes, and any warnings. Only proceed after the user confirms.
+> **Preview before executing**: Before running any state-changing command (`deposit`, `redeem`, `lp-add`, `lp-remove`, `claim`), call `defi preview --action <action> ...` with the same parameters first. Show the user the estimated fee, balance changes, and any warnings. Only proceed after the user confirms, unless the user explicitly asks to skip confirmation.
 
 ## Post-trade verification
 
@@ -29,7 +29,7 @@ When summarizing or rendering any field below to the user, format to **exactly 2
 
 | Field kind                          | Examples in JSON                                                        | Render as                            |
 |-------------------------------------|-------------------------------------------------------------------------|--------------------------------------|
-| APY / APR (always decimal)          | `apy: "0.0432"`, `apy: "2.12"`                                          | `4.32%`, `212.00%`                   |
+| APY / APR (pre-formatted)           | `apyDisplay: "4.32%"`, `apyDisplay: "212.00%"`                          | quote `apyDisplay` verbatim          |
 | TVL (USD)                           | `tvl: "1187356864"`, `tvl: "2851031.25"`                                | `$1,187,356,864.00`, `$2,851,031.25` |
 | USD values                          | `tokenValue`, `protocolTotalValue`, `deFiTotalValue`, `fdv`, `valueUsd` | `$57.40`, `$1,807.99`                |
 | Health factor                       | `healthRate: "1.85"`                                                    | `1.85`                               |
@@ -37,9 +37,12 @@ When summarizing or rendering any field below to the user, format to **exactly 2
 | Slippage (basis points)             | `slippageBps: "100"`                                                    | `1.00%`                              |
 
 Notes for the model:
-- **`apy` is ALWAYS a decimal fraction** — multiply by `100` to get the percentage. `"0.04"` → `4.00%`, `"2.12"` → `212.00%`. Values can exceed 1.0 (>100% APY is normal for some LP pools). Never display raw decimal to user.
-- **`apy` is base APY only** — it does NOT include earn campaign / promotional APY. Numbers may differ from values shown on the protocol's official website. Mention this if the user asks why the number differs.
-- **At the protocol level (`defi protocol-list` / `defi protocol-info`), `apy` is the MAX APY across all the protocol's pools / investments** — not every pool yields this rate. When presenting to the user, call it "max APY" or "up to X%" so they don't assume every position under this protocol earns that same rate. To see the per-investment APY, use `defi investment-list --defiProtocolId <id>`.
+- **`apyDisplay` is pre-formatted by the backend** (e.g. `"99.63%"`, `"6,800.00%"`). Quote it **verbatim** when showing APY/APR to the user — never re-compute, re-round, reformat, or drop the thousands separator.
+- **`apyBps` is the numeric APY in basis points** (1 bps = 0.01%): `"9963"` = 99.63%, `"680000"` = 6,800.00%. Use `apyBps` **only** for sorting, filtering, and comparisons (e.g. "top 3 by APY") — never for display. Do NOT multiply, divide, or convert it.
+- The raw decimal `apy` field is **no longer returned**. If you need an APY number for reasoning, use `apyBps`; if you need to show it to the user, use `apyDisplay`.
+- **APY/APR is base APY only** — it does NOT include earn campaign / promotional APY. Numbers may differ from values shown on the protocol's official website. Mention this if the user asks why the number differs.
+- **At the protocol level (`defi protocol-list`), APY is the MAX APY across all the protocol's pools / investments** — not every pool yields this rate. When presenting to the user, call it "max APY" or "up to X%" so they don't assume every position under this protocol earns that same rate. To see the per-investment APY, use `defi investment-list --defiProtocolId <id>`.
+- `apyType` tells you whether the rate is `"APY"` (compounded) or `"APR"` (simple). It only labels the rate — the display string is still `apyDisplay`.
 - Token amounts (`tokenAmount`) keep their original precision (8+ decimals); do **not** force them to 2 decimals.
 - Numeric IDs (`nftId`, `tickLower`, `tickUpper`, `unlockTime`, chain IDs) are integers; never reformat.
 
@@ -84,7 +87,8 @@ baw defi protocol-list --binanceChainId 56 --investType Earn --json
         "description": "...",
         "protocolLogo": "https://...",
         "tvl": "1187356864",
-        "apy": "0.29",
+        "apyBps": 2900,
+        "apyDisplay": "29.00%",
         "investType": ["Earn"],
         "supportedChains": ["56"]
       }
@@ -193,7 +197,8 @@ baw defi investment-list --investType Earn --defiProtocolId protocol_abc --json
         "investmentName": "TOKEN_A",
         "investType": "Earn",
         "apyType": "APY",
-        "apy": "0.04",
+        "apyBps": 400,
+        "apyDisplay": "4.00%",
         "tvl": "2851031.25"
       }
     ]
@@ -239,7 +244,8 @@ baw defi investment-info --investmentId 0e82... --json
     "investmentName": "TOKEN_A",
     "investType": "Earn",
     "investable": true,
-    "apy": "0.04",
+    "apyBps": 400,
+    "apyDisplay": "4.00%",
     "apyType": "APY",
     "tvl": "2851031.25",
     "poolAddress": null,
@@ -507,7 +513,7 @@ For protocols with no delay, redeem is single-step — no Phase 2 needed.
 
 Add liquidity to an LP position (create new or top up existing).
 
-> **Single-token input only — no auto-swap.** An LP position requires both pool tokens, but `lp-add` only takes **one** `--tokenAddress` + `--amount`. The wallet does **not** swap the input into the paired token; the user must already hold both tokens in the correct ratio for the chosen price range.
+> **You name one token; the wallet debits BOTH.** An LP position requires both pool tokens, but `lp-add` only takes **one** `--tokenAddress` + `--amount`. The wallet does **not** swap the input into the paired token; the user must already hold both tokens in the correct ratio for the chosen price range.
 
 ### Syntax
 
@@ -521,7 +527,7 @@ baw defi lp-add --investmentId <investmentId> --tokenAddress <tokenAddress> --am
 |------------------|----------|----------|------------------------------------------------------------------------------------------------------|
 | `--investmentId` | Yes      | —        | LP investment product ID                                                                             |
 | `--tokenAddress` | Yes      | —        | Token contract address                                                                               |
-| `--amount`       | Yes      | —        | Amount in human-readable units (e.g., `1.5`)                                                         |
+| `--amount`       | Yes      | —        | Amount in human-readable units (e.g., `1.5`), the amount of the specified token only, not the combined total.   |
 | `--nftId`        | No*      | —        | Position source: top up existing V3/V4 LP NFT tokenId                                                |
 | `--priceRange`   | No*      | —        | Position source: new position centered on current pool price; percent, e.g. `5` = ±5%                |
 | `--tickLower`    | No*      | —        | Position source: new position lower tick (raw int24, aligned to pool tickSpacing)                    |
