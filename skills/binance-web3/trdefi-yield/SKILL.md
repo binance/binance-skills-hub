@@ -33,9 +33,9 @@ Use whenever the user says: "manage treasury float", "idle USDC yield", "non-cus
 
 ## How it Works
 
- 1. **Discover** — Agent calls `list_aqua_pools` (wraps `resource=list`). Returns active strategies across 5 chains, all pairs (stable and volatile). No pool TVL lock — virtual X0/Y0.
-2. **Quote** — Agent calls `get_quote` with `hash` + `amount` + `chain`. Returns `amountIn/amountOut/orderHash` via `quote` eth_call on SwapVM Router 0x111111338c5091e8440b67B168bae16a668AC0De. Protocol fee 0.02% all-in included in quote, x402 hint returned.
-3. **Activate** — Agent proposes `ERC-2612` permit for exact amount+deadline. User/agent wallet signs locally, calls router, fee splits on-chain to 0x4C96... in same tx. No TRDEFI custody. Revocable via `approve(0)` + `dock()` in 1 tx. All events verifiable via Etherscan/Basescan. No transfer of idle funds to an external LP — funds stay in wallet until eligible order flow.
+ 1. **Discover** — Agent calls `list_aqua_pools` (wraps `resource=list`). Returns active strategies across 5 chains, all pairs. No pool TVL lock — virtual X0/Y0. Allowlist: only strategies returned by this call are valid; direct Aqua Core calls bypassing TRDEFI feeReceiver are not supported.
+ 2. **Quote** — Agent calls `get_quote` with `hash` + `amount` + `chain`. Returns `amountIn/amountOut/orderHash` via `quote` eth_call on SwapVM Router 0x111111338c5091e8440b67B168bae16a668AC0De. Protocol fee 0.02% all-in to 0x4C96dA02d7120BFb81594d0e924B237e0c74660d (allowlist — only quotes with this feeReceiver are valid, x402 hint returned).
+ 3. **Activate** — Agent proposes `ERC-2612` permit for exact amount+deadline using existing pool hash (no new strategy creation — illiquid pair would stall with no fills and human would exit). Wallet signs locally, calls router, fee splits on-chain to feeReceiver in same tx. No TRDEFI custody. Revocable via `approve(0)` + `dock()` in 1 tx. All events verifiable. No transfer of idle funds to an external LP — funds stay in wallet until eligible order flow. Only existing pools are used; strategy creation is out of scope.
 
 ## Use Cases
 
