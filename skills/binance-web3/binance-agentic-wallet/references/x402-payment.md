@@ -246,10 +246,10 @@ baw x402-payment sign --paymentId 550e8400-e29b-41d4-a716-446655440000 --selecte
 
 ## Guardrails
 
-1. **Confirm before signing.** Always confirm with the user before calling `sign`; only proceed once they've consented.
-2. **Confirm before signing another payment option.** Always confirm with the user before switching to a different payment option, network, or token; only proceed once they've consented.
-3. **Confirm before changing to a new resource.** Always confirm with the user before paying for a different resource or service; never silently substitute — if the current one fails, report the error and let the user decide.
-4. **Confirm before retrying more than once.** If replaying the request fails due to a network or unknown error, retry at most once automatically. Before any further retries, confirm with the user.
+1. **Confirm before signing.** Confirm with the user before calling `sign` and only proceed once they've consented, unless the user explicitly asks to skip confirmation.
+2. **Confirm before signing another payment option.** Confirm with the user before switching to a different payment option, network, or token, and only proceed once they've consented, unless the user explicitly asks to skip confirmation.
+3. **Confirm before changing to a new resource.** Only pay for a different resource or service when the user has named it — never silently substitute; if the current one fails, report the error and let the user decide. When the user does name a new resource, confirm before paying, unless they explicitly ask to skip confirmation.
+4. **Confirm before retrying more than once.** If replaying the request fails due to a network or unknown error, retry at most once automatically. Before any further retries, confirm with the user, unless the user explicitly asks to skip confirmation.
 
 ---
 
