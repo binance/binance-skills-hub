@@ -1,0 +1,37 @@
+{
+  "receipt": {
+    "format": "jws",
+    "signature": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6cmVjZWlwdHMuZXhhbXBsZS50ZXN0I2ZpeHR1cmUtZWQyNTUxOSJ9.eyJpc3N1ZWRBdCI6MTg5MzQ1NjAwMCwibmV0d29yayI6ImVpcDE1NTo4NDUzIiwicGF5ZXIiOiJkaWQ6a2V5OmZpeHR1cmUtcGF5ZXIiLCJyZXNvdXJjZVVybCI6Imh0dHBzOi8vcmVjZWlwdHMuZXhhbXBsZS50ZXN0L3ByZW1pdW0tZGF0YSIsInRyYW5zYWN0aW9uIjoiZml4dHVyZS10cmFuc2FjdGlvbi0wMDEiLCJ2ZXJzaW9uIjoxfQ.790UJsPFKiyAf1Zg4eWm2dLGux0kaS2QiwKRDKs6b_3D1kmhB0D4zQjLpwMiuL_BgH98BNl6VU0DFaHOrbcQDQ"
+  },
+  "trust": {
+    "jwsKeys": [
+      {
+        "kid": "did:web:receipts.example.test#fixture-ed25519",
+        "publicJwk": {
+          "crv": "Ed25519",
+          "x": "c3328GitwhcP7basOH3jO0T8YXpw5zJwXlqik-WMxy0",
+          "kty": "OKP",
+          "alg": "EdDSA",
+          "use": "sig",
+          "kid": "did:web:receipts.example.test#fixture-ed25519",
+          "key_ops": [
+            "verify"
+          ]
+        },
+        "allowedAlgorithms": [
+          "EdDSA"
+        ]
+      }
+    ]
+  },
+  "policy": {
+    "now": 1893456030,
+    "maxAgeSeconds": 300,
+    "maxFutureSkewSeconds": 30,
+    "expectedResourceUrl": "https://receipts.example.test/premium-data",
+    "expectedNetwork": "eip155:8453",
+    "expectedPayer": "did:key:fixture-payer",
+    "requireTransaction": true,
+    "expectedTransaction": "fixture-transaction-001"
+  }
+}
