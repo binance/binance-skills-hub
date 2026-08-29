@@ -1,5 +1,5 @@
 ---
-title: CYRE Guardian Risk Check
+name: guardian-risk
 description: Screen a wallet address, token mint, or counterparty for fraud and risk signals before an agent trades, swaps, or transfers funds. Use when the user or agent mentions risk check, address screening, counterparty check, rug check, token safety, mint authority, holder concentration, wallet reputation, passport, attestation, CYRE, or Guardian — or before executing a trade, transfer, or approval involving an unfamiliar address or mint. Pay-per-request in USDC via x402 on Base mainnet. No API key, no account. Returns explainable patterns, not verdicts.
 metadata:
   version: 0.1.0
