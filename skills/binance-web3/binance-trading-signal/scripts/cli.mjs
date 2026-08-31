@@ -5,6 +5,23 @@
 // Commands:
 //   smart-money  POST  on-chain Smart Money trading signals (BSC + Solana)
 
+import { realpathSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+// Compares resolved filesystem paths (via realpathSync, which also collapses
+// the symlinks the `skills add` installer creates) rather than raw URL
+// strings, since `import.meta.url === \`file://${process.argv[1]}\`` never
+// matches on Windows (file:// URLs there use forward slashes and a /drive:
+// prefix that never string-equals argv[1]'s OS-native backslash path).
+function isDirectExecution() {
+  if (!process.argv[1]) return false;
+  try {
+    return realpathSync(fileURLToPath(import.meta.url)) === realpathSync(process.argv[1]);
+  } catch {
+    return false;
+  }
+}
+
 // ---- inline HTTP helper (self-contained, zero dependency) ----
 const TIMEOUT_MS = 10_000;
 const UA = { 'Accept-Encoding': 'identity', 'User-Agent': 'binance-web3/2.0 (Skill)' };
@@ -62,7 +79,7 @@ const COMMANDS = {
 export { COMMANDS, call, qs, UA, TIMEOUT_MS, CHAINS, validateChainId };
 
 // ---- CLI dispatch (only runs when executed directly, not when imported) ----
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (isDirectExecution()) {
   const [cmd, paramsStr] = process.argv.slice(2);
 
   if (!cmd || cmd === '--help' || cmd === '-h') {
