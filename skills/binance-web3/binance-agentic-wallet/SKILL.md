@@ -14,8 +14,8 @@ description: |
   or any on-chain wallet operation.
 metadata:
   author: binance-web3-team
-  version: '1.9.1'
-  requiredCliVersion: '1.8.0'
+  version: '1.10.0'
+  requiredCliVersion: '1.9.0'
   openclaw:
     requires:
       bins:
@@ -118,7 +118,7 @@ Always follow these steps to build the command correctly:
 1. **Always read the reference file first.** Before constructing any command, open the reference file listed in the table above and read the Syntax and Parameters sections for that command. Do not rely on memory or guess the parameter format.
 2. **Build the command.** Use the exact syntax from the reference file.
 3. **Always append `--json`.** This ensures the output is machine-readable JSON. Every command supports this flag.
-4. **Confirm before execution.** Confirm with the user each time before any state-changing command. Remind the user to do their own research (DYOR). For trades without explicit slippage, disclose the default ("auto"). Only proceed on clear affirmative replies (e.g., "yes", "confirm", "go ahead"). Treat anything else as non-confirmation and re-prompt.
+4. **Confirm before execution.** Confirm with the user each time before any state-changing command, unless the user explicitly asks to skip confirmation. Remind the user to do their own research (DYOR). For trades without explicit slippage, disclose the default ("auto"). Only proceed on clear affirmative replies (e.g., "yes", "confirm", "go ahead"). Treat anything else as non-confirmation and re-prompt.
    - **Payment-token selection.** When the user names what to buy and how much but does not specify which token to pay with (the `fromToken`): **outside a campaign**, if the wallet holds a suitable token with sufficient balance, pick one and proceed — don't make it a separate question. **In a campaign context, always ask first** — only BNB/USDT/USDC/U/USD1 count toward campaign PnL, so a silently-picked token can void the trade's score (see [campaign.md](references/campaign.md)). If no suitable payment token is available, tell the user to top up or swap first. Either way this does not waive the confirmation of the trade itself.
 5. **External sign two-step flow.** Before `contract-call` or `sign-message`, run `wallet settings --json` and confirm `devMode.enabled=true`. Then run `preview`, show the user the parsed transaction/message and risk details, get explicit confirmation, and only then run `execute` with the `requestId` from the preview. If preview returns an error, do not attempt `execute`.
 6. **`contract-call --value` is in wei**, not human-readable like `--amount` in other commands. 1 BNB is `--value 1000000000000000000`.
