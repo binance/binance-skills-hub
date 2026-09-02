@@ -17,7 +17,7 @@ If your agent already decides what to trade, CHARTER decides whether it is allow
 
 ## Calling CHARTER
 
-CHARTER exposes a local HTTP API (`charter serve`). All three calls below are plain JSON over HTTP. No SDK is required.
+CHARTER exposes an HTTP API (`charter serve`). All three calls below are plain JSON over HTTP. No SDK is required. If the instance you are calling was started with `CHARTER_API_KEY` set, include it on every request as an `X-Charter-Api-Key` header.
 
 ### charter.propose
 
