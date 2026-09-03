@@ -65,7 +65,13 @@ baw wallet chains --json
 {
   "success": true,
   "data": [
-    { "binanceChainId": "56", "name": "BNB Smart Chain", "simpleName": "BSC" }
+    { "binanceChainId": "56", "name": "BNB Smart Chain", "simpleName": "BSC" },
+    { "binanceChainId": "1", "name": "Ethereum", "simpleName": "ETH" },
+    { "binanceChainId": "CT_501", "name": "Solana", "simpleName": "Solana" },
+    { "binanceChainId": "8453", "name": "Base", "simpleName": "Base" },
+    { "binanceChainId": "42161", "name": "Arbitrum One", "simpleName": "Arbitrum" },
+    { "binanceChainId": "137", "name": "Polygon", "simpleName": "Polygon" },
+    { "binanceChainId": "4663", "name": "Robinhood", "simpleName": "Robinhood" }
   ]
 }
 ```
@@ -117,6 +123,21 @@ baw wallet address --json
       {
         "binanceChainId": "8453",
         "chainName": "Base",
+        "address": "0x1234...5678"
+      },
+      {
+        "binanceChainId": "42161",
+        "chainName": "Arbitrum",
+        "address": "0x1234...5678"
+      },
+      {
+        "binanceChainId": "137",
+        "chainName": "Polygon",
+        "address": "0x1234...5678"
+      },
+      {
+        "binanceChainId": "4663",
+        "chainName": "Robinhood",
         "address": "0x1234...5678"
       }
     ]
