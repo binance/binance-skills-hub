@@ -1,0 +1,8 @@
+{
+  "name": "rsoft-agentic-bank-skill",
+  "version": "2.2.0",
+  "private": true,
+  "dependencies": {
+    "@coinbase/cdp-sdk": "^1.47.0"
+  }
+}
