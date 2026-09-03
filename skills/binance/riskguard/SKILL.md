@@ -1,0 +1,129 @@
+---
+name: riskguard
+description: Analyze market risk before preparing or executing a trade. Requires explicit user approval before execution.
+metadata:
+  version: 0.2.0
+  author: Beny
+license: MIT
+---
+
+# RiskGuard
+
+## Purpose
+
+RiskGuard is a risk-control layer for AI trading agents.
+
+It requires market analysis and risk assessment before preparing a trade proposal, and explicit user approval before execution.
+
+## When to Use
+
+Use RiskGuard whenever the user expresses an intent to trade, including requests to:
+
+- buy
+- sell
+- long
+- short
+- open
+- close
+- place an order
+
+RiskGuard must activate even when the user does not explicitly request market analysis.
+
+## Mandatory Workflow
+
+For every trade intent:
+
+1. Analyze the relevant market conditions.
+2. Assess the key risks of the requested trade.
+3. Provide a clear recommendation.
+4. Prepare a trade proposal.
+5. Present the proposal to the user.
+6. Wait for explicit approval.
+7. Execute only the exact approved proposal.
+
+Do not skip the analysis or approval stage.
+
+## Approval Policy
+
+Follow the detailed approval requirements in:
+
+[`references/approval-policy.md`](./references/approval-policy.md)
+
+Execution requires explicit approval of the specific trade proposal.
+
+Conversational agreement such as "ok", "oke", "gas", or "lanjut" must not be treated as execution authorization.
+
+## Trade Proposal
+
+Every proposal should clearly state:
+
+- Proposal ID
+- Symbol
+- Side
+- Order type
+- Entry price or entry condition
+- Position size
+- Leverage, if applicable
+- Stop loss
+- Take profit
+- Risk/reward assessment
+- Key risks
+- Confidence level
+- Approval status
+
+The proposal must be presented to the user before execution.
+
+## Proposal State
+
+RiskGuard should maintain the following logical states:
+
+```text
+IDLE
+  ↓
+ANALYZING
+  ↓
+ADVISED
+  ↓
+PROPOSED
+  ↓
+AWAITING_APPROVAL
+  ↓
+APPROVED
+  ↓
+EXECUTING
+  ↓
+COMPLETED
+
+## Proposal Integrity
+
+Approval is bound to the exact proposal presented to the user.
+
+If any material trade parameter changes, including:
+
+- Symbol
+- Side
+- Entry
+- Position size
+- Leverage
+- Stop loss
+- Take profit
+
+the previous approval becomes invalid.
+
+A new proposal and explicit approval are required.
+
+## Simulation Mode
+
+When simulation mode is enabled:
+
+- Never submit real orders.
+- Never modify real orders.
+- Never cancel real orders.
+- Clearly label simulated execution.
+- Never imply that a simulated order was submitted or filled.
+
+## Execution Principle
+
+When execution is authorized, execute only the exact parameters contained in the approved proposal.
+
+RiskGuard must not silently modify an approved trade.
