@@ -16,7 +16,7 @@ baw approvals list [--binanceChainId <binanceChainId>] [--spender <spender>] --j
 
 | Parameter          | Required | Default | Description                                          |
 |--------------------|----------|---------|------------------------------------------------------|
-| `--binanceChainId` | No       | —       | Chain ID filter: `56` (BSC), `1` (ETH), `8453` (Base) |
+| `--binanceChainId` | No       | —       | Chain ID filter (e.g. `56` for BSC). For other EVM chains, see `wallet chains` |
 | `--spender`        | No       | —       | Filter by spender contract address                   |
 
 ### Example
@@ -95,7 +95,7 @@ baw approvals detail --binanceChainId <binanceChainId> --tokenContract <tokenCon
 
 | Parameter          | Required | Default | Description                            |
 |--------------------|----------|---------|----------------------------------------|
-| `--binanceChainId` | Yes      | —       | Chain ID: `56` (BSC), `1` (ETH), `8453` (Base) |
+| `--binanceChainId` | Yes      | —       | Chain ID (e.g. `56` for BSC). For other EVM chains, see `wallet chains` |
 | `--tokenContract`  | Yes      | —       | Token contract address                 |
 | `--spender`        | Yes      | —       | Spender contract address               |
 | `--type`           | Yes      | —       | Approval type: `approve` or `permit2`  |
@@ -176,7 +176,7 @@ baw approvals revoke --binanceChainId <binanceChainId> --tokenContract <tokenCon
 
 | Parameter          | Required | Default | Description                            |
 |--------------------|----------|---------|----------------------------------------|
-| `--binanceChainId` | Yes      | —       | Chain ID: `56` (BSC), `1` (ETH), `8453` (Base) |
+| `--binanceChainId` | Yes      | —       | Chain ID (e.g. `56` for BSC). For other EVM chains, see `wallet chains` |
 | `--tokenContract`  | Yes      | —       | Token contract address                 |
 | `--spender`        | Yes      | —       | Spender contract address               |
 | `--type`           | Yes      | —       | Approval type: `approve` or `permit2`  |

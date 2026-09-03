@@ -14,7 +14,7 @@ description: |
   or any on-chain wallet operation.
 metadata:
   author: binance-web3-team
-  version: '1.10.0'
+  version: '1.11.0'
   requiredCliVersion: '1.9.0'
   openclaw:
     requires:
@@ -210,3 +210,27 @@ The `binance-tokenized-securities-info` skill is optional — it wraps the same 
 |--------------|----------------------------------------------|
 | ETH (Native) | `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` |
 | USDC         | `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913` |
+
+### Arbitrum
+
+| Token        | Address                                      |
+|--------------|----------------------------------------------|
+| ETH (Native) | `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` |
+| USDT         | `0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9` |
+| USDC         | `0xaf88d065e77c8cC2239327C5EDb3A432268e5831` |
+
+### Polygon
+
+| Token        | Address                                      |
+|--------------|----------------------------------------------|
+| POL (Native) | `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` |
+| USDT         | `0xc2132d05d31c914a87c6611c10748aeb04b58e8f` |
+| USDC         | `0x3c499c542cef5e3811e1192ce70d8cc03d5c3359` |
+
+### Robinhood Chain
+
+| Token        | Address                                      |
+|--------------|----------------------------------------------|
+| ETH (Native) | `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` |
+| USDG         | `0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168` |
+| USDE         | `0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34` |
