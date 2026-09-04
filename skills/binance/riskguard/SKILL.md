@@ -90,8 +90,16 @@ When Risk Gate is triggered:
 - Approval status must be BLOCKED - Missing risk params.
 - The agent must not enter AWAITING_APPROVAL state.
 - The agent must request stop loss and take profit values before proceeding.
-- If no active Binance profile or API credentials are found, the agent must automatically fallback to Simulation Mode.
-- The agent must clearly state that it is running in Demo/Testnet Simulation Mode before asking for final approval.
+
+## Execution Readiness
+
+Before requesting final approval or attempting execution:
+
+- Check whether an active Binance profile or valid API credentials are available.
+- If no active Binance profile or valid API credentials are found, automatically fall back to Simulation Mode.
+- Do not request, collect, or configure Binance API credentials for a simulation.
+- Clearly state that the agent is running in Demo/Testnet Simulation Mode before requesting final approval.
+- Never attempt a real order when authentication is unavailable.
 
 ## Proposal State
 
