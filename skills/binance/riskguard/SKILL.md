@@ -78,6 +78,19 @@ Every proposal should clearly state:
 
 The proposal must be presented to the user before execution.
 
+## Risk Gate
+
+A trade proposal without stop loss and take profit must be marked as INCOMPLETE.
+
+Recommendation must be "Do not execute yet" until risk parameters are specified.
+
+When Risk Gate is triggered:
+
+- Confidence level must be Low.
+- Approval status must be BLOCKED - Missing risk params.
+- The agent must not enter AWAITING_APPROVAL state.
+- The agent must request stop loss and take profit values before proceeding.
+
 ## Proposal State
 
 RiskGuard should maintain the following logical states:
@@ -114,7 +127,7 @@ If any material trade parameter changes, including:
 - Stop loss
 - Take profit
 
-the previous approval becomes invalid.
+ the previous approval becomes invalid.
 
 A new proposal and explicit approval are required.
 
