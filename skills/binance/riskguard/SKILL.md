@@ -90,6 +90,8 @@ When Risk Gate is triggered:
 - Approval status must be BLOCKED - Missing risk params.
 - The agent must not enter AWAITING_APPROVAL state.
 - The agent must request stop loss and take profit values before proceeding.
+- If no active Binance profile or API credentials are found, the agent must automatically fallback to Simulation Mode.
+- The agent must clearly state that it is running in Demo/Testnet Simulation Mode before asking for final approval.
 
 ## Proposal State
 
