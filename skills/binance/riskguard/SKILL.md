@@ -93,6 +93,7 @@ APPROVED
 EXECUTING
   ↓
 COMPLETED
+```text
 
 ## Proposal Integrity
 
