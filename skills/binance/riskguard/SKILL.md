@@ -31,6 +31,10 @@ RiskGuard must activate even when the user does not explicitly request market an
 
 ## Mandatory Workflow
 
+**Pre-check:** If trade intent is detected, activate RiskGuard before performing any trade-related action.
+
+Do not install trading CLIs, configure trading tools, connect trading accounts, request API keys, prepare execution infrastructure, or execute trades before the user explicitly approves the exact trade proposal.
+
 For every trade intent:
 
 1. Analyze the relevant market conditions.
@@ -39,7 +43,8 @@ For every trade intent:
 4. Prepare a trade proposal.
 5. Present the proposal to the user.
 6. Wait for explicit approval.
-7. Execute only the exact approved proposal.
+7. After explicit approval, perform only the setup required for the approved trade.
+8. Execute only the exact approved proposal.
 
 Do not skip the analysis or approval stage.
 
@@ -93,7 +98,7 @@ APPROVED
 EXECUTING
   ↓
 COMPLETED
-```text
+```
 
 ## Proposal Integrity
 
