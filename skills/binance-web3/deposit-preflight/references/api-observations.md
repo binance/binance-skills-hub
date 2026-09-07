@@ -1,7 +1,48 @@
 # API observations
 
 Behaviour of the `baw defi` surface that motivates each step of the procedure. Observed on BNB
-Smart Chain (`binanceChainId` 56) against 61 `investType=Earn` products.
+Smart Chain (`binanceChainId` 56), which returns **61 `Earn` products and 529 `LiquidityPool`
+products** across 10 protocols — 590 in total.
+
+## `investType` accepts two values, not three
+
+`baw defi protocol-list --help` and `investment-list --help` both document
+`Earn, Loan, LiquidityPool`. Passing `Loan` returns:
+
+```json
+{ "success": false,
+  "error": { "code": 1001001, "name": "UNKNOWN_ERROR",
+             "message": "Invalid investType value. Supported values: Earn, LiquidityPool." } }
+```
+
+The CLI help text and the API disagree.
+
+## The two product types behave differently, and the difference matters
+
+|  | `Earn` | `LiquidityPool` |
+|---|---|---|
+| count on chain 56 | 61 | 529 |
+| `poolAddress` | `null` on every product | populated on every product |
+| `apyType` | `APY` | `APR` |
+| median advertised rate | 0.72% | 196% |
+| highest advertised rate | 12.44% | 16,121.58% |
+
+Sampled 8 of each; the `poolAddress` split was 0/8 populated for `Earn` and 8/8 populated for
+`LiquidityPool`.
+
+Consequences for the procedure:
+
+- For `LiquidityPool`, the contract can be read straight from `investment-info`. Step 3 can verify
+  it directly.
+- For `Earn`, it cannot, and `defi preview` is the only route to the address. Step 2 exists for
+  this case.
+- An `APR` on a concentrated-liquidity position is an annualised fee rate. It is not a return a
+  depositor receives, and it does not account for impermanent loss. Presenting an `APR` and an
+  `APY` in the same sorted list invites a comparison that does not hold.
+
+The highest advertised rate on the whole surface is a `LiquidityPool` product at 16,121.58% APR
+against $278K of TVL. An agent that ranks the listing by rate and deposits into the top entry lands
+there.
 
 ## `investment-list` omits deposit eligibility
 
@@ -19,11 +60,12 @@ APY placed such a product first; simulating a deposit on it returned:
 An agent that ranks the listing by yield and deposits into the top entry meets this error rather
 than the listing.
 
-## `poolAddress` is always null; the address is available from `preview`
+## For `Earn`, the address is only available from `preview`
 
-Every entry returns `poolAddress: null` from both `investment-list` and `investment-info`.
+`Earn` entries return `poolAddress: null` from both `investment-list` and `investment-info`.
+(`LiquidityPool` entries do carry it — see the table above.)
 
-`defi preview` does return it, without broadcasting:
+`defi preview` returns it for either type, without broadcasting:
 
 ```json
 { "feeAndContract": {

@@ -12,18 +12,22 @@ skipping it silently.
 There is no counterpart before a DeFi deposit. An agent receives a protocol name and an APY from
 `investment-list`, and that is the whole basis on which it moves funds.
 
-Three properties of the listing make that basis thin:
+Four properties of the listing make that basis thin:
 
-- `poolAddress` is returned as `null` on every product, so the listing never says which contract a
-  deposit enters.
+- `poolAddress` is `null` on every `Earn` product, so for those the listing never says which
+  contract a deposit enters. (`LiquidityPool` products do carry it.)
 - `investable` is absent from `investment-list`. A delisted product therefore stays visible, and
-  can sit at the top when the listing is sorted by APY; the deposit fails only later, with
+  can sit at the top when the listing is sorted by rate; the deposit fails only later, with
   `INVESTMENT_NOT_INVESTABLE`.
 - One protocol frequently runs several pools for the same asset at materially different rates, and
   the listing does not distinguish them.
+- `Earn` reports `APY` and `LiquidityPool` reports `APR`, and the two sit in one sortable list.
+  On chain 56 that list holds 61 `Earn` products with a median of 0.72% and 529 `LiquidityPool`
+  products with a median of 196%, topped by one at 16,121.58% against $278K of TVL. An agent
+  ranking by rate lands there.
 
-The address is in fact available — `defi preview` returns `feeAndContract.interactWith` without
-broadcasting anything. This skill uses it.
+For `Earn`, the address is still reachable — `defi preview` returns `feeAndContract.interactWith`
+without broadcasting anything. This skill uses it.
 
 ## What it does
 

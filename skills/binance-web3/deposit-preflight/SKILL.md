@@ -53,8 +53,11 @@ baw defi preview --action deposit --investmentId <id> \
   --tokenAddress <asset> --amount <amount> --json
 ```
 
-Read `feeAndContract.interactWith.address`. **This is the contract the deposit would call, and it
-appears nowhere in `investment-list`, where `poolAddress` is returned as `null`.**
+Read `feeAndContract.interactWith.address`. **This is the contract the deposit would call.**
+
+For `Earn` products this is the only route to it: `poolAddress` is `null` on every `Earn` entry in
+both `investment-list` and `investment-info`. `LiquidityPool` entries do carry `poolAddress`, so
+for those it can be read directly and this step confirms it rather than discovers it.
 
 If the preview fails with `INSUFFICIENT_BALANCE`, the check has not run. Report it as not tested
 rather than as a failure of the product — see §2.
@@ -111,6 +114,12 @@ baseline warrants explicit mention to the user before any deposit.
 
 Match on rate agreement. Do not match on TVL: independent sources define it differently, and
 entries routinely agree on rate while differing substantially on TVL.
+
+**Do not compare an `APR` against an `APY`.** `Earn` products report `apyType: APY`;
+`LiquidityPool` products report `apyType: APR`, which on a concentrated-liquidity position is an
+annualised fee rate — not a return a depositor receives, and blind to impermanent loss. Ranking
+both together produces a list topped by liquidity pools whose headline figure does not mean what
+the lending figures beneath it mean. State the type alongside the number.
 
 ### Step 7 — Check capacity
 
