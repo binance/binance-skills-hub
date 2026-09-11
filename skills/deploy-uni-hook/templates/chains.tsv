@@ -1,0 +1,33 @@
+# Uniswap v4 chain registry — the SINGLE source of truth for deploy-uni-hook.
+# hook-deploy.sh resolves <chain> here (name -> PoolManager + RPC); the skill reads
+# it to pick a chain and to know the testnet flag for the mainnet double-opt-in.
+# Addresses are the official v4 deployments (developers.uniswap.org/.../v4/deployments).
+# Columns are TAB-separated: name  chainId  testnet  poolManager  stateView  rpc  explorer  alchemy
+# The 8th column (alchemy) is the Alchemy network slug, if any. When ALCHEMY_API_KEY
+# is set, hook-deploy.sh prefers https://<slug>.g.alchemy.com/v2/$ALCHEMY_API_KEY over
+# the public `rpc` (authenticated RPC — matters most for the mainnet sim + broadcast).
+# Set RPC_URL to override the resolved endpoint (testing/escape hatch).
+# To add a chain: append one row. Leave `alchemy` empty if Alchemy has no endpoint.
+#
+# --- mainnets (testnet=false: require arm: + explicit chain: + a balance check) ---
+ethereum	1	false	0x000000000004444c5dc75cB358380D2e3dE08A90	0x7ffe42c4a5deea5b0fec41c94c136cf115597227	https://ethereum-rpc.publicnode.com	https://etherscan.io	eth-mainnet
+unichain	130	false	0x1f98400000000000000000000000000000000004	0x86e8631a016f9068c3f085faf484ee3f5fdee8f2	https://mainnet.unichain.org	https://uniscan.xyz	unichain-mainnet
+optimism	10	false	0x9a13f98cb987694c9f086b1f5eb990eea8264ec3	0xc18a3169788f4f75a170290584eca6395c75ecdb	https://mainnet.optimism.io	https://optimistic.etherscan.io	opt-mainnet
+base	8453	false	0x498581ff718922c3f8e6a244956af099b2652b2b	0xa3c0c9b65bad0b08107aa264b0f3db444b867a71	https://mainnet.base.org	https://basescan.org	base-mainnet
+arbitrum	42161	false	0x360e68faccca8ca495c1b759fd9eee466db9fb32	0x76fd297e2d437cd7f76d50f01afe6160f86e9990	https://arb1.arbitrum.io/rpc	https://arbiscan.io	arb-mainnet
+polygon	137	false	0x67366782805870060151383f4bbff9dab53e5cd6	0x5ea1bd7974c8a611cbab0bdcafcb1d9cc9b3ba5a	https://polygon-bor-rpc.publicnode.com	https://polygonscan.com	polygon-mainnet
+robinhood	4663	false	0x8366a39cc670b4001a1121b8f6a443a643e40951	0xf3334192d15450cdd385c8b70e03f9a6bd9e673b	https://rpc.mainnet.chain.robinhood.com	https://robinhoodchain.blockscout.com
+worldchain	480	false	0xb1860d529182ac3bc1f51fa2abd56662b7d13f33	0x51d394718bc09297262e368c1a481217fdeb71eb	https://worldchain-mainnet.g.alchemy.com/public	https://worldscan.org	worldchain-mainnet
+xlayer	196	false	0x360e68faccca8ca495c1b759fd9eee466db9fb32	0x76fd297e2d437cd7f76d50f01afe6160f86e9990	https://rpc.xlayer.tech	https://www.oklink.com/xlayer
+ink	57073	false	0x360e68faccca8ca495c1b759fd9eee466db9fb32	0x76fd297e2d437cd7f76d50f01afe6160f86e9990	https://rpc-gel.inkonchain.com	https://explorer.inkonchain.com	ink-mainnet
+soneium	1868	false	0x360e68faccca8ca495c1b759fd9eee466db9fb32	0x76fd297e2d437cd7f76d50f01afe6160f86e9990	https://rpc.soneium.org	https://soneium.blockscout.com	soneium-mainnet
+avalanche	43114	false	0x06380c0e0912312b5150364b9dc4542ba0dbbc85	0xc3c9e198c735a4b97e3e683f391ccbdd60b69286	https://api.avax.network/ext/bc/C/rpc	https://snowtrace.io	avax-mainnet
+bnb	56	false	0x28e2ea090877bf75740558f6bfb36a5ffee9e9df	0xd13dd3d6e93f276fafc9db9e6bb47c1180aee0c4	https://bsc-dataseed.binance.org	https://bscscan.com	bnb-mainnet
+celo	42220	false	0x288dc841A52FCA2707c6947B3A777c5E56cd87BC	0xbc21f8720babf4b20d195ee5c6e99c52b76f2bfb	https://forno.celo.org	https://celoscan.io	celo-mainnet
+# --- testnets (testnet=true: the default, dry-run friendly) ---
+# NOTE: Ethereum Sepolia (11155111, PoolManager 0xE03A...3543) is intentionally
+# omitted — its PoolManager predates current v4-core and reverts the fork sim with
+# NativeTransferFailed(), so the gate would block every deploy there anyway.
+base-sepolia	84532	true	0x05E73354cFDd6745C338b50BcFDfA3Aa6fA03408	0x571291b572ed32ce6751a2cb2486ebee8defb9b4	https://sepolia.base.org	https://sepolia.basescan.org	base-sepolia
+unichain-sepolia	1301	true	0x00b036b58a818b1bc34d502d3fe730db729e62ac	0xc199f1072a74d4e905aba1a84d9a45e2546b6222	https://sepolia.unichain.org	https://sepolia.uniscan.xyz	unichain-sepolia
+arbitrum-sepolia	421614	true	0xFB3e0C6F74eB1a21CC1Da29aeC80D2Dfe6C9a317	0x9d467fa9062b6e9b1a46e26007ad82db116c67cb	https://sepolia-rollup.arbitrum.io/rpc	https://sepolia.arbiscan.io	arb-sepolia
