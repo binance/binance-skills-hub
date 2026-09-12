@@ -1,0 +1,135 @@
+name: Binance Daily Data Update
+
+# Runs once per day (00:05 UTC), and on demand via the Actions UI
+# (workflow_dispatch). Produces data/binance-daily.data: an Ondo
+# statement-style daily read-only report with Binance ID + HMAC
+# verification. All endpoints are READ-ONLY.
+on:
+  schedule:
+    - cron: "5 0 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  update-daily-data:
+    name: Fetch daily read-only statement
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js 26
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26
+
+      - name: Report Node.js version
+        run: node --version && npm --version
+
+      - name: Install Binance CLI globally
+        run: npm install -g @binance/binance-cli@1.3.0
+
+      - name: Apply sandbox timeout patch
+        # @binance/common defaults to a 1000 ms REST timeout, which is lower than
+        # real-world latency to api.binance.com. See docs/binance-cli-sandbox-fix.md
+        run: python3 scripts/patch-binances-cli-timeout.py
+
+      - name: Verify CLI version
+        run: binance-cli --version
+
+      - name: Verify API reachability (handles geo-restricted runners)
+        id: reachability
+        run: |
+          set +e
+          for domain in api.binance.com api1.binance.com data-api.binance.vision; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "https://$domain/api/v3/ping")
+            echo "$domain ping -> HTTP $code"
+            if [ "$code" = "200" ]; then
+              echo "base=$domain" >> "$GITHUB_OUTPUT"
+              echo "Reachable base URL: $domain"
+              break
+            fi
+          done
+          if ! grep -q "base=" "$GITHUB_OUTPUT"; then
+            echo "base=api.binance.com" >> "$GITHUB_OUTPUT"
+            echo "warn: no fully reachable base detected; the fetch script mirrors as needed"
+          fi
+
+      - name: Fetch daily data (read-only)
+        env:
+          BASE_URL: https://api.binance.com
+          PUBLIC_MIRROR_URL: ${{ steps.reachability.outputs.base == 'data-api.binance.vision' && 'https://data-api.binance.vision' || '' }}
+          BINANCE_API_KEY: ${{ secrets.BINANCE_API_KEY }}
+          BINANCE_SECRET_KEY: ${{ secrets.BINANCE_SECRET_KEY }}
+          BINANCE_UID: ${{ secrets.BINANCE_UID }}
+          BINANCE_STOCKS: GOOGL,AAPL,TSLA
+          BINANCE_STOCK_MAP: ${{ secrets.BINANCE_ALHFA_GOOGLON }}
+        run: |
+          set -euo pipefail
+          node scripts/fetch-daily-data.mjs
+          python3 - <<'PYEOF'
+          import json
+          d = json.load(open('data/binance-daily.data'))
+          ident = d['binance_identity']
+          print('daily data summary:',
+                'hmac_verified=', ident.get('hmac_verified'),
+                'uid_check_status=', ident.get('uid_check_status'),
+                'non_zero_balances=', d['balances'].get('non_zero', 0))
+          PYEOF
+          echo "---- sizes ----"
+          ls -la data/
+
+      - name: Validate output schema
+        env:
+          BINANCE_UID: ${{ secrets.BINANCE_UID }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PYEOF'
+          import os
+          import json, sys
+          d = json.load(open('data/binance-daily.data'))
+          required = ['generated_at', 'kind', 'read_only', 'binance_identity',
+                      'balances', 'ondo_statement', 'market_24h', 'summary']
+          missing = [k for k in required if k not in d]
+          assert not missing, f'missing top-level keys: {missing}'
+          assert d['kind'] == 'binance-daily' and d['read_only'] is True
+          ident = d['binance_identity']
+          assert ident.get('binance_id') is not None, 'missing Binance identity UID'
+          assert ident.get('hmac_verified') is True, 'HMAC verification failed'
+          expected_uid = os.environ.get('BINANCE_UID', '').strip()
+          if expected_uid:
+              assert ident.get('uid_matches_expected') is True, 'BINANCE_UID mismatch'
+              assert ident.get('uid_check_status') == 'matched', 'unexpected UID validation status'
+          else:
+              assert ident.get('uid_check_status') == 'not_configured', 'expected UID check should be skipped when BINANCE_UID is unset'
+          ondo = d['ondo_statement']
+          assert 'watched_stocks' in ondo, 'missing watched_stocks'
+          errors = [s['error'] for s in ondo['watched_stocks'] if 'error' in s]
+          assert not errors, f'ondo stock errors: {errors}'
+          print('schema OK | uid_check_status:', ident.get('uid_check_status'),
+                '| hmac:', ident['hmac_verified'],
+                '| stocks:', len(ondo['watched_stocks']),
+                '| elapsed:', d['elapsed_ms'], 'ms')
+          PYEOF
+
+      - name: Commit and push daily data
+        run: |
+          set -euo pipefail
+          git config user.name "binance-daily-data[bot]"
+          git config user.email "binance-daily-data@cripto-web3.github.io"
+          git add data/binance-daily.data
+          if git diff --cached --quiet; then
+            echo "no daily data changes (unchanged file or data identical)"
+            exit 0
+          fi
+          git commit -m "data: daily read-only statement update $(date -u +%Y-%m-%d)"
+          git push origin HEAD:main

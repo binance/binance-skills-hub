@@ -1,1 +1,75 @@
+# =============================================================================
+# Binance Skills Hub — .gitignore
+# Catch-all policy: ignore everything except explicitly tracked repo files.
+# Secrets and runtime data must NEVER reach this repository.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Secrets / credentials / environment variables (kept local only)
+# -----------------------------------------------------------------------------
+.env
+.env-*
+*.env
+.env.local
+.env.*.local
+!.env.example
+
+# API keys, tokens, wallets
+*.key
+*.pem
+*.p12
+*.pfx
+*.keystore
+*.wallet
+
+# -----------------------------------------------------------------------------
+# Runtime / local-only data (repo rule: no tracked user data)
+# -----------------------------------------------------------------------------
+.data
+**/.data
+*.data
+**/*.data
+# Opt-in: hourly scheduled workflow output (read-only market data, refreshed every 1H)
+!data/binance-1h.data
+*.sqlite
+*.db
+**/*.db
+*.log
+**/*.log
+
+# -----------------------------------------------------------------------------
+# OS / editor / IDE
+# -----------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
 .idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# -----------------------------------------------------------------------------
+# Build / dependency artifacts
+# -----------------------------------------------------------------------------
+node_modules/
+package-lock.json
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Temp / scratch
+/tmp/
+*.tmp
+*.bak
+*.orig
+coverage/
+.nyc_output/
