@@ -1,0 +1,21 @@
+{
+  "name": "x402-offer-receipt-verifier",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "fixtures": "node scripts/generate-fixtures.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "verify:jws": "node scripts/verify-receipt.mjs --input fixtures/jws-valid.json"
+  },
+  "dependencies": {
+    "@x402/extensions": "2.23.0"
+  },
+  "devDependencies": {
+    "viem": "2.55.19"
+  }
+}
