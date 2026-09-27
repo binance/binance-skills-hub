@@ -28,7 +28,7 @@ Please keep implementations readable:
 - Do **not** require root access
 - Keep external dependencies minimal and document them clearly
 
-Each skill must include a **frontformatter** for Clawhub with these required fields:
+Each skill must include YAML **front matter** for Clawhub with these required fields:
 
 - `name`
 - `description`
@@ -71,7 +71,7 @@ Examples:
 - `wallet-tracker`
 - `token-listing-checker`
 
-The skill folder name should match, or closely match, the `name` in the frontformatter.
+The skill folder name should match, or closely match, the `name` in the front matter.
 
 ## Project Structure
 
@@ -83,10 +83,12 @@ Example:
 skills/
 └── example-skill/
     ├── README.md
-    ├── skill.md
+    ├── SKILL.md
     ├── references/
     └── scripts/
 ```
+
+The skill entrypoint must be named `SKILL.md` exactly so that installers can discover it.
 
 ### References
 
