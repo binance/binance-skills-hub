@@ -1,0 +1,15 @@
+{
+  "quote": "USDC",
+  "mode": "propose",
+  "stopLossPct": 8,
+  "trailingStopPct": 5,
+  "takeProfitPct": 20,
+  "maxPositionPct": 40,
+  "maxExposurePct": 80,
+  "maxDrawdownPct": 15,
+  "maxDailyLossPct": 5,
+  "minTradeUsd": 10,
+  "maxTickJumpPct": 25,
+  "volatility": { "windowSec": 300, "dropPct": 6 },
+  "assets": { "BTC": { "stopLossPct": 12 } }
+}
