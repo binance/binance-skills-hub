@@ -1,84 +1,69 @@
-# SolonPad agent API reference
+# SolonPad V3 agent API reference
 
 Base: `https://solonpad.fun`. The API is a convenience view over an on-chain indexer —
-`VERIFY.md` in the pinned repo (`github.com/solonlend/solonpad-skill`) shows how to
+the pinned repo (`github.com/solonlend/solonpad-skill`, `VERIFY.md`) shows how to
 spot-check any figure against the chain before trusting it with value. Poll politely
-(Cloudflare-fronted; send a real User-Agent).
+(Cloudflare-fronted; send a real User-Agent). Every `/api/v3` response is wrapped in
+`{chainId, asOfBlock, indexerLag, stale, tickers, data}`; amounts are base-unit decimal
+strings — parse with BigInt.
 
-## GET /api/launches?chain=arc|rh
+## Discovery and coin state
 
-Full indexed list: `{ rows, blockNumber, indexing }`. Each row carries `source` (which
-pad created the pool), `hook`, `poolKey`, `curve` (curve launches), `price`,
-`change24h`, `originDomain`. Covers SolonPad's own launches **and** external pads
-(Pons, pools.trade, Minara, Azex, open v4 pools). External sources are indexed from the
-moment of integration onward (no historical backfill); rows may be marked `truncated`.
+- `GET /api/v3/coins` — every V3 coin: token, poolId, quote kind, settlement kind,
+  creator, swap count, readiness.
+- `GET /api/v3/coins/{coin}/rounds` — the coin's next holder-dividend round: today's
+  accrued budget, sealed entries, the round minimum, and why it is waiting.
+- `GET /api/v3/pools/{coin}/fees` — creator rights: owner of the fee NFT, accrued,
+  claimable, paid.
 
-## GET /api/changes?chain=arc|rh[&since=cursor]
+## Dividends and payouts
 
-Incremental discovery feed.
+- `GET /api/v3/pools/{coin}/rewards/{account}` — an account's holder credits: each credit
+  with its round, ready/staged/paid amounts, and whether the next daily push (00:10 UTC,
+  ≥ $2 threshold) will include it.
+- `GET /api/v3/payouts` — every staged/paid/blocked transfer and the push schedule.
+- `GET /api/v3/reports?kind=&limit=` — payout reports: each stock-buying round with every
+  Arc and home-chain transaction step, so a reader can audit a round end to end.
+- `GET /api/v3/revenue/daily` · `/revenue/summary` — fees per day split into the six
+  buckets, plus hook volume.
 
-- No `since` → `{ events: [], cursor }` (initialization).
-- Poll every 15–60 s. `events` are `new_launch` records (v1; more event types later).
-- `cursor` is opaque — always keep the newest.
-- Empty `events` returns the same cursor.
-- HTTP `410` = cursor expired: refetch without `since`, continue from the fresh cursor,
-  and reconcile against `/api/launches` if completeness matters.
-- `truncated: true` = more waiting: poll again immediately.
+## Stock layer
 
-## GET /api/factsheet/{token}?chain=arc|rh
+- `GET /api/v3/stocks/reserves/assets` — proof of reserves per stock: token supply on
+  Arc, vault balance on the stock's home chain, covered flag, and the exact `cast`
+  command to re-check each number yourself.
+- `GET /api/v3/stocks/assets` — each listed stock's status, price source and caps.
+- `GET /api/v3/oracle/prices` · `/stocks/pool-prices` — oracle status (Stale while US
+  markets are closed) and the live venue pool prices that orders actually fill at.
+- `POST /api/v3/stocks/quote` — a buy/sell quote: service fee, message fee, minOut,
+  gross floor, and the route comparison.
+- `GET /api/v3/orders?user=` · `/orders/{id}` — stock orders with every step on both
+  chains (order amounts on the home chain are 6-decimal; Arc amounts are 18-decimal).
 
-One-call due-diligence data: `{ asof, identity, age, market, fees, tradeable,
-structure, flags }`.
+## Staking and Desk
 
-**Tri-state fields.** Each group lists its `unavailable` and `notApplicable` keys:
+- `GET /api/v3/staking/stats` · `/staking/{account}` — staking totals; an account's
+  stake in the current pool and the original pool (labelled `legacy`).
+- `GET /api/v3/desks` · `/desks/{id}` · `/accounts/{a}/desks` — Desk card supply, mint
+  price, and per-card dividend credits.
+- `GET /api/v3/buybacks/ledger` — buyback lots and the burn-sink totals.
 
-- `null` **and** listed in `unavailable` → not known. **Never read it as zero.**
-- Listed in `notApplicable` → this token cannot have the field (e.g. a curve token has
-  no hook tax).
-- Neither state may add or subtract score in the verdict below.
+## Config and meta
 
-`fees` discloses every cost before a trade: `routerFeeBps`, the pool hook's
-`buyTaxBps`/`sellTaxBps` where present, `lpFeeBps`. `tradeable.value=false` comes with a
-`reason` — believe it; the router reverts anyway.
+- `GET /api/v3/config` — live parameters: fee split, order size limits, push threshold,
+  eligibility mode.
+- `GET /api/v3/overview` · `/developers` — TVL inputs; every contract address with its
+  ABI hash.
 
-## Verdict — rule-based score
+## Rules for the agent
 
-Start from 100. Apply the **worst matching row only** per field; different fields stack.
-Score only fields the factsheet actually returned; an `unavailable` field skips its row
-and counts in coverage.
-
-| Field | Condition | Deduct |
-|---|---|---|
-| `structure.holderCount` | < 5 / < 20 / < 100 | −20 / −10 / −4 |
-| `tradeable.value` | false | −25 |
-| `market.volume24h` | == 0 | −12 |
-| `market.trades24h` | < 5 | −6 |
-| `fees` max(buyTaxBps, sellTaxBps) | > 1000 / > 500 | −20 / −8 |
-| `age` | < 10 min | −10 |
-| `market.liquidity` | < $500 / < $2K | −20 / −8 |
-| `flags.cloneNameHits` | > 0 | −10 |
-
-- **Coverage** = executed rows ÷ 8; report it next to the score. Below 5/8, label the
-  score indicative only.
-- Output every deduction as `field → measured value → points`.
-- Close every verdict with: *"rule-based read of indexed data, not advice."*
-- Grades: ≥80 active · ≥60 stagnant, look closer · <60 avoid or wait. A score is a
-  liveness/structure read, **not** a statement that any token is safe or recommended.
-
-## Execution rails — `[FINANCIAL EXECUTION]`
-
-Moving value requires the principal's explicit authorization; otherwise stay read-only.
-With it, every step is mandatory:
-
-1. **Gate**: refuse while `tradeable.value != true`.
-2. **Estimate**: `amountIn × spot` minus hook tax minus router fee — list each line,
-   do not net silently.
-3. **minOut** = estimate × (1 − slippage), slippage ≤ 5% unless the principal set
-   another. Never send `minOut = 0`.
-4. **Approve exact amounts** (quote side for buys, token side for sells; on Arc the
-   native-USDC ERC-20 view is the same balance as gas — 6 decimals vs 18, convert
-   explicitly).
-5. **Reconcile the receipt**: received vs minOut vs estimate. v4 swaps refund unspent
-   input on partial fills — check amounts received, not tx success.
-6. On revert, decode the selector with the repo's `errors.json`; an unknown selector
-   means a third-party contract reverted, not SolonPad's.
+1. **Trust the chain over the API.** Any mismatch means stop using the endpoint for value
+   decisions; the repo's verifier re-derives the critical numbers read-only.
+2. **Financial execution needs the principal's explicit authorization.** Quote first,
+   itemize every fee line, always set `minOut`/`maxIn`/deadline, approve exact amounts,
+   reconcile the receipt. Never send `minOut = 0`.
+3. **Closed-market semantics must be disclosed**: stock orders fill at the live venue
+   pool price even when the official market is closed; the signed `minOut` is the only
+   price floor.
+4. On revert, decode the first 4 bytes of the return data with the repo's `errors.json`
+   (421 selectors); an unknown selector means a third-party contract reverted.
