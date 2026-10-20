@@ -6,7 +6,7 @@
 | change-auto-repay-futures-status | `auto-repay` [] | Change Auto-repay-futures Status |
 | delete-margin-call-level | [] | Delete Margin Call Level |
 | fund-auto-collection | [] | Fund Auto-collection |
-| fund-collection-by-asset | `asset` [] | Fund Collection by Asset |
+| fund-collection-by-asset | `asset` [`amount` `future-type`] | Fund Collection by Asset |
 | get-auto-repay-futures-status | [] | Get Auto-repay-futures Status |
 | get-delta-mode-status | [] | Get Delta Mode Status |
 | get-margin-call-level | [] | Get Margin Call Level |
@@ -39,5 +39,6 @@
 **auto-repay:** `true` `false`
 **delta-enabled:** `true` `false`
 **from:** `SPOT` `MARGIN`
+**future-type:** `UM` `CM` `OPTION`
 **transfer-side:** `TO_UM` `FROM_UM`
 **transfer-type:** `EARN_TO_FUTURE` `FUTURE_TO_EARN`

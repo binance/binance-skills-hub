@@ -74,6 +74,7 @@
 | query-margin-accounts-oco | [`is-isolated` `symbol` `order-list-id` `orig-client-order-id`] | Query Margin Account\'s OCO |
 | query-margin-accounts-open-oco | [`is-isolated` `symbol`] | Query Margin Account\'s Open OCO |
 | query-margin-accounts-open-orders | [`symbol` `is-isolated`] | Query Margin Account\'s Open Orders |
+| query-margin-accounts-open-otootoco-order-lists | [`symbol`] | Query Margin Account\'s Open OTO/OTOCO Order Lists |
 | query-margin-accounts-order | `symbol` [`is-isolated` `order-id` `orig-client-order-id`] | Query Margin Account\'s Order |
 | query-margin-accounts-trade-list | `symbol` [`is-isolated` `order-id` `start-time` `end-time` `from-id` `limit`] | Query Margin Account\'s Trade List |
 | query-prevented-matches | `symbol` [`prevented-match-id` `order-id` `from-prevented-match-id` `is-isolated`] | Query Prevented Matches |

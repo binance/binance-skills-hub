@@ -94,7 +94,6 @@ binance-cli --version
 ## Notes
 
 - ⚠️ **Prod transactions** — always ask user to type `CONFIRM` before executing.
-- Install binance-cli using `npm install -g @binance/binance-cli`
 - Use `--help` to get the list of commands and parameters.
 - Use the output from both stdout and stderr.
 - Append `--profile <name>` to any command to use a non-active profile.

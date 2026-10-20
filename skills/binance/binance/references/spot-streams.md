@@ -12,7 +12,7 @@
 | kline | `symbol` `interval` [`id`] | Kline/Candlestick Streams for UTC |
 | kline-offset | `symbol` `interval` [`id`] | Kline/Candlestick Streams with timezone offset |
 | mini-ticker | `symbol` [`id`] | Individual Symbol Mini Ticker Stream |
-| partial-book-depth | `symbol` `levels` [`id` `update-speed`] | WebSocket Partial Book Depth Streams |
+| partial-book-depth | `symbol` `levels` [`id` `update-speed`] | Partial Book Depth Streams |
 | reference-price | `symbol` [`id`] | Reference Price Streams |
 | rolling-window-ticker | `symbol` `window-size` [`id`] | Individual Symbol Rolling Window Statistics Streams |
 | ticker | `symbol` [`id`] | Individual Symbol Ticker Streams |

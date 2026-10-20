@@ -12,7 +12,7 @@
 | change-um-position-mode | `dual-side-position` [] | Change UM Position Mode |
 | cm-notional-and-leverage-brackets | [`symbol`] | CM Notional and Leverage Brackets |
 | fund-auto-collection | [] | Fund Auto-collection |
-| fund-collection-by-asset | `asset` [] | Fund Collection by Asset |
+| fund-collection-by-asset | `asset` [`amount` `future-type`] | Fund Collection by Asset |
 | get-auto-repay-futures-status | [] | Get Auto-repay-futures Status |
 | get-cm-account-detail | [] | Get CM Account Detail |
 | get-cm-current-position-mode | [] | Get CM Current Position Mode |
@@ -60,7 +60,6 @@
 | cancel-all-cm-open-conditional-orders | `symbol` [] | Cancel All CM Open Conditional Orders |
 | cancel-all-cm-open-orders | `symbol` [] | Cancel All CM Open Orders |
 | cancel-all-um-algo-open-orders | `symbol` [] | Cancel All UM Algo Open Orders |
-| cancel-all-um-open-conditional-orders | `symbol` [] | Cancel All UM Open Conditional Orders |
 | cancel-all-um-open-orders | `symbol` [] | Cancel All UM Open Orders |
 | cancel-cm-conditional-order | `symbol` [`strategy-id` `new-client-strategy-id`] | Cancel CM Conditional Order |
 | cancel-cm-order | `symbol` [`order-id` `orig-client-order-id`] | Cancel CM Order |
@@ -68,7 +67,6 @@
 | cancel-margin-account-oco-orders | `symbol` [`order-list-id` `list-client-order-id` `new-client-order-id`] | Cancel Margin Account OCO Orders |
 | cancel-margin-account-order | `symbol` [`order-id` `orig-client-order-id` `new-client-order-id`] | Cancel Margin Account Order |
 | cancel-um-algo-order | [`algo-id` `client-algo-id`] | Cancel UM Algo Order |
-| cancel-um-conditional-order | `symbol` [`strategy-id` `new-client-strategy-id`] | Cancel UM Conditional Order |
 | cancel-um-order | `symbol` [`order-id` `orig-client-order-id`] | Cancel UM Order |
 | cm-account-trade-list | [`symbol` `pair` `start-time` `end-time` `from-id` `limit`] | CM Account Trade List |
 | cm-position-adl-quantile-estimation | [`symbol`] | CM Position ADL Quantile Estimation |
@@ -84,18 +82,15 @@
 | new-cm-conditional-order | `symbol` `side` `strategy-type` [`position-side` `time-in-force` `quantity` `reduce-only` `price` `working-type` `price-protect` `new-client-strategy-id` `stop-price` `activation-price` `callback-rate`] | New CM Conditional Order |
 | new-cm-order | `symbol` `side` `type` [`position-side` `time-in-force` `quantity` `reduce-only` `price` `price-match` `new-client-order-id` `new-order-resp-type`] | New CM Order |
 | new-margin-order | `symbol` `side` `type` [`quantity` `quote-order-qty` `price` `stop-price` `new-client-order-id` `new-order-resp-type` `iceberg-qty` `side-effect-type` `time-in-force` `self-trade-prevention-mode` `auto-repay-at-cancel`] | New Margin Order |
-| new-um-algo-order | `algo-type` `symbol` `side` `type` `quantity` [`position-side` `time-in-force` `price` `trigger-price` `working-type` `price-match` `price-protect` `reduce-only` `activate-price` `callback-rate` `client-algo-id` `new-order-resp-type` `self-trade-prevention-mode` `good-till-date`] | New UM Algo Order |
-| new-um-conditional-order | `symbol` `side` `strategy-type` [`position-side` `time-in-force` `quantity` `reduce-only` `price` `working-type` `price-protect` `new-client-strategy-id` `stop-price` `activation-price` `callback-rate` `price-match` `self-trade-prevention-mode` `good-till-date`] | New UM Conditional Order |
+| new-um-algo-order | `algo-type` `symbol` `side` `type` [`position-side` `time-in-force` `quantity` `price` `trigger-price` `working-type` `price-match` `close-position` `price-protect` `reduce-only` `activate-price` `callback-rate` `client-algo-id` `new-order-resp-type` `self-trade-prevention-mode` `good-till-date`] | New UM Algo Order |
 | new-um-order | `symbol` `side` `type` [`position-side` `time-in-force` `quantity` `reduce-only` `price` `new-client-order-id` `new-order-resp-type` `price-match` `self-trade-prevention-mode` `good-till-date`] | New UM Order |
 | query-all-cm-conditional-orders | [`symbol` `strategy-id` `start-time` `end-time` `limit`] | Query All CM Conditional Orders |
 | query-all-cm-orders | [`symbol` `pair` `order-id` `start-time` `end-time` `limit`] | Query All CM Orders |
 | query-all-current-cm-open-conditional-orders | [`symbol`] | Query All Current CM Open Conditional Orders |
 | query-all-current-cm-open-orders | [`symbol` `pair`] | Query All Current CM Open Orders |
 | query-all-current-um-open-algo-orders | [`algo-type` `symbol` `algo-id`] | Query All Current UM Open Algo Orders |
-| query-all-current-um-open-conditional-orders | [`symbol`] | Query All Current UM Open Conditional Orders |
 | query-all-current-um-open-orders | [`symbol`] | Query All Current UM Open Orders |
 | query-all-margin-account-orders | `symbol` [`order-id` `start-time` `end-time` `limit`] | Query All Margin Account Orders |
-| query-all-um-conditional-orders | [`symbol` `strategy-id` `start-time` `end-time` `limit`] | Query All UM Conditional Orders |
 | query-all-um-orders | `symbol` [`order-id` `start-time` `end-time` `limit`] | Query All UM Orders |
 | query-cm-conditional-order-history | `symbol` [`strategy-id` `new-client-strategy-id`] | Query CM Conditional Order History |
 | query-cm-modify-order-history | `symbol` [`order-id` `orig-client-order-id` `start-time` `end-time` `limit`] | Query CM Modify Order History |
@@ -104,14 +99,12 @@
 | query-current-cm-open-order | `symbol` [`order-id` `orig-client-order-id`] | Query Current CM Open Order |
 | query-current-margin-open-order | `symbol` [] | Query Current Margin Open Order |
 | query-current-um-open-algo-order | [`algo-id` `client-algo-id`] | Query Current UM Open Algo Order |
-| query-current-um-open-conditional-order | `symbol` [`strategy-id` `new-client-strategy-id`] | Query Current UM Open Conditional Order |
 | query-current-um-open-order | `symbol` [`order-id` `orig-client-order-id`] | Query Current UM Open Order |
 | query-margin-account-order | `symbol` [`order-id` `orig-client-order-id`] | Query Margin Account Order |
 | query-margin-accounts-all-oco | [`from-id` `start-time` `end-time` `limit`] | Query Margin Account\'s all OCO |
 | query-margin-accounts-oco | [`order-list-id` `orig-client-order-id`] | Query Margin Account\'s OCO |
 | query-margin-accounts-open-oco | [] | Query Margin Account\'s Open OCO |
 | query-um-algo-order-history | `symbol` [`algo-id` `start-time` `end-time` `limit`] | Query UM Algo Order History |
-| query-um-conditional-order-history | `symbol` [`strategy-id` `new-client-strategy-id`] | Query UM Conditional Order History |
 | query-um-modify-order-history | `symbol` [`order-id` `orig-client-order-id` `start-time` `end-time` `limit`] | Query UM Modify Order History |
 | query-um-order | `symbol` [`order-id` `orig-client-order-id`] | Query UM Order |
 | query-users-cm-force-orders | [`symbol` `auto-close-type` `start-time` `end-time` `limit`] | Query User\'s CM Force Orders |
@@ -136,9 +129,11 @@
 **archived:** `true` `false`
 **auto-close-type:** `LIQUIDATION` `ADL`
 **auto-repay:** `true` `false`
+**close-position:** `true` `false`
 **dual-side-position:** `true` `false`
 **fee-burn:** `true` `false`
-**income-type:** `TRANSFER` `WELCOME_BONUS` `REALIZED_PNL` `FUNDING_FEE` `COMMISSION` `INSURANCE_CLEAR` `REFERRAL_KICKBACK` `COMMISSION_REBATE` `API_REBATE` `CONTEST_REWARD` `CROSS_COLLATERAL_TRANSFER` `OPTIONS_PREMIUM_FEE` `OPTIONS_SETTLE_PROFIT` `INTERNAL_TRANSFER` `AUTO_EXCHANGE` `DELIVERED_SETTELMENT` `COIN_SWAP_DEPOSIT` `COIN_SWAP_WITHDRAW` `POSITION_LIMIT_INCREASE_FEE`
+**future-type:** `UM` `CM` `OPTION`
+**income-type:** `TRANSFER` `WELCOME_BONUS` `REALIZED_PNL` `FUNDING_FEE` `COMMISSION` `INSURANCE_CLEAR` `REFERRAL_KICKBACK` `COMMISSION_REBATE` `API_REBATE` `CONTEST_REWARD` `CROSS_COLLATERAL_TRANSFER` `OPTIONS_PREMIUM_FEE` `OPTIONS_SETTLE_PROFIT` `INTERNAL_TRANSFER` `DELIVERED_SETTELMENT` `COIN_SWAP_DEPOSIT` `COIN_SWAP_WITHDRAW` `POSITION_LIMIT_INCREASE_FEE`
 **new-order-resp-type:** `ACK` `RESULT` `FULL`
 **position-side:** `BOTH` `LONG` `SHORT`
 **price-match:** `OPPONENT` `OPPONENT_5` `OPPONENT_10` `OPPONENT_20` `QUEUE` `QUEUE_5` `QUEUE_10` `QUEUE_20`

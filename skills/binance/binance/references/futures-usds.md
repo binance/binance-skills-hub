@@ -17,7 +17,7 @@
 | get-futures-order-history-download-link-by-id | `download-id` [] | Get Futures Order History Download Link by Id |
 | get-futures-trade-download-link-by-id | `download-id` [] | Get Futures Trade Download Link by Id |
 | get-futures-transaction-history-download-link-by-id | `download-id` [] | Get Futures Transaction History Download Link by Id |
-| get-income-history | [`symbol` `income-type` `start-time` `end-time` `page` `limit`] | Get Income History |
+| get-income-history | [`symbol` `income-type` `start-time` `end-time` `limit`] | Get Income History |
 | notional-and-leverage-brackets | [`symbol`] | Notional and Leverage Brackets |
 | query-user-rate-limit | [] | Query User Rate Limit |
 | symbol-configuration | [`symbol`] | Symbol Configuration |
@@ -87,7 +87,7 @@
 | Endpoint | Key params | Description |
 |---|---|---|
 | account-trade-list | `symbol` [`order-id` `start-time` `end-time` `from-id` `limit`] | Account Trade List |
-| all-orders | `symbol` [`order-id` `start-time` `end-time` `limit`] | All Orders |
+| all-orders | [`symbol` `order-id` `start-time` `end-time` `limit`] | All Orders |
 | auto-cancel-all-open-orders | `symbol` `countdown-time` [] | Auto-Cancel All Open Orders |
 | cancel-algo-order | [`algo-id` `client-algo-id`] | Cancel Algo Order |
 | cancel-all-algo-open-orders | `symbol` [] | Cancel All Algo Open Orders |
@@ -105,8 +105,8 @@
 | get-position-margin-change-history | `symbol` [`type` `start-time` `end-time` `limit`] | Get Position Margin Change History |
 | modify-isolated-position-margin | `symbol` `amount` `type` [`position-side`] | Modify Isolated Position Margin |
 | modify-multiple-orders | `batch-orders` [] | Modify Multiple Orders |
-| modify-order | `symbol` `side` `quantity` `price` [`order-id` `orig-client-order-id` `price-match` `modify-id`] | Modify Order |
-| new-algo-order | `algo-type` `symbol` `side` `type` [`position-side` `time-in-force` `quantity` `price` `trigger-price` `working-type` `price-match` `close-position` `price-protect` `reduce-only` `activate-price` `callback-rate` `client-algo-id` `new-order-resp-type` `self-trade-prevention-mode` `good-till-date`] | New Algo Order |
+| modify-order | `symbol` `side` `quantity` `price` [`order-id` `orig-client-order-id` `price-match` `modify-id` `reduce-only`] | Modify Order |
+| new-algo-order | `algo-type` `symbol` `side` `type` [`position-side` `time-in-force` `quantity` `price` `trigger-price` `working-type` `price-match` `close-position` `price-protect` `reduce-only` `activate-price` `callback-rate` `client-algo-id` `new-order-resp-type` `self-trade-prevention-mode` `good-till-date`] | New Algo Order<br>Use this endpoint to place  TP/SL (Take Profit / Stop Loss) and trailing stop orders |
 | new-order | `symbol` `side` `type` [`position-side` `time-in-force` `reduce-only` `quantity` `price` `new-client-order-id` `new-order-resp-type` `price-match` `self-trade-prevention-mode` `good-till-date`] | New Order |
 | place-multiple-orders | `batch-orders` [] | Place Multiple Orders |
 | position-adl-quantile-estimation | [`symbol`] | Position ADL Quantile Estimation |
@@ -134,7 +134,7 @@
 **auto-close-type:** `LIQUIDATION` `ADL`
 **close-position:** `true` `false`
 **contract-type:** `PERPETUAL` `CURRENT_QUARTER` `NEXT_QUARTER` `TRADIFI_PERPETUAL`
-**income-type:** `TRANSFER` `WELCOME_BONUS` `REALIZED_PNL` `FUNDING_FEE` `COMMISSION` `INSURANCE_CLEAR` `REFERRAL_KICKBACK` `COMMISSION_REBATE` `API_REBATE` `CONTEST_REWARD` `CROSS_COLLATERAL_TRANSFER` `OPTIONS_PREMIUM_FEE` `OPTIONS_SETTLE_PROFIT` `INTERNAL_TRANSFER` `AUTO_EXCHANGE` `DELIVERED_SETTELMENT` `COIN_SWAP_DEPOSIT` `COIN_SWAP_WITHDRAW` `POSITION_LIMIT_INCREASE_FEE` `STRATEGY_UMFUTURES_TRANSFER` `FEE_RETURN` `BFUSD_REWARD`
+**income-type:** `TRANSFER` `WELCOME_BONUS` `REALIZED_PNL` `FUNDING_FEE` `COMMISSION` `INSURANCE_CLEAR` `REFERRAL_KICKBACK` `COMMISSION_REBATE` `API_REBATE` `CONTEST_REWARD` `CROSS_COLLATERAL_TRANSFER` `OPTIONS_PREMIUM_FEE` `OPTIONS_SETTLE_PROFIT` `INTERNAL_TRANSFER` `AUTO_EXCHANGE` `DELIVERED_SETTELMENT` `COIN_SWAP_DEPOSIT` `COIN_SWAP_WITHDRAW` `POSITION_LIMIT_INCREASE_FEE` `STRATEGY_UMFUTURES_TRANSFER` `FEE_RETURN` `BFUSD_REWARD` `SPECIAL_FUNDING_FEE`
 **interval:** `1m` `3m` `5m` `15m` `30m` `1h` `2h` `4h` `6h` `8h` `12h` `1d` `3d` `1w` `1M`
 **margin-type:** `ISOLATED` `CROSSED`
 **new-order-resp-type:** `ACK` `RESULT`

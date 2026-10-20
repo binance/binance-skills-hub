@@ -11,7 +11,7 @@
 | get-futures-order-history-download-link-by-id | `download-id` [] | Get Futures Order History Download Link by Id |
 | get-futures-trade-download-link-by-id | `download-id` [] | Get Futures Trade Download Link by Id |
 | get-futures-transaction-history-download-link-by-id | `download-id` [] | Get Futures Transaction History Download Link by Id |
-| get-income-history | [`symbol` `income-type` `start-time` `end-time` `page` `limit`] | Get Income History |
+| get-income-history | [`symbol` `income-type` `start-time` `end-time` `limit`] | Get Income History |
 | notional-bracket-for-pair | [`pair`] | Notional Bracket for Pair |
 | notional-bracket-for-symbol | [`symbol`] | Notional Bracket for Symbol |
 | user-commission-rate | `symbol` [] | User Commission Rate |
@@ -31,11 +31,11 @@
 | index-price-and-mark-price | [`symbol` `pair`] | Index Price and Mark Price |
 | index-price-kline-candlestick-data | `pair` `interval` [`start-time` `end-time` `limit`] | Index Price Kline/Candlestick Data |
 | kline-candlestick-data | `symbol` `interval` [`start-time` `end-time` `limit`] | Kline/Candlestick Data |
-| long-short-ratio | `pair` `period` [`limit` `start-time` `end-time`] | Long/Short Ratio |
+| long-short-ratio | `pair` `period` [`contract-type` `limit` `start-time` `end-time`] | Long/Short Ratio |
 | mark-price-kline-candlestick-data | `symbol` `interval` [`start-time` `end-time` `limit`] | Mark Price Kline/Candlestick Data |
 | old-trades-lookup | `symbol` [`limit` `from-id`] | Old Trades Lookup |
 | open-interest | `symbol` [] | Open Interest |
-| open-interest-statistics | `pair` `contract-type` `period` [`limit` `start-time` `end-time`] | Open Interest Statistics |
+| open-interest-statistics | `pair` `period` [`contract-type` `limit` `start-time` `end-time`] | Open Interest Statistics |
 | order-book | `symbol` [`limit`] | Order Book |
 | premium-index-kline-data | `symbol` `interval` [`start-time` `end-time` `limit`] | Premium index Kline Data |
 | query-index-price-constituents | `symbol` [] | Query Index Price Constituents |
@@ -45,8 +45,8 @@
 | taker-buy-sell-volume | `pair` `contract-type` `period` [`limit` `start-time` `end-time`] | Taker Buy/Sell Volume |
 | test-connectivity | [] | Test Connectivity |
 | ticker24hr-price-change-statistics | [`symbol` `pair`] | 24hr Ticker Price Change Statistics |
-| top-trader-long-short-ratio-accounts | `symbol` `period` [`limit` `start-time` `end-time`] | Top Trader Long/Short Account Ratio |
-| top-trader-long-short-ratio-positions | `pair` `period` [`limit` `start-time` `end-time`] | Top Trader Long/Short Position Ratio |
+| top-trader-long-short-ratio-accounts | `pair` `period` [`contract-type` `limit` `start-time` `end-time`] | Top Trader Long/Short Account Ratio |
+| top-trader-long-short-ratio-positions | `pair` `period` [`contract-type` `limit` `start-time` `end-time`] | Top Trader Long/Short Position Ratio |
 
 
 ## Trade (auth required)

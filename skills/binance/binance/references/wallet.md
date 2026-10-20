@@ -25,9 +25,10 @@
 | get-assets-that-can-be-converted-into-bnb | [`account-type`] | Get Assets That Can Be Converted Into BNB |
 | get-cloud-mining-payment-and-refund-history | `start-time` `end-time` [`tran-id` `client-tran-id` `asset` `current` `size`] | Get Cloud-Mining payment and refund history |
 | get-open-symbol-list | [] | Get Open Symbol List |
+| get-spot-asset-tags | [`tag`] | Get Spot Asset Tags |
 | query-user-delegation-history | `email` `start-time` `end-time` [`type` `asset` `current` `size`] | Query User Delegation History(For Master Account) |
 | query-user-universal-transfer-history | `type` [`start-time` `end-time` `current` `size` `from-symbol` `to-symbol`] | Query User Universal Transfer History |
-| query-user-wallet-balance | [`quote-asset`] | Query User Wallet Balance |
+| query-user-wallet-balance | [`quote-asset` `need-balance-detail`] | Query User Wallet Balance |
 | toggle-bnb-burn-on-spot-trade-and-margin-interest | [`spot-bnb-burn` `interest-bnb-burn`] | Toggle BNB Burn On Spot Trade And Margin Interest |
 | trade-fee | [`symbol`] | Trade Fee |
 | user-asset | [`asset` `need-btc-valuation`] | User Asset |

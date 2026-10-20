@@ -9,13 +9,11 @@
 
 | Endpoint | Key params | Description |
 |---|---|---|
-| change-auto-compound-status | `position-id` `auto-compound-plan` [] | Change Auto-Compound status |
 | check-dual-investment-accounts | [] | Check Dual Investment accounts |
 | get-dual-investment-positions | [`status` `page-size` `page-index`] | Get Dual Investment positions |
-| subscribe-dual-investment-products | `id` `order-id` `deposit-amount` `auto-compound-plan` [] | Subscribe Dual Investment products |
+| subscribe-dual-investment-products | `id` `order-id` `deposit-amount` [] | Subscribe Dual Investment products |
 
 ### Enums
 
-**auto-compound-plan:** `NONE` `STANDARD` `ADVANCED`
 **option-type:** `CALL` `PUT`
 **status:** `PENDING` `PURCHASE_SUCCESS` `SETTLED` `PURCHASE_FAIL` `REFUNDING` `REFUND_SUCCESS` `SETTLING`
