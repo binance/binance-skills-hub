@@ -36,7 +36,9 @@ npx skills add https://github.com/binance/binance-skills-hub
 
 ### Authentication
 
-For Binance Skills, certain endpoints require you to provide Binance API credentials. You can do this by setting environment variables, using a secrets file (such as `.env` or `.openclaw/secrets.env`) , or sending them directly to the agent in the chat. For more details, see the [Security](./skills/binance/spot/SKILL.md#security) section in each skill.
+For Binance Skills, certain endpoints require you to provide Binance API credentials. You can do this by setting environment variables, using a secrets file (such as `.env` or `.openclaw/secrets.env`). For more details, see the [Auth](skills/binance/binance/references/auth.md) section in each skill.
+
+We strongly recommend scoping your API key to only the permissions the agent requires, and restricting access by whitelisting the specific IP address where the agent is hosted. This principle of least privilege significantly reduces your exposure should the key ever be compromised.
 
 ---
 
