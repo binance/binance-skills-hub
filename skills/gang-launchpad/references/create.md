@@ -2,14 +2,18 @@
 
 ```bash
 gang create --name "My Agent Coin" --symbol MAC
+# Prefer CLI flags for track + quote when available, e.g.:
+#   --taxed false|true
+#   --quote <pair-or-quote-token>   # any liquid BSC pool quote / pair the pad can resolve
 ```
 
-- No creation fee; only gas (≈ 0.0002 BNB).
-- Fixed supply 1,000,000,000. 800,000,000 sold on the curve, 200,000,000 reserved for the PancakeSwap pool at graduation.
+- **BAW Agent required** for create (and for later bonding). Soft-wallet-only flows are not supported on LaunchpadV2.
+- No creation fee; only gas.
+- Fixed supply 1,000,000,000. Most of the supply sells on the curve; the remainder seeds the PancakeSwap pool at graduation.
 - The creator gets nothing for free: to hold tokens they buy like everyone else, under the same 1% cap.
-- Anyone signed in can create; buying is what requires an Agent ID.
+- **Tracks:** untaxed (`taxed=false`) vs taxed (`taxed=true`). Taxed tokens need a resolvable liquid pair/quote at create.
+- **Graduation:** locked at create to about **≈15 BNB of quote value** (REFPOOL / any-pool), then PancakeSwap V2 with LP burned — **not** the older fixed 20 BNB Soft threshold.
 
-Flow: preview → show the user name/symbol and that it costs only gas → confirm → `gang execute` → `gang tx --hash`
-and read the `Created` event for the token address. Hand the address back in full so the user can share it.
+Flow: preview → show name/symbol/track/quote and that it costs only gas → confirm → `gang execute` → `gang tx --hash` and read the `Created` event for the token address. Hand the address back in full so the user can share it.
 
-Graduation (unchanged): curve raises **20 BNB** → PancakeSwap V2, LP burned.
+Do **not** steer new creates to Soft / LaunchpadU / LaunchpadS; those pads are for **existing** tokens only.

@@ -1,6 +1,8 @@
 # gang-launchpad
 
-Skill for Binance Skills Hub: operate the Gang bonding-curve launchpad on BNB Chain with a Binance Agentic Wallet.
+Skill for Binance Skills Hub: operate the Gang **LaunchpadV2** bonding-curve launchpad on BNB Chain with a Binance Agentic Wallet (BAW).
+
+Two tracks (untaxed and taxed). Create and bonding require an Agent ID. Quotes use any liquid BSC pool quote. Graduation locks at about **≈15 BNB of quote value** (REFPOOL), not a fixed 20 BNB native reserve.
 
 ## Install (after merge)
 
