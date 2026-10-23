@@ -1,0 +1,112 @@
+name: Binance 1H Data Update
+
+# Runs every hour on the hour (minute 5 to avoid load spikes),
+# and on demand via the Actions UI (workflow_dispatch).
+# All endpoints are READ-ONLY: never places orders or withdraws funds.
+on:
+  schedule:
+    - cron: "5 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  update-1h-data:
+    name: Fetch hourly read-only data
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js 26
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26
+
+      - name: Report Node.js version
+        run: node --version && npm --version
+
+      - name: Install Binance CLI globally
+        run: npm install -g @binance/binance-cli@1.3.0
+
+      - name: Apply sandbox timeout patch
+        # @binance/common defaults to a 1000 ms REST timeout, which is lower than
+        # real-world latency to api.binance.com. See docs/binance-cli-sandbox-fix.md
+        run: python3 scripts/patch-binances-cli-timeout.py
+
+      - name: Verify CLI version
+        run: binance-cli --version
+
+      - name: Verify API reachability (handles geo-restricted runners)
+        id: reachability
+        run: |
+          set +e
+          for domain in api.binance.com api1.binance.com data-api.binance.vision; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "https://$domain/api/v3/ping")
+            echo "$domain ping -> HTTP $code"
+            if [ "$code" = "200" ]; then
+              echo "base=$domain" >> "$GITHUB_OUTPUT"
+              echo "Reachable base URL: $domain"
+              break
+            fi
+          done
+          if ! grep -q "base=" "$GITHUB_OUTPUT"; then
+            echo "base=api.binance.com" >> "$GITHUB_OUTPUT"
+            echo "warn: no fully reachable base detected; the fetch script mirrors as needed"
+          fi
+
+      - name: Fetch hourly data (read-only)
+        env:
+          BASE_URL: https://api.binance.com
+          PUBLIC_MIRROR_URL: ${{ steps.reachability.outputs.base == 'data-api.binance.vision' && 'https://data-api.binance.vision' || '' }}
+          BINANCE_API_KEY: ${{ secrets.BINANCE_API_KEY }}
+          BINANCE_SECRET_KEY: ${{ secrets.BINANCE_SECRET_KEY }}
+          BINANCE_SYMBOLS: BTCUSDT,ETHUSDT,BNBUSDT,SOLUSDT
+        run: |
+          set -euo pipefail
+          node scripts/fetch-hourly-data.mjs
+          echo "---- data file preview ----"
+          head -c 600 data/binance-1h.data || true
+          echo
+          echo "---- sizes ----"
+          ls -la data/
+
+      - name: Validate output schema
+        run: |
+          set -euo pipefail
+          python3 - <<'PYEOF'
+          import json, sys
+          d = json.load(open('data/binance-1h.data'))
+          required = ['generated_at', 'kind', 'read_only', 'spot_tickers', 'market_summary',
+                      'bnb_alpha', 'smart_money_opinion', 'account']
+          missing = [k for k in required if k not in d]
+          assert not missing, f'missing top-level keys: {missing}'
+          assert d['kind'] == 'binance-1h' and d['read_only'] is True
+          assert len(d['spot_tickers']) >= 4, 'expected tickers for watched symbols'
+          acc = d['account']
+          if 'uid' in acc:
+              assert isinstance(acc['uid'], int), 'uid must be an integer'
+          print('schema OK | opinion:', d['smart_money_opinion']['opinion'],
+                '| elapsed:', d['elapsed_ms'], 'ms')
+          PYEOF
+
+      - name: Commit and push hourly data
+        run: |
+          set -euo pipefail
+          git config user.name "binance-1h-data[bot]"
+          git config user.email "binance-1h-data@cripto-web3.github.io"
+          git add data/binance-1h.data
+          if git diff --cached --quiet; then
+            echo "no data changes this hour (unchanged file or data identical)"
+            exit 0
+          fi
+          git commit -m "data: hourly read-only market update $(date -u +%Y-%m-%dT%H:%M%SZ)"
+          git push origin HEAD:main

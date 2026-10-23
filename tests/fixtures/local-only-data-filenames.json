@@ -1,0 +1,26 @@
+{
+  "blocked": [
+    ".data",
+    "login.data",
+    "transfer.data",
+    "openclaw/.data",
+    "openclaw/.data/skills/bnb-hub/status.data",
+    "openclaw/.data/qrcode/binance-alpha-scan-results.data",
+    "nested/path/alpha.data",
+    "archive/2026/trade.alhfa.data",
+    "LOGIN.DATA",
+    "transfer.DATA",
+    "OPENCLAW/.DATA",
+    "openclaw/.data/skills/bnb-hub/STATUS.DATA",
+    "nested/ALPHA.data"
+  ],
+  "allowed": [
+    "README.md",
+    ".data.example",
+    "docs/status.data.json",
+    "fixtures/data.txt",
+    "openclaw/status/summary.yml",
+    "data/binance-1h.data",
+    "data/binance-daily.data"
+  ]
+}

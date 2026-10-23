@@ -1,0 +1,93 @@
+name: Validate content
+
+on:
+  pull_request:
+    paths:
+      - "**/*.md"
+      - "**/*.yml"
+      - "**/*.yaml"
+      - ".markdownlint-cli2.yaml"
+      - ".github/workflows/validate-content.yml"
+      - "package.json"
+      - "scripts/**/*.mjs"
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.md"
+      - "**/*.yml"
+      - "**/*.yaml"
+      - ".markdownlint-cli2.yaml"
+      - ".github/workflows/validate-content.yml"
+      - "package.json"
+      - "scripts/**/*.mjs"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-yaml:
+    name: Validate YAML
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Check YAML syntax and formatting
+        run: npx --yes prettier@3.5.3 --check "**/*.{yml,yaml}"
+
+  validate-markdown:
+    name: Validate Markdown
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Lint Markdown links and references
+        run: npx --yes markdownlint-cli2@0.17.2
+
+  test-bnb-hub-status:
+    name: Test BNB Hub status schema
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+      - name: Test local-only status schema
+        run: bun run bnb:status:test
+
+  test-qrcode-schema:
+    name: Test QR metadata schema
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+      - name: Test offline QR metadata schema
+        run: bun run qrcode:test
+
+  test-binance-daily-data:
+    name: Test Binance daily data helpers
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test daily data safety and signing helpers
+        run: npm run binance-daily:test
+
+  test-binance-internal-transfer:
+    name: Test Binance internal transfer helpers
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test internal transfer validation and dry-run safety
+        run: npm run binance-internal-transfer:test
