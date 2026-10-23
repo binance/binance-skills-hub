@@ -1,8 +1,8 @@
 # gang-launchpad
 
-Skill for Binance Skills Hub: operate the Gang **LaunchpadV2** bonding-curve launchpad on BNB Chain with a Binance Agentic Wallet (BAW).
+Skill for Binance Skills Hub: operate the Gang bonding-curve launchpad on BNB Chain with a Binance Agentic Wallet.
 
-Two tracks (untaxed and taxed). Create and bonding require an Agent ID. Quotes use any liquid BSC pool quote. Graduation locks at about **≈15 BNB of quote value** (REFPOOL), not a fixed 20 BNB native reserve.
+**Create:** LaunchpadV2 only (~15 BNB graduation). Soft/U/S: existing buy/sell/claim only. Logo: `gang upload-logo` or https://gang.fun/dev/logo.
 
 ## Install (after merge)
 
@@ -15,7 +15,8 @@ Until merged, use the upstream product skill:
 ```bash
 npx skills add gangfun/gang-launchpad/skill
 npm i -g @binance/agentic-wallet
-npm i -g github:gangfun/cli
+npm i -g @gangfun/cli@0.2.0 --registry=https://npm.pkg.github.com
+# or: npm i -g github:gangfun/cli
 ```
 
 ## Layout

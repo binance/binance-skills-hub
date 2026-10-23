@@ -1,75 +1,23 @@
 # Trading on the curve
 
-All amounts in output are human-readable (tokens with 18 decimals already applied, quote amounts in the token’s quote asset).
-
-Create and bonding buys/sells are **BAW-only**: the wallet must hold a SPACE ID Agent ID (`.ai`). Listing may include older Soft / LaunchpadU / LaunchpadS inventory alongside LaunchpadV2; use the same preview → confirm → execute flow when the CLI supports that token.
+All amounts in output are human-readable (tokens with 18 decimals already applied, amounts in eth-units of the quote).
 
 ## `gang list` / `gang token --token <addr>`
 
-Read-only. `progressPct` reflects raised quote toward the token’s locked graduation target (**≈15 BNB of value** at create for LaunchpadV2 — not a universal 20 BNB Soft meter). `myBalance` / `myRoomTokens` appear when signed in; `myRoomTokens` is
-how many more tokens this wallet may buy before the 1% cap (10,000,000). `graduated: true` means trade on PancakeSwap at
-the reported `pair` (neutral link; no token promotion).
+Read-only. CLI auto-resolves Soft / LaunchpadV2 / U / S. `progressPct` is raised / graduation target. **New (V2) tokens ≈15 BNB**; Soft archive tokens 20 BNB. `myBalance` / `myRoomTokens` appear when signed in; `myRoomTokens` is how many more tokens this wallet may buy before the 1% cap (10,000,000). `graduated: true` means trade on PancakeSwap at `pair`. Soft/U/S: buy/sell/claim existing only — no new create.
 
 ## `gang quote --token <addr> --bnb <n>`
 
-Exact on-chain quote for *this* wallet against the token’s pool quote (any liquid BSC pool quote the pad resolved — not only a single native path): `tokensOut`, quote spent, `fee` (1% bonding fee), `refund`. A non-zero `refund` means the
-1% wallet cap or the graduation reserve binds and that quote is returned in the same transaction.
+Soft: on-chain BNB quote. V2/U/S: `--bnb` is the **quote ERC-20** amount (same flag name); quote may be marked `approx: true` when computed off-chain. Fields: tokens out, spent, fee, refund. Non-zero `refund` means the 1% wallet cap or graduation reserve would bind.
 
-## Buy
+## `gang buy --token <addr> --bnb <n> [--slippage 1]`
 
-```bash
-gang buy --token <addr> --bnb 0.05 [--slippage 1]
-```
+Preview only. Soft: payable BNB buy. V2/U/S: may first return `step: approve-quote` (approve quote ERC-20 to the pad); after that confirms, re-run the same buy to preview. Then `gang execute`. Show expected tokens, fee, refund, min out.
 
-Checks Agent ID (bonding is BAW-only), graduation and wallet cap, quotes, builds `buy()` calldata with `minTokensOut` (default 1% slippage)
-and previews through `baw contract-call preview`. Output:
+## `gang sell --token <addr> (--amount <tokens> | --all) [--slippage 1]`
 
-```json
-{
-  "success": true, "step": "buy", "symbol": "CPROBE",
-  "bnbSent": "0.05", "expectTokens": "7,750,000.00", "expectBnbSpent": "0.0495", "fee": "0.0005", "expectRefund": "0",
-  "requestId": "<requestId>", "requireConfirmation": false, "risks": [],
-  "simulatedChanges": [{ "token": "<token>", "type": "Erc20", "change": 7.75e24 }, { "token": "<native>", "type": "Native", "change": -5e16 }],
-  "next": "gang execute --request-id <requestId>"
-}
-```
+Preview only. May first return `step: approve` for the token. Soft pays out BNB; V2/U/S pay out quote ERC-20. Then execute. Sells may need Binance App confirmation (`pendingConfirmation`).
 
-Show the user: tokens expected, quote spent, fee, refund, and any `risks`. Wait for their confirmation. Then:
+## `gang execute --request-id <id>` / `gang tx --hash <0x..>`
 
-```bash
-gang execute --request-id <requestId>
-```
-
-→ `{ "status": "BROADCASTED", "txHash": "<txHash>" }`. Follow with `gang tx --hash <txHash>` and report the decoded `Buy`
-event (`tokensOut`, quote in, `fee`). If the `Graduated` event also appears, tell the user the token just graduated and is
-now live on PancakeSwap at the reported `pair`.
-
-## Sell
-
-```bash
-gang sell --token <addr> --all
-gang sell --token <addr> --amount 1000000
-```
-
-Two possible previews:
-
-1. `step: "approve"` — the Launchpad has no allowance yet. Confirm, execute, wait for `gang tx`, then run the **same
-   `gang sell` command again**.
-2. `step: "sell"` — shows `expectBnb` and `fee`. Confirm, execute.
-
-Execute may return:
-
-```json
-{ "status": "PENDING_CONFIRMATION", "pendingConfirmation": true, "txHash": null, "next": "..." }
-```
-
-Binance asks the user to approve sells of non-whitelisted tokens in the App. **The request expires within a few
-minutes**, so tell the user immediately to open Binance App → Wallet → Agentic Wallet and approve. Poll
-`baw wallet tx-lock --binanceChainId 56 --json`: `LOCKED` means still waiting, `UNLOCKED` means it was approved,
-rejected or expired. Then read `baw wallet tx-history --binanceChainId 56 --type confirmed --json` (newest first,
-`txType: contract_call`) for the hash and run `gang tx --hash <txHash>`. If no new hash appears after unlock, the order
-expired: run the same `gang sell` again to create a fresh one. Do not call execute on the old requestId.
-
-## `gang tx --hash <txHash>`
-
-Waits for the receipt and decodes Gang events: `Created` (with the new `token` address), `Buy`, `Sell`, `Graduated`.
+Broadcast a preview; decode `Created` / `Buy` / `Sell` / `Graduated` after the tx lands.
