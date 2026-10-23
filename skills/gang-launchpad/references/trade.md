@@ -8,7 +8,7 @@ Read-only. CLI auto-resolves Soft / LaunchpadV2 / U / S. `progressPct` is raised
 
 ## `gang quote --token <addr> --bnb <n>`
 
-Soft: on-chain BNB quote. V2/U/S: `--bnb` is the **quote ERC-20** amount (same flag name); quote may be marked `approx: true` when computed off-chain. Fields: tokens out, spent, fee, refund. Non-zero `refund` means the 1% wallet cap or graduation reserve would bind.
+Soft archive: on-chain BNB `quoteBuy`. **LaunchpadV2:** `--bnb` is the **quote ERC-20** amount; unique path = `LaunchpadV2.sol` `_prepBuy` / `_tokensOut` / `_quoteOut` (`quotePath`, `deterministic: true`). No Soft/U/S create/quote fallback. Fields: tokens out, spent, fee, refund. Non-zero `refund` = 1% wallet cap or graduation clamp.
 
 ## `gang buy --token <addr> --bnb <n> [--slippage 1]`
 

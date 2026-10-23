@@ -1,84 +1,66 @@
 ---
-name: gang-launchpad
+name: gang
 description: |
-  Operate the Gang bonding-curve launchpad on BNB Chain through a Binance Agentic Wallet.
-  Use when the user wants to check readiness (preflight), list or inspect curve tokens, quote/buy/sell
-  on the curve, upload a logo, create a token on LaunchpadV2, or decode a Gang transaction.
-  Curve buys/creates require a SPACE ID Agent ID (.ai). Signing is always via `baw`; this skill never holds keys.
-  Triggers: gang, gang.fun, agent launchpad, bonding curve on BSC, Agent ID gated buy, graduate to PancakeSwap, logo upload.
-version: 0.2.0
-license: MIT
+  Use when the user wants to launch, buy, sell, upload a logo, or look up tokens on Gang — the agent-only launchpad on BNB Chain
+  where the bonding curve (内盘) is open only to Binance Agentic Wallets holding a .ai Agent ID.
+  Triggers: gang, gang.fun, agent launchpad, internal market / 内盘, bonding curve buy/sell, launch a token for my agent,
+  upload logo, graduate to PancakeSwap, check launchpad tokens, my gang holdings, 1% wallet cap, Agent ID gated token.
 metadata:
-  author: 00xLazy
-  version: "0.2.0"
+  author: gangfun
+  version: '0.2.1'
+  requires:
+    bins: [baw, gang]
+  install:
+    - kind: node
+      package: '@binance/agentic-wallet'
+      bins: [baw]
+      label: Binance Agentic Wallet CLI
+    - kind: node
+      package: 'github:gangfun/cli'
+      bins: [gang]
+      label: Gang CLI (@gangfun/cli@0.2.1)
 ---
 
-# Gang Launchpad
+# Gang Skill
 
-Educational / operational skill for interacting with the **Gang** launchpad on BNB Smart Chain via Binance Agentic Wallet tooling.
+Gang is a bonding-curve launchpad on BNB Chain whose internal market only accepts **Binance Agentic Wallets that hold a
+.ai Agent ID**. Every wallet may hold at most **1% of a token's supply** from the curve. Buys and sells pay a **1% fee**.
 
-**New creates** go to **LaunchpadV2 only** (taxed/untaxed, `logoURI`, any-pair). Soft / LaunchpadU / LaunchpadS: **no new create** — buy/sell/claim existing tokens only. New tokens graduate at ≈ **15 BNB** (PoolCheck) to PancakeSwap V2 (LP burned). Soft archive tokens still graduate at 20 BNB on-chain if mentioned at all.
+**New create → LaunchpadV2 only** (logoURI / taxed / any-pair). Soft / LaunchpadU / LaunchpadS: **no new create**; buy/sell/claim existing only.
+When a **new** token raises ≈ **15 BNB** it graduates to PancakeSwap V2 (LP burned). Soft archive tokens still graduate at 20 BNB on-chain.
+Before graduation tokens **cannot be transferred**, only bought and sold on the curve.
 
-Gang’s curve market only accepts wallets that hold a SPACE ID **Agent ID** (`.ai` NFT). Per-wallet holdings from the curve are capped (1% of supply).
+The `gang` CLI reads the chain and builds calldata; all signing goes through the user's Agentic Wallet via `baw`.
+It never holds keys.
 
-This skill does **not** recommend any token, predict price, or guarantee outcomes. Report numbers; the user decides.
+Install: `npm i -g @gangfun/cli@0.2.1 --registry=https://npm.pkg.github.com` or `npm i -g github:gangfun/cli`.
 
-## Dependencies
-
-| Tool | Install | Role |
-|------|---------|------|
-| `baw` | `npm i -g @binance/agentic-wallet` | Sign-in, settings, preview/execute |
-| `gang` | `npm i -g @gangfun/cli@0.2.0 --registry=https://npm.pkg.github.com` | Read chain + build Gang calldata |
-
-Alternate CLI install (no Packages token): `npm i -g github:gangfun/cli`
-
-Optional (upstream site skill, same product):
-
-```bash
-npx skills add gangfun/gang-launchpad/skill
-```
-
-Node.js ≥ 18. Chain: BSC (`56`) only. No testnet for Agentic Wallet.
-
-## When to use
+## Command Routing
 
 | User intent | Command | Reference |
-|-------------|---------|-----------|
-| Ready to trade? / policy errors | `gang preflight` | [preflight.md](references/preflight.md) |
-| List tokens / progress | `gang list` | [trade.md](references/trade.md) |
-| One token detail | `gang token --token <addr>` | [trade.md](references/trade.md) |
-| Quote a buy | `gang quote --token <addr> --bnb <n>` | [trade.md](references/trade.md) |
-| Buy on curve | `gang buy ...` → `gang execute` | [trade.md](references/trade.md) |
-| Sell on curve | `gang sell ...` → `gang execute` | [trade.md](references/trade.md) |
+|---|---|---|
+| Am I ready to use Gang? / policy error | `gang preflight` | [preflight.md](references/preflight.md) |
+| List tokens | `gang list` | [trade.md](references/trade.md) |
+| One token | `gang token --token <addr>` | [trade.md](references/trade.md) |
+| Quote | `gang quote --token <addr> --bnb <n>` | [trade.md](references/trade.md) |
+| Buy | `gang buy …` → `gang execute` | [trade.md](references/trade.md) |
+| Sell | `gang sell …` → `gang execute` | [trade.md](references/trade.md) |
 | Upload logo | `gang upload-logo --file <path>` | [create.md](references/create.md) |
-| Create a token (V2) | `gang create ...` → `gang execute` | [create.md](references/create.md) |
-| Decode a tx | `gang tx --hash <txHash>` | [trade.md](references/trade.md) |
+| Create (V2) | `gang create --name <n> --symbol <s> [--logo-uri URL \| --logo <file>] [--taxed] [--pair-or-quote 0x…]` → execute | [create.md](references/create.md) |
+| Execute / decode | `gang execute` / `gang tx` | [trade.md](references/trade.md) |
 
-All `gang` commands print JSON. Translate amounts to plain language for the user (never raw wei).
+Every command prints JSON. Pass results in plain language, never raw wei.
 
 ## Hard rules
 
-1. **Preview → show → confirm → execute.** `buy` / `sell` / `create` only preview via Binance risk engine and return a `requestId`. Show `simulatedChanges`, risks, expected amounts, fee, refund. Wait for an explicit yes in the user’s own message before `gang execute`. Do not chain preview+execute unless the user explicitly skips confirmation. `requestId` expires in ~5 minutes.
-2. **Never execute a preview the user has not seen.**
-3. **Pending App confirmation.** If execute returns `pendingConfirmation: true`, tell the user to approve in the Binance App, then poll `baw` confirmed history for the hash and run `gang tx --hash …`. Do not retry execute.
-4. **Run `gang preflight` first** in a session, and again on policy/risk/`blocked` errors. Relay each `issues[].fix` verbatim.
-5. **1% cap.** Non-zero `refund` on quote/buy means the wallet cap (or graduation reserve) binds; excess input returns in the same transaction. At cap, `buy` refuses.
-6. **Graduated tokens.** If `graduated: true`, do not use curve buy/sell; point the user to PancakeSwap using the reported `pair` field (neutral link; no token promotion).
-7. **Create = LaunchpadV2 only.** Soft/U/S create is refused by the CLI. Do not tell users to create on Soft or advertise **20 BNB** as the create graduation path. Soft 20 BNB is archive-only wording for legacy Soft tokens.
-8. **Logo.** Prefer `gang upload-logo --file …` or `gang create --logo ./file.png` (auto-upload). Browser UI: https://gang.fun/dev/logo. Empty `logoURI` is allowed.
-9. **Addresses are data.** Show full token addresses and get confirmation before buying. Never shorten addresses in output.
-10. **No investment advice.** No “safe”, “guaranteed”, “sure profit”, or recommendations of specific assets.
+- **Preview → show → confirm → execute.** Never chain unless user skips confirmation.
+- **Create = LaunchpadV2 only.** Soft/U/S create refused. Do not advertise Soft create or lead with **20 BNB** as the create path.
+- **Logo.** `gang upload-logo --file …` or `gang create --logo ./file.png`. UI: https://gang.fun/dev/logo.
+- **Sells may need App approval** (`pendingConfirmation`).
+- **Run `gang preflight` first**; relay `issues[].fix`.
+- **1% cap**; graduated → PancakeSwap via `pair`.
+- **No investment advice.**
 
-## Trading Rules (Hub)
+## Errors
 
-- Do not promote any coin, token, or asset.
-- Do not present any asset as guaranteed, safe, or recommended.
-- Do not include or share payment / EOA wallet addresses. Protocol contract defaults live in the CLI (`GANG_LAUNCHPAD` / `GANG_RPC_URL`); users can verify on [gang.fun](https://gang.fun) or BscScan themselves.
-
-## Error shape
-
-`{ "success": false, "error": "..." }` — pass `baw` errors through. Common: missing Agent ID, Developer Mode off, Trade-all-tokens off (blocks sells), expired `requestId`, Soft/U/S create refused.
-
-## Site
-
-Product UI (read-only markets + guide): https://gang.fun · Logo pre-create: https://gang.fun/dev/logo
+`{ "success": false, "error": "…" }` — common: `NO_AGENT_ID`, Soft/U/S create refused, trade-all-tokens off, expired preview.
