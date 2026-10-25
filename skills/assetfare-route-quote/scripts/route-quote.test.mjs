@@ -16,13 +16,8 @@ import {
 } from './route-quote.mjs'
 
 const CONTRACT = buildRouteContract()
-const ENDPOINTS = [
-  ['solana', 'SOL'], ['solana', 'USDC'], ['solana', 'USDG'],
-  ['base', 'ETH'], ['base', 'USDC'],
-  ['arbitrum', 'ETH'], ['arbitrum', 'USDC'],
-  ['robinhood', 'ETH'], ['robinhood', 'USDG'],
-  ['polygon', 'USDC'], ['optimism', 'USDC'],
-]
+const ENDPOINTS = [...new Set(Object.keys(CONTRACT.routes).flatMap((route) => route.split('->')))]
+  .sort().map((endpoint) => endpoint.split(':'))
 
 function capabilities(overrides = {}) {
   return {
@@ -33,28 +28,36 @@ function capabilities(overrides = {}) {
       assetfare_fee_step_bound: true,
       base_unit_amounts_are_decimal_strings: true,
       classification_values: ['direct_protocol_only', 'external_intent'],
-      external_intent: 'Across only for Robinhood ingress; provider-internal liquidity sourcing or aggregation remains possible',
+      external_intent: 'No public route uses an external intent protocol; provider-internal liquidity sourcing or aggregation remains possible',
       normalized_chain_asset_endpoints: true,
       ordered_provider_path: true,
       required_on_every_quote: true,
       route_aggregator_used_scope: 'assetfare_engine_only',
-      route_count: 76,
+      route_count: 65,
       server_signing: false,
       server_submission: false,
-      step_count: 168,
+      step_count: 118,
       version: 'assetfare-direct-route-summary-v1',
     },
-    directed_conversion_routes: 76,
+    directed_conversion_routes: 65,
     evaluation_guidance: {
       always_compare_fresh_at_intended_amount: true,
-      native_usdc_economic_evaluation_start_usd: 50,
+      documentation_example_scope: 'example_only_not_route_guidance_or_minimum',
+      documentation_example_usd: 1000,
       not_a_minimum: true,
       not_guaranteed_best: true,
       reachability_smoke_scope: 'connectivity_only_not_economic_evaluation',
       reachability_smoke_usd: 1,
-      representative_economic_evaluation_usd: 1000,
+      route_minimum_usd: 1,
+      route_specific_guidance: {
+        amount_specific_product_gates: false,
+        competitor_rankings_public_product: false,
+        public_active_routes: 65,
+        public_inactive_routes: 35,
+      },
+      schema_version: 5,
     },
-    execution_ready_routes: 76,
+    execution_ready_routes: 65,
     fee_policy: {
       exact_bps: 1,
       minimum_bps: 1,
@@ -68,7 +71,7 @@ function capabilities(overrides = {}) {
     server_signing: false,
     server_submission: false,
     status: 'capped_public_agent_release',
-    unsigned_route_plans_ready: 76,
+    unsigned_route_plans_ready: 65,
     version: 'assetfare-multichain-api-v2',
     ...overrides,
   }
@@ -227,6 +230,11 @@ function quote(request) {
       quote_latency_ms: 1,
       aggregator_api_used: false,
       external_intent_protocol_used: external,
+      product_classification: definition.product_classification,
+      economic_eligibility: 'not_asserted_by_capability',
+      public_execution_eligible: true,
+      primary_selection_eligible: true,
+      route_minimum_guard_bps: definition.mode === 'robinhood_paxos_ingress_composition' ? 50 : null,
       server_signing: false,
       server_submission: false,
     },
@@ -237,6 +245,11 @@ function quote(request) {
       to: `${request.to_chain}:${request.to_token}`,
       classification: definition.classification,
       mode: definition.mode,
+      product_classification: definition.product_classification,
+      economic_eligibility: 'not_asserted_by_capability',
+      public_execution_eligible: true,
+      primary_selection_eligible: true,
+      route_minimum_guard_bps: definition.mode === 'robinhood_paxos_ingress_composition' ? 50 : null,
       route_aggregator_used: false,
       external_intent_protocol_used: external,
       provider_internal_dex_aggregation_possible: external,
@@ -272,11 +285,11 @@ function mockFetchFor(request, quoteOverride) {
   return { calls, fetch }
 }
 
-test('contract reproduces all 76 routes and 168 ordered provider steps', () => {
-  assert.deepEqual(CONTRACT_COUNTS, { routes: 76, steps: 168 })
-  assert.equal(CONTRACT_SHA256, '3f6f64f66b6973f3da6ff53d1974c7b0cf725b0bc6bcc4554f0bfa5b55e7cff1')
-  assert.equal(CONTRACT.version, 'assetfare-direct-route-contract-v1')
-  assert.equal(Object.values(CONTRACT.routes).filter((item) => item.classification === 'external_intent').length, 14)
+test('contract reproduces all 65 offered routes and 118 ordered provider steps', () => {
+  assert.deepEqual(CONTRACT_COUNTS, { routes: 65, steps: 118 })
+  assert.equal(CONTRACT_SHA256, 'ee9237e324821bf625f22da048733d3708cac9e0047da4340e19cd6be597e063')
+  assert.equal(CONTRACT.version, 'assetfare-public-route-product-contract-v2')
+  assert.equal(Object.values(CONTRACT.routes).filter((item) => item.classification === 'external_intent').length, 0)
 })
 
 test('lossless parser preserves unsafe integers and rejects duplicate keys', () => {
@@ -312,11 +325,11 @@ test('CLI accepts representative USD 1000 and connectivity-only USD 1 without de
   ]) assert.throws(() => parseCli(invalid), /assetfare_request_invalid/)
 })
 
-test('capabilities validation requires 2.3 route summary contract and evaluation guidance', async () => {
+test('capabilities validation requires the 65-route product contract and guidance v5', async () => {
   const output = validateCapabilities(capabilities())
-  assert.equal(output.directed_conversion_routes, 76)
-  assert.equal(output.direct_route_summary.step_count, 168)
-  assert.equal(output.evaluation_guidance.representative_economic_evaluation_usd, 1000)
+  assert.equal(output.directed_conversion_routes, 65)
+  assert.equal(output.direct_route_summary.step_count, 118)
+  assert.equal(output.evaluation_guidance.documentation_example_usd, 1000)
   assert.equal(output.evaluation_guidance.reachability_smoke_usd, 1)
   assert.deepEqual(Object.keys(output.amount_usd).sort(), ['maximum', 'minimum', 'policy'])
   assert.equal(Object.hasOwn(output, 'unexpected'), false)
@@ -387,7 +400,7 @@ test('USD 1 remains a connectivity-only quote and is never promoted as economic 
 })
 
 test('lossless transport validates live-compatible ETH wei above Number.MAX_SAFE_INTEGER', async () => {
-  const request = { from_chain: 'base', from_token: 'ETH', to_chain: 'arbitrum', to_token: 'USDC', amount_usd: 1000 }
+  const request = { from_chain: 'base', from_token: 'ETH', to_chain: 'solana', to_token: 'USDC', amount_usd: 1000 }
   let body = JSON.stringify(quote(request))
   body = body.replaceAll(':1000000', ':9007199254740993').replaceAll(':"1000000"', ':"9007199254740993"')
   const calls = []
@@ -401,7 +414,7 @@ test('lossless transport validates live-compatible ETH wei above Number.MAX_SAFE
   assert.deepEqual(calls, ['https://api.assetfare.dev/v2/capabilities', 'https://api.assetfare.dev/v2/quote'])
 })
 
-test('all 76 planner routes validate with exact topology and amount continuity', () => {
+test('all 65 planner routes validate with exact topology and amount continuity', () => {
   let routeCount = 0
   let stepCount = 0
   for (const routeName of Object.keys(CONTRACT.routes)) {
@@ -414,22 +427,21 @@ test('all 76 planner routes validate with exact topology and amount continuity',
     routeCount += 1
     stepCount += output.direct_route_summary.step_count
   }
-  assert.equal(routeCount, 76)
-  assert.equal(stepCount, 168)
+  assert.equal(routeCount, 65)
+  assert.equal(stepCount, 118)
 })
 
-test('Across ingress is explicit external intent, never a direct-only route', () => {
+test('Paxos ingress is direct-only and never presented as external intent', () => {
   const request = { from_chain: 'base', from_token: 'USDC', to_chain: 'robinhood', to_token: 'USDG', amount_usd: 1000 }
   const output = validateQuote(quote(request), request)
-  assert.equal(output.direct_route_summary.classification, 'external_intent')
-  assert.equal(output.direct_route_summary.external_intent_protocol_used, true)
-  assert.equal(output.direct_route_summary.provider_internal_dex_aggregation_possible, true)
+  assert.equal(output.direct_route_summary.classification, 'direct_protocol_only')
+  assert.equal(output.direct_route_summary.external_intent_protocol_used, false)
+  assert.equal(output.direct_route_summary.provider_internal_dex_aggregation_possible, false)
   assert.equal(output.direct_route_summary.route_aggregator_used, false)
 })
 
 test('direct route summary and duplicate raw route fail closed under hostile mutations', () => {
-  const directRequest = { from_chain: 'solana', from_token: 'SOL', to_chain: 'base', to_token: 'ETH', amount_usd: 1000 }
-  const acrossRequest = { from_chain: 'base', from_token: 'USDC', to_chain: 'robinhood', to_token: 'USDG', amount_usd: 1000 }
+  const directRequest = { from_chain: 'solana', from_token: 'SOL', to_chain: 'base', to_token: 'USDC', amount_usd: 1000 }
   const hostiles = []
   {
     const value = quote(directRequest); delete value.direct_route_summary; hostiles.push([value, directRequest])
@@ -506,11 +518,11 @@ test('direct route summary and duplicate raw route fail closed under hostile mut
     const value = quote(directRequest); value.route.steps[0].signed = true; hostiles.push([value, directRequest])
   }
   {
-    const value = quote(acrossRequest)
-    value.direct_route_summary.classification = 'direct_protocol_only'
-    value.direct_route_summary.external_intent_protocol_used = false
-    value.direct_route_summary.provider_internal_dex_aggregation_possible = false
-    hostiles.push([value, acrossRequest])
+    const value = quote(directRequest)
+    value.direct_route_summary.classification = 'external_intent'
+    value.direct_route_summary.external_intent_protocol_used = true
+    value.direct_route_summary.provider_internal_dex_aggregation_possible = true
+    hostiles.push([value, directRequest])
   }
   {
     const value = quote(directRequest); value.cost_summary.rankable_all_in = true; hostiles.push([value, directRequest])

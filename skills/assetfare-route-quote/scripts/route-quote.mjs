@@ -11,30 +11,37 @@ const MAX_RESPONSE_BYTES = 1_048_576
 const MAX_RESPONSE_CHUNKS = 16_384
 
 const ENDPOINTS = Object.freeze([
-  ['solana', 'SOL'],
-  ['solana', 'USDC'],
-  ['solana', 'USDG'],
-  ['base', 'ETH'],
-  ['base', 'USDC'],
-  ['arbitrum', 'ETH'],
-  ['arbitrum', 'USDC'],
-  ['robinhood', 'ETH'],
-  ['robinhood', 'USDG'],
-  ['polygon', 'USDC'],
-  ['optimism', 'USDC'],
+  ["aptos", "USDC"],
+  ["arbitrum", "ETH"],
+  ["arbitrum", "USDC"],
+  ["avalanche", "USDC"],
+  ["base", "ETH"],
+  ["base", "USDC"],
+  ["cronos", "USDC"],
+  ["ethereum", "USDC"],
+  ["hyperevm", "USDC"],
+  ["injective", "USDC"],
+  ["ink", "USDC"],
+  ["linea", "USDC"],
+  ["monad", "USDC"],
+  ["optimism", "USDC"],
+  ["robinhood", "ETH"],
+  ["robinhood", "USDG"],
+  ["sei", "USDC"],
+  ["solana", "SOL"],
+  ["solana", "USDC"],
+  ["solana", "USDG"],
+  ["sonic", "USDC"],
+  ["unichain", "USDC"],
+  ["xlayer", "USDC"]
 ])
-const DESTINATION_ENDPOINTS = ENDPOINTS.filter(([chain]) => !['polygon', 'optimism'].includes(chain))
 const ENDPOINT_SET = new Set(ENDPOINTS.map(([chain, token]) => `${chain}:${token}`))
-const DESTINATION_SET = new Set(DESTINATION_ENDPOINTS.map(([chain, token]) => `${chain}:${token}`))
-const SOURCE_ONLY_ROUTES = new Set([
-  'optimism:USDC->arbitrum:USDC',
-  'optimism:USDC->base:USDC',
-  'polygon:USDC->arbitrum:USDC',
-  'polygon:USDC->base:USDC',
-])
+const ROUTE_CONTRACT_DATA = {"aptos:USDC->base:USDC":{"classification":"direct_protocol_only","mode":"aptos_move_cctp_direct","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"aptos:USDC","index":0,"provider":"circle_cctp","to":"base:USDC"}]},"aptos:USDC->solana:USDC":{"classification":"direct_protocol_only","mode":"aptos_move_cctp_direct","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"aptos:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"}]},"arbitrum:ETH->arbitrum:USDC":{"classification":"direct_protocol_only","mode":"same_chain_direct","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"arbitrum:ETH","index":0,"provider":"uniswap_v3","to":"arbitrum:USDC"}]},"arbitrum:ETH->solana:USDG":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"arbitrum:ETH","index":0,"provider":"uniswap_v3","to":"arbitrum:USDC"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"arbitrum:USDC","index":1,"provider":"circle_cctp","to":"solana:USDC"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":2,"provider":"orca_whirlpool","to":"solana:USDG"}]},"arbitrum:USDC->arbitrum:ETH":{"classification":"direct_protocol_only","mode":"same_chain_direct","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"arbitrum:USDC","index":0,"provider":"uniswap_v3","to":"arbitrum:ETH"}]},"arbitrum:USDC->robinhood:ETH":{"classification":"direct_protocol_only","mode":"robinhood_paxos_ingress_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"arbitrum:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":1,"provider":"orca_whirlpool","to":"solana:USDG"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":2,"provider":"paxos_usdg_layerzero_oft","to":"robinhood:USDG"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:USDG","index":3,"provider":"uniswap_v3","to":"robinhood:ETH"}]},"arbitrum:USDC->robinhood:USDG":{"classification":"direct_protocol_only","mode":"robinhood_paxos_ingress_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"arbitrum:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":1,"provider":"orca_whirlpool","to":"solana:USDG"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":2,"provider":"paxos_usdg_layerzero_oft","to":"robinhood:USDG"}]},"arbitrum:USDC->solana:SOL":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"arbitrum:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":1,"provider":"raydium_clmm","to":"solana:SOL"}]},"arbitrum:USDC->solana:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"arbitrum:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"}]},"arbitrum:USDC->solana:USDG":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"arbitrum:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":1,"provider":"orca_whirlpool","to":"solana:USDG"}]},"avalanche:USDC->base:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"avalanche:USDC","index":0,"provider":"circle_cctp","to":"base:USDC"}]},"avalanche:USDC->solana:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"avalanche:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"}]},"base:ETH->base:USDC":{"classification":"direct_protocol_only","mode":"same_chain_direct","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"base:ETH","index":0,"provider":"uniswap_v3","to":"base:USDC"}]},"base:ETH->solana:SOL":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"base:ETH","index":0,"provider":"uniswap_v3","to":"base:USDC"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"base:USDC","index":1,"provider":"circle_cctp","to":"solana:USDC"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":2,"provider":"raydium_clmm","to":"solana:SOL"}]},"base:ETH->solana:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"base:ETH","index":0,"provider":"uniswap_v3","to":"base:USDC"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"base:USDC","index":1,"provider":"circle_cctp","to":"solana:USDC"}]},"base:ETH->solana:USDG":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"base:ETH","index":0,"provider":"uniswap_v3","to":"base:USDC"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"base:USDC","index":1,"provider":"circle_cctp","to":"solana:USDC"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":2,"provider":"orca_whirlpool","to":"solana:USDG"}]},"base:USDC->base:ETH":{"classification":"direct_protocol_only","mode":"same_chain_direct","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"base:USDC","index":0,"provider":"uniswap_v3","to":"base:ETH"}]},"base:USDC->robinhood:USDG":{"classification":"direct_protocol_only","mode":"robinhood_paxos_ingress_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"base:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":1,"provider":"orca_whirlpool","to":"solana:USDG"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":2,"provider":"paxos_usdg_layerzero_oft","to":"robinhood:USDG"}]},"base:USDC->solana:SOL":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"base:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":1,"provider":"raydium_clmm","to":"solana:SOL"}]},"base:USDC->solana:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"base:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"}]},"base:USDC->solana:USDG":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"base:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":1,"provider":"orca_whirlpool","to":"solana:USDG"}]},"cronos:USDC->base:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"cronos:USDC","index":0,"provider":"circle_cctp","to":"base:USDC"}]},"cronos:USDC->solana:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"cronos:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"}]},"ethereum:USDC->solana:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"ethereum:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"}]},"hyperevm:USDC->solana:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"hyperevm:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"}]},"injective:USDC->base:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"injective:USDC","index":0,"provider":"circle_cctp","to":"base:USDC"}]},"injective:USDC->solana:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"injective:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"}]},"ink:USDC->solana:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"ink:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"}]},"linea:USDC->base:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"linea:USDC","index":0,"provider":"circle_cctp","to":"base:USDC"}]},"linea:USDC->solana:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"linea:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"}]},"monad:USDC->base:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"monad:USDC","index":0,"provider":"circle_cctp","to":"base:USDC"}]},"monad:USDC->solana:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"monad:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"}]},"optimism:USDC->base:USDC":{"classification":"direct_protocol_only","mode":"optimism_source_cctp","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"optimism:USDC","index":0,"provider":"circle_cctp","to":"base:USDC"},{"action":"receive","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"base:USDC","index":1,"provider":"circle_cctp_receive","to":"base:USDC"}]},"robinhood:ETH->arbitrum:USDC":{"classification":"direct_protocol_only","mode":"robinhood_paxos_egress_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:ETH","index":0,"provider":"uniswap_v3","to":"robinhood:USDG"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:USDG","index":1,"provider":"paxos_usdg_layerzero_oft","to":"solana:USDG"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":2,"provider":"orca_whirlpool","to":"solana:USDC"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":3,"provider":"circle_cctp","to":"arbitrum:USDC"}]},"robinhood:ETH->base:USDC":{"classification":"direct_protocol_only","mode":"robinhood_paxos_egress_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:ETH","index":0,"provider":"uniswap_v3","to":"robinhood:USDG"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:USDG","index":1,"provider":"paxos_usdg_layerzero_oft","to":"solana:USDG"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":2,"provider":"orca_whirlpool","to":"solana:USDC"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":3,"provider":"circle_cctp","to":"base:USDC"}]},"robinhood:ETH->robinhood:USDG":{"classification":"direct_protocol_only","mode":"same_chain_direct","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:ETH","index":0,"provider":"uniswap_v3","to":"robinhood:USDG"}]},"robinhood:ETH->solana:SOL":{"classification":"direct_protocol_only","mode":"robinhood_paxos_egress_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:ETH","index":0,"provider":"uniswap_v3","to":"robinhood:USDG"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:USDG","index":1,"provider":"paxos_usdg_layerzero_oft","to":"solana:USDG"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":2,"provider":"orca_whirlpool","to":"solana:USDC"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":3,"provider":"raydium_clmm","to":"solana:SOL"}]},"robinhood:ETH->solana:USDC":{"classification":"direct_protocol_only","mode":"robinhood_paxos_egress_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:ETH","index":0,"provider":"uniswap_v3","to":"robinhood:USDG"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:USDG","index":1,"provider":"paxos_usdg_layerzero_oft","to":"solana:USDG"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":2,"provider":"orca_whirlpool","to":"solana:USDC"}]},"robinhood:ETH->solana:USDG":{"classification":"direct_protocol_only","mode":"robinhood_paxos_egress_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:ETH","index":0,"provider":"uniswap_v3","to":"robinhood:USDG"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:USDG","index":1,"provider":"paxos_usdg_layerzero_oft","to":"solana:USDG"}]},"robinhood:USDG->arbitrum:USDC":{"classification":"direct_protocol_only","mode":"robinhood_paxos_egress_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:USDG","index":0,"provider":"paxos_usdg_layerzero_oft","to":"solana:USDG"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":1,"provider":"orca_whirlpool","to":"solana:USDC"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":2,"provider":"circle_cctp","to":"arbitrum:USDC"}]},"robinhood:USDG->base:USDC":{"classification":"direct_protocol_only","mode":"robinhood_paxos_egress_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:USDG","index":0,"provider":"paxos_usdg_layerzero_oft","to":"solana:USDG"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":1,"provider":"orca_whirlpool","to":"solana:USDC"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":2,"provider":"circle_cctp","to":"base:USDC"}]},"robinhood:USDG->robinhood:ETH":{"classification":"direct_protocol_only","mode":"same_chain_direct","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:USDG","index":0,"provider":"uniswap_v3","to":"robinhood:ETH"}]},"robinhood:USDG->solana:SOL":{"classification":"direct_protocol_only","mode":"robinhood_paxos_egress_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:USDG","index":0,"provider":"paxos_usdg_layerzero_oft","to":"solana:USDG"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":1,"provider":"orca_whirlpool","to":"solana:USDC"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":2,"provider":"raydium_clmm","to":"solana:SOL"}]},"robinhood:USDG->solana:USDC":{"classification":"direct_protocol_only","mode":"robinhood_paxos_egress_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:USDG","index":0,"provider":"paxos_usdg_layerzero_oft","to":"solana:USDG"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":1,"provider":"orca_whirlpool","to":"solana:USDC"}]},"sei:USDC->base:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"sei:USDC","index":0,"provider":"circle_cctp","to":"base:USDC"}]},"sei:USDC->solana:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"sei:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"}]},"solana:SOL->base:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:SOL","index":0,"provider":"raydium_clmm","to":"solana:USDC"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":1,"provider":"circle_cctp","to":"base:USDC"}]},"solana:SOL->robinhood:ETH":{"classification":"direct_protocol_only","mode":"robinhood_paxos_ingress_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:SOL","index":0,"provider":"raydium_clmm","to":"solana:USDC"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":1,"provider":"orca_whirlpool","to":"solana:USDG"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":2,"provider":"paxos_usdg_layerzero_oft","to":"robinhood:USDG"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:USDG","index":3,"provider":"uniswap_v3","to":"robinhood:ETH"}]},"solana:SOL->robinhood:USDG":{"classification":"direct_protocol_only","mode":"robinhood_paxos_ingress_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:SOL","index":0,"provider":"raydium_clmm","to":"solana:USDC"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":1,"provider":"orca_whirlpool","to":"solana:USDG"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":2,"provider":"paxos_usdg_layerzero_oft","to":"robinhood:USDG"}]},"solana:SOL->solana:USDC":{"classification":"direct_protocol_only","mode":"same_chain_direct","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:SOL","index":0,"provider":"raydium_clmm","to":"solana:USDC"}]},"solana:SOL->solana:USDG":{"classification":"direct_protocol_only","mode":"same_chain_direct_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:SOL","index":0,"provider":"raydium_clmm","to":"solana:USDC"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":1,"provider":"orca_whirlpool","to":"solana:USDG"}]},"solana:USDC->arbitrum:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":0,"provider":"circle_cctp","to":"arbitrum:USDC"}]},"solana:USDC->base:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":0,"provider":"circle_cctp","to":"base:USDC"}]},"solana:USDC->robinhood:ETH":{"classification":"direct_protocol_only","mode":"robinhood_paxos_ingress_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":0,"provider":"orca_whirlpool","to":"solana:USDG"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":1,"provider":"paxos_usdg_layerzero_oft","to":"robinhood:USDG"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:USDG","index":2,"provider":"uniswap_v3","to":"robinhood:ETH"}]},"solana:USDC->robinhood:USDG":{"classification":"direct_protocol_only","mode":"robinhood_paxos_ingress_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":0,"provider":"orca_whirlpool","to":"solana:USDG"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":1,"provider":"paxos_usdg_layerzero_oft","to":"robinhood:USDG"}]},"solana:USDG->arbitrum:ETH":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":0,"provider":"orca_whirlpool","to":"solana:USDC"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":1,"provider":"circle_cctp","to":"arbitrum:USDC"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"arbitrum:USDC","index":2,"provider":"uniswap_v3","to":"arbitrum:ETH"}]},"solana:USDG->arbitrum:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":0,"provider":"orca_whirlpool","to":"solana:USDC"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":1,"provider":"circle_cctp","to":"arbitrum:USDC"}]},"solana:USDG->base:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":0,"provider":"orca_whirlpool","to":"solana:USDC"},{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDC","index":1,"provider":"circle_cctp","to":"base:USDC"}]},"solana:USDG->robinhood:ETH":{"classification":"direct_protocol_only","mode":"robinhood_paxos_ingress_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":0,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":0,"provider":"paxos_usdg_layerzero_oft","to":"robinhood:USDG"},{"action":"swap","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"robinhood:USDG","index":1,"provider":"uniswap_v3","to":"robinhood:ETH"}]},"solana:USDG->robinhood:USDG":{"classification":"direct_protocol_only","mode":"robinhood_paxos_ingress_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"solana:USDG","index":0,"provider":"paxos_usdg_layerzero_oft","to":"robinhood:USDG"}]},"sonic:USDC->base:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"sonic:USDC","index":0,"provider":"circle_cctp","to":"base:USDC"}]},"sonic:USDC->solana:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"sonic:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"}]},"unichain:USDC->solana:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"unichain:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"}]},"xlayer:USDC->base:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"xlayer:USDC","index":0,"provider":"circle_cctp","to":"base:USDC"}]},"xlayer:USDC->solana:USDC":{"classification":"direct_protocol_only","mode":"cctp_direct_composition","product_classification":"primary_direct","steps":[{"action":"bridge","aggregator_api_used":false,"assetfare_fee_bps":1,"direct_protocol":true,"external_intent_protocol":false,"from":"xlayer:USDC","index":0,"provider":"circle_cctp","to":"solana:USDC"}]}}
 
 const SUMMARY_KEYS = Object.freeze([
   'version', 'route', 'from', 'to', 'classification', 'mode',
+  'product_classification', 'economic_eligibility', 'public_execution_eligible',
+  'primary_selection_eligible', 'route_minimum_guard_bps',
   'route_aggregator_used', 'external_intent_protocol_used',
   'provider_internal_dex_aggregation_possible', 'assetfare_fee_bps',
   'fee_collection_step_index', 'server_signing', 'server_submission',
@@ -49,7 +56,9 @@ const SUMMARY_STEP_KEYS = Object.freeze([
 const ROUTE_KEYS = Object.freeze([
   'status', 'version', 'route', 'mode', 'input_base', 'expected_output_base',
   'minimum_output_base', 'steps', 'quote_latency_ms', 'aggregator_api_used',
-  'external_intent_protocol_used', 'server_signing', 'server_submission',
+  'external_intent_protocol_used', 'product_classification', 'economic_eligibility',
+  'public_execution_eligible', 'primary_selection_eligible', 'route_minimum_guard_bps',
+  'server_signing', 'server_submission',
 ])
 const RAW_STEP_SUFFIX = Object.freeze([
   'index', 'expected_input_base', 'floor_input_base', 'expected_output_base',
@@ -60,148 +69,16 @@ const AMOUNT_STRING = /^[1-9][0-9]*$/
 const DECIMAL_USD = /^(?:0|[1-9][0-9]*)(?:\.[0-9]{1,6})?$/
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 const REQUEST_KEYS = Object.freeze(['from_chain', 'from_token', 'to_chain', 'to_token', 'amount_usd'])
-const PINNED_ROUTE_CONTRACT_SHA256 = '3f6f64f66b6973f3da6ff53d1974c7b0cf725b0bc6bcc4554f0bfa5b55e7cff1'
-
-function step(action, provider, from, to, feeBps) {
-  return {
-    action,
-    provider,
-    from,
-    to,
-    assetfare_fee_bps: feeBps,
-    direct_protocol: provider !== 'across_intent_bridge',
-    external_intent_protocol: provider === 'across_intent_bridge',
-  }
-}
-
-function normalizeToUsdc(chain, token, feeBps = 0) {
-  if (token === 'USDC') return []
-  if (chain === 'solana' && token === 'SOL') return [step('swap', 'raydium_clmm', 'solana:SOL', 'solana:USDC', feeBps)]
-  if (chain === 'solana' && token === 'USDG') return [step('swap', 'orca_whirlpool', 'solana:USDG', 'solana:USDC', feeBps)]
-  if (['base', 'arbitrum'].includes(chain) && token === 'ETH') {
-    return [step('swap', 'uniswap_v3', `${chain}:ETH`, `${chain}:USDC`, feeBps)]
-  }
-  return []
-}
-
-function normalizeFromUsdc(chain, token, feeBps = 0) {
-  if (token === 'USDC') return []
-  if (chain === 'solana' && token === 'SOL') return [step('swap', 'raydium_clmm', 'solana:USDC', 'solana:SOL', feeBps)]
-  if (chain === 'solana' && token === 'USDG') return [step('swap', 'orca_whirlpool', 'solana:USDC', 'solana:USDG', feeBps)]
-  if (['base', 'arbitrum'].includes(chain) && token === 'ETH') {
-    return [step('swap', 'uniswap_v3', `${chain}:USDC`, `${chain}:ETH`, feeBps)]
-  }
-  return []
-}
-
-function plannedRoute(fromChain, fromToken, toChain, toToken) {
-  const route = `${fromChain}:${fromToken}->${toChain}:${toToken}`
-  if (!ENDPOINT_SET.has(`${fromChain}:${fromToken}`) || !DESTINATION_SET.has(`${toChain}:${toToken}`)) return null
-  if (fromChain === toChain && fromToken === toToken) return null
-
-  let mode
-  let classification = 'direct_protocol_only'
-  let steps
-
-  if (SOURCE_ONLY_ROUTES.has(route)) {
-    mode = `${fromChain}_source_cctp`
-    steps = [step('bridge', 'circle_cctp', `${fromChain}:USDC`, `${toChain}:USDC`, 1)]
-  } else if (['polygon', 'optimism'].includes(fromChain)) {
-    return null
-  } else if (fromChain === toChain) {
-    if (fromChain === 'solana') {
-      mode = fromToken === 'USDC' || toToken === 'USDC' ? 'same_chain_direct' : 'same_chain_direct_composition'
-      if (fromToken === 'SOL') {
-        steps = [
-          step('swap', 'raydium_clmm', 'solana:SOL', 'solana:USDC', toToken === 'USDC' ? 1 : 0),
-          ...normalizeFromUsdc('solana', toToken, toToken === 'USDG' ? 1 : 0),
-        ]
-      } else if (fromToken === 'USDG') {
-        steps = [
-          step('swap', 'orca_whirlpool', 'solana:USDG', 'solana:USDC', 1),
-          ...normalizeFromUsdc('solana', toToken, 0),
-        ]
-      } else {
-        steps = normalizeFromUsdc('solana', toToken, 1)
-      }
-    } else {
-      mode = 'same_chain_direct'
-      steps = [step('swap', 'uniswap_v3', `${fromChain}:${fromToken}`, `${toChain}:${toToken}`, 1)]
-    }
-  } else if (fromChain === 'robinhood') {
-    mode = 'robinhood_paxos_egress_composition'
-    steps = [
-      ...(fromToken === 'ETH' ? [step('swap', 'uniswap_v3', 'robinhood:ETH', 'robinhood:USDG', 0)] : []),
-      step('bridge', 'paxos_usdg_layerzero_oft', 'robinhood:USDG', 'solana:USDG', 1),
-    ]
-    if (toChain === 'solana') {
-      if (toToken !== 'USDG') steps.push(step('swap', 'orca_whirlpool', 'solana:USDG', 'solana:USDC', 0))
-      if (toToken === 'SOL') steps.push(step('swap', 'raydium_clmm', 'solana:USDC', 'solana:SOL', 0))
-    } else if (['base', 'arbitrum'].includes(toChain)) {
-      steps.push(step('swap', 'orca_whirlpool', 'solana:USDG', 'solana:USDC', 0))
-      steps.push(step('bridge', 'circle_cctp', 'solana:USDC', `${toChain}:USDC`, 0))
-      steps.push(...normalizeFromUsdc(toChain, toToken, 0))
-    } else {
-      return null
-    }
-  } else if (toChain === 'robinhood') {
-    mode = 'robinhood_across_ingress_composition'
-    classification = 'external_intent'
-    if (fromChain === 'solana') {
-      steps = [
-        ...normalizeToUsdc('solana', fromToken, 0),
-        step('bridge', 'circle_cctp', 'solana:USDC', 'base:USDC', 1),
-        step('bridge', 'across_intent_bridge', 'base:USDC', 'robinhood:USDG', 0),
-        ...(toToken === 'ETH' ? [step('swap', 'uniswap_v3', 'robinhood:USDG', 'robinhood:ETH', 0)] : []),
-      ]
-    } else if (['base', 'arbitrum'].includes(fromChain)) {
-      const sourceSwap = normalizeToUsdc(fromChain, fromToken, fromToken === 'ETH' ? 1 : 0)
-      const acrossFee = fromToken === 'USDC' && toToken === 'USDG' ? 1 : 0
-      const destinationFee = fromToken === 'USDC' && toToken === 'ETH' ? 1 : 0
-      steps = [
-        ...sourceSwap,
-        step('bridge', 'across_intent_bridge', `${fromChain}:USDC`, 'robinhood:USDG', acrossFee),
-        ...(toToken === 'ETH' ? [step('swap', 'uniswap_v3', 'robinhood:USDG', 'robinhood:ETH', destinationFee)] : []),
-      ]
-    } else {
-      return null
-    }
-  } else if (['base', 'arbitrum', 'solana'].includes(fromChain) && ['base', 'arbitrum', 'solana'].includes(toChain)) {
-    mode = 'cctp_direct_composition'
-    steps = [
-      ...normalizeToUsdc(fromChain, fromToken, 0),
-      step('bridge', 'circle_cctp', `${fromChain}:USDC`, `${toChain}:USDC`, 1),
-      ...normalizeFromUsdc(toChain, toToken, 0),
-    ]
-  } else {
-    return null
-  }
-
-  if (!steps?.length || steps.reduce((sum, value) => sum + value.assetfare_fee_bps, 0) !== 1) return null
-  return {
-    classification,
-    mode,
-    steps: steps.map((value, index) => ({ index, ...value })),
-  }
-}
+const PINNED_ROUTE_CONTRACT_SHA256 = 'ee9237e324821bf625f22da048733d3708cac9e0047da4340e19cd6be597e063'
 
 export function buildRouteContract() {
-  const routes = {}
-  let stepCount = 0
-  for (const [fromChain, fromToken] of ENDPOINTS) {
-    for (const [toChain, toToken] of DESTINATION_ENDPOINTS) {
-      const definition = plannedRoute(fromChain, fromToken, toChain, toToken)
-      if (!definition) continue
-      const name = `${fromChain}:${fromToken}->${toChain}:${toToken}`
-      routes[name] = definition
-      stepCount += definition.steps.length
-    }
-  }
-  if (Object.keys(routes).length !== 76 || stepCount !== 168) throw new Error('assetfare_contract_internal_invalid')
+  const routes = ROUTE_CONTRACT_DATA
+  const stepCount = Object.values(routes).reduce((sum, value) => sum + value.steps.length, 0)
+  if (Object.keys(routes).length !== 65 || stepCount !== 118) throw new Error('assetfare_contract_internal_invalid')
   return Object.freeze({
-    version: 'assetfare-direct-route-contract-v1',
-    route_count: 76,
-    step_count: 168,
+    version: 'assetfare-public-route-product-contract-v2',
+    route_count: 65,
+    step_count: 118,
     routes: Object.freeze(routes),
   })
 }
@@ -303,8 +180,8 @@ export function validateCapabilities(value) {
   if (!isObject(value) || value.version !== 'assetfare-multichain-api-v2' ||
       value.status !== 'capped_public_agent_release' || value.public_api_enabled !== true ||
       value.server_signing !== false || value.server_submission !== false ||
-      value.route_aggregator_used !== false || value.directed_conversion_routes !== 76 ||
-      value.unsigned_route_plans_ready !== 76 || value.execution_ready_routes !== 76) {
+      value.route_aggregator_used !== false || value.directed_conversion_routes !== 65 ||
+      value.unsigned_route_plans_ready !== 65 || value.execution_ready_routes !== 65) {
     throw new Error('assetfare_capabilities_invalid')
   }
   if (!isObject(value.amount_usd) || value.amount_usd.minimum !== 1 || value.amount_usd.maximum !== null ||
@@ -322,21 +199,24 @@ export function validateCapabilities(value) {
   }
   const direct = value.direct_route_summary
   if (!isObject(direct) || direct.version !== 'assetfare-direct-route-summary-v1' ||
-      direct.required_on_every_quote !== true || direct.route_count !== 76 || direct.step_count !== 168 ||
+      direct.required_on_every_quote !== true || direct.route_count !== 65 || direct.step_count !== 118 ||
       direct.ordered_provider_path !== true || direct.normalized_chain_asset_endpoints !== true ||
       direct.base_unit_amounts_are_decimal_strings !== true || direct.assetfare_fee_step_bound !== true ||
       direct.route_aggregator_used_scope !== 'assetfare_engine_only' ||
-      direct.external_intent !== 'Across only for Robinhood ingress; provider-internal liquidity sourcing or aggregation remains possible' ||
+      direct.external_intent !== 'No public route uses an external intent protocol; provider-internal liquidity sourcing or aggregation remains possible' ||
       direct.server_signing !== false || direct.server_submission !== false ||
       JSON.stringify(direct.classification_values) !== JSON.stringify(['direct_protocol_only', 'external_intent'])) {
     throw new Error('assetfare_capabilities_invalid')
   }
   const guidance = value.evaluation_guidance
   if (!isObject(guidance) || guidance.always_compare_fresh_at_intended_amount !== true ||
-      guidance.representative_economic_evaluation_usd !== 1000 || guidance.reachability_smoke_usd !== 1 ||
+      guidance.schema_version !== 5 || guidance.documentation_example_usd !== 1000 || guidance.reachability_smoke_usd !== 1 ||
       guidance.reachability_smoke_scope !== 'connectivity_only_not_economic_evaluation' ||
-      guidance.not_guaranteed_best !== true || guidance.not_a_minimum !== true ||
-      guidance.native_usdc_economic_evaluation_start_usd !== 50) {
+      guidance.not_guaranteed_best !== true || guidance.not_a_minimum !== true || guidance.route_minimum_usd !== 1 ||
+      !isObject(guidance.route_specific_guidance) || guidance.route_specific_guidance.public_active_routes !== 65 ||
+      guidance.route_specific_guidance.public_inactive_routes !== 35 ||
+      guidance.route_specific_guidance.amount_specific_product_gates !== false ||
+      guidance.route_specific_guidance.competitor_rankings_public_product !== false) {
     throw new Error('assetfare_capabilities_invalid')
   }
   return {
@@ -344,12 +224,12 @@ export function validateCapabilities(value) {
     status: value.status,
     amount_usd: { minimum: 1, maximum: null, policy: 'no_business_maximum' },
     asset_endpoints: endpoints.map((item) => ({ chain: item.chain, token: item.token })),
-    directed_conversion_routes: 76,
+    directed_conversion_routes: 65,
     direct_route_summary: {
       version: direct.version,
       required_on_every_quote: true,
-      route_count: 76,
-      step_count: 168,
+      route_count: 65,
+      step_count: 118,
       ordered_provider_path: true,
       normalized_chain_asset_endpoints: true,
       base_unit_amounts_are_decimal_strings: true,
@@ -362,12 +242,14 @@ export function validateCapabilities(value) {
     },
     evaluation_guidance: {
       always_compare_fresh_at_intended_amount: true,
-      native_usdc_economic_evaluation_start_usd: 50,
+      documentation_example_usd: 1000,
       not_a_minimum: true,
       not_guaranteed_best: true,
       reachability_smoke_scope: 'connectivity_only_not_economic_evaluation',
       reachability_smoke_usd: 1,
-      representative_economic_evaluation_usd: 1000,
+      route_minimum_usd: 1,
+      route_specific_guidance: { ...guidance.route_specific_guidance },
+      schema_version: 5,
     },
     fee_policy: {
       exact_bps: 1,
@@ -391,7 +273,11 @@ export function validateDirectRouteSummary(summary, rawRoute, risk, intent, offe
   const definition = ROUTE_CONTRACT.routes[routeName]
   if (!definition || summary.version !== 'assetfare-direct-route-summary-v1' ||
       summary.route !== routeName || summary.from !== intent.from || summary.to !== intent.to ||
-      summary.mode !== definition.mode || summary.classification !== definition.classification) {
+      summary.mode !== definition.mode || summary.classification !== definition.classification ||
+      summary.product_classification !== definition.product_classification ||
+      summary.economic_eligibility !== 'not_asserted_by_capability' ||
+      summary.public_execution_eligible !== true || summary.primary_selection_eligible !== true ||
+      (summary.route_minimum_guard_bps !== null && summary.route_minimum_guard_bps !== 50)) {
     throw new Error('assetfare_direct_route_binding_invalid')
   }
   const external = definition.classification === 'external_intent'
@@ -405,6 +291,10 @@ export function validateDirectRouteSummary(summary, rawRoute, risk, intent, offe
   if (rawRoute.status !== 'pass' || rawRoute.version !== 'assetfare-direct-multichain-quote-v2' ||
       rawRoute.route !== routeName || rawRoute.mode !== definition.mode || rawRoute.aggregator_api_used !== false ||
       rawRoute.external_intent_protocol_used !== external || rawRoute.server_signing !== false ||
+      rawRoute.product_classification !== definition.product_classification ||
+      rawRoute.economic_eligibility !== 'not_asserted_by_capability' ||
+      rawRoute.public_execution_eligible !== true || rawRoute.primary_selection_eligible !== true ||
+      rawRoute.route_minimum_guard_bps !== summary.route_minimum_guard_bps ||
       rawRoute.server_submission !== false || !Array.isArray(rawRoute.steps) ||
       rawRoute.steps.length !== definition.steps.length) {
     throw new Error('assetfare_direct_route_raw_invalid')

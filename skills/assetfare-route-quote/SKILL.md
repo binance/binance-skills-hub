@@ -57,7 +57,7 @@ Do not add wallet, authentication, session, recipient, prepare, signature, or tr
 5. State where the one-basis-point AssetFare service fee is collected. Provider, protocol, and network costs are additional where the response says so.
 6. Explain the route classification:
    - `direct_protocol_only`: every disclosed route step is a direct protocol integration.
-   - `external_intent`: the route uses Across for Robinhood ingress. Across may internally source or aggregate destination liquidity.
+   - `external_intent`: retained only as a compatibility enum; no current public route uses it.
 7. Stop after presenting the quote. This skill has no execution continuation.
 
 ## Amount Guidance
@@ -80,11 +80,11 @@ Do not add wallet, authentication, session, recipient, prepare, signature, or tr
 
 The client fails closed unless all of the following hold:
 
-- the capabilities contract declares 76 routes, 168 ordered steps, exactly one AssetFare basis point, and no server signing or submission;
+- the capabilities contract declares 65 offered routes, 118 ordered steps, exactly one AssetFare basis point, and no server signing or submission;
 - the response binds the requested endpoints and amount;
-- `direct_route_summary` exactly matches the known 76-route topology;
+- `direct_route_summary` exactly matches the known 65-route topology;
 - provider order, action kind, endpoints, base-unit amount continuity, raw route evidence, and the one fee-collection step agree;
-- Across ingress is classified as external intent and never as direct-only;
+- every current public route is direct-protocol-only, including Paxos Robinhood ingress;
 - AssetFare route aggregation flags remain false, scoped only to AssetFare's route engine;
 - no private key, seed, signature, signed transaction, or submitted material appears anywhere in the response.
 

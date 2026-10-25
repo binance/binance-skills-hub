@@ -34,7 +34,7 @@ node --check scripts/route-quote.mjs
 node --test scripts/route-quote.test.mjs
 ```
 
-The suite covers all 76 routes and 168 ordered provider steps against the pinned Core topology digest, plus hostile response mutations, unsafe-integer precision, request-field isolation, USD 1/1,000 guidance, Across classification, response bounds, and error sanitization.
+The suite covers all 65 offered routes and 118 ordered provider steps against the pinned Core topology digest, plus hostile response mutations, unsafe-integer precision, request-field isolation, USD 1/1,000 guidance, direct-protocol classification, response bounds, and error sanitization.
 
 ## Scope
 

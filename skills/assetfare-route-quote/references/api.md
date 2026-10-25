@@ -36,14 +36,14 @@ The client refuses unknown, missing, or repeated command-line fields before maki
 ## Required capability invariants
 
 - API version `assetfare-multichain-api-v2`
-- 76 directed conversion routes and 168 ordered provider steps
+- 65 offered directed conversion routes and 118 ordered provider steps
 - direct-route-summary version `assetfare-direct-route-summary-v1`
 - direct classification values `direct_protocol_only` and `external_intent`
 - route aggregation flag scoped to the AssetFare engine only
-- Across-only external-intent caveat for Robinhood ingress
+- `external_intent` retained only as a compatibility enum; no current public route uses it
 - server signing and submission both false
 - fresh intended-amount comparison required
-- representative evaluation USD 1,000
+- documentation example USD 1,000, explicitly not a minimum or route-specific recommendation
 - USD 1 reachability smoke classified as connectivity only
 - current native-USDC evaluation guidance begins at USD 50, but is not a minimum or guarantee
 
@@ -67,7 +67,7 @@ Raw route payloads and execution handoff fields are validated where needed but a
 
 `classification: direct_protocol_only` means every disclosed route step uses a direct protocol integration.
 
-`classification: external_intent` identifies an Across Robinhood-ingress step. The response must also set `external_intent_protocol_used` and `provider_internal_dex_aggregation_possible` to true.
+Every current public route is `direct_protocol_only`, including Paxos Robinhood ingress. A response that marks a current route as `external_intent` fails closed.
 
 Every step binds:
 
@@ -82,7 +82,7 @@ Every step binds:
 
 Step amounts must be continuous. Exactly one step collects the one-basis-point AssetFare service fee. The duplicate raw route, risk block, and offer fee index must agree.
 
-The embedded 76-route/168-step contract is pinned to canonical SHA-256 `3f6f64f66b6973f3da6ff53d1974c7b0cf725b0bc6bcc4554f0bfa5b55e7cff1`. A bounded lossless JSON parser preserves integer lexemes above `Number.MAX_SAFE_INTEGER`, so ETH-denominated base units remain exact instead of being rounded during parsing.
+The embedded 65-route/118-step contract is pinned to canonical SHA-256 `ee9237e324821bf625f22da048733d3708cac9e0047da4340e19cd6be597e063`. A bounded lossless JSON parser preserves integer lexemes above `Number.MAX_SAFE_INTEGER`, so ETH-denominated base units remain exact instead of being rounded during parsing.
 
 ## Failure contract
 
