@@ -187,6 +187,8 @@ Other protocols also return a `tokenVersion` and accept the same filter, but the
 
 **Tax & fees:** `taxRateBuy` / `taxRateSell` (string %, pre-formatted; there is **no** `taxRate` field; `null` = unknown — show "unknown", not `0%`) · `taxFeeDistribution` (tax split: burn / dividend / liquidity / vault / fund wallet; not on Solana) · `launchTaxEnable` (BSC only) · `globalFee` (all chains).
 
+For Flap V6 tokens, `taxFeeDistribution.taxRateVaultAddress` can identify the creating **factory**, rather than the receiving/callable **vault**. Resolve the token with the official VaultPortal's `tryGetVault(token)` and use its separate `vault` and `vaultFactory` fields. Do not use the feed field alone as a transaction destination. See [Flap's indexing documentation](https://docs.flap.sh/flap/developers/wallet-and-terminal-and-bot-developers/indexing-vaults) and [current deployed contracts](https://docs.flap.sh/flap/developers/deployed-contract-addresses).
+
 **Socials:** `socials.website` / `socials.twitter` / `socials.telegram` · `twitterHandle` · `twitterInfo` (`followersCnt` / `followingCnt` / `type`).
 
 **AI narrative:** `narrativeText.en` / `narrativeText.cn`.
