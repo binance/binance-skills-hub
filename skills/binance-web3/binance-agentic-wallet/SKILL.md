@@ -44,6 +44,7 @@ This skill drives the `baw` CLI to manage a Binance Web3 wallet — sign-in/sign
 | Sign in / connect wallet                                             | `auth signin` → `auth verify`         | [authentication.md](references/authentication.md) |
 | Sign out / disconnect wallet                                         | `auth signout`                        | [authentication.md](references/authentication.md) |
 | Check if wallet is connected                                         | `wallet status`                       | [wallet-view.md](references/wallet-view.md)       |
+| Run several wallets side by side / switch accounts / per-wallet batch | `HOME=<slot> baw …`                  | [multi-account.md](references/multi-account.md)   |
 | List supported chains / available networks                           | `wallet chains`                       | [wallet-view.md](references/wallet-view.md)       |
 | Query gas price / fee levels / network fee                           | `wallet gas-price`                    | [gas.md](references/gas.md)                       |
 | Get my wallet address                                                | `wallet address`                      | [wallet-view.md](references/wallet-view.md)       |
