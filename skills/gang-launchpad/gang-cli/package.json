@@ -1,0 +1,44 @@
+{
+  "name": "@gangfun/cli",
+  "version": "0.2.1",
+  "description": "Gang launchpad CLI (LaunchpadV2-only create + legacy Soft/U/S trade) for Binance Agentic Wallet agents.",
+  "type": "module",
+  "bin": {
+    "gang": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "README.zh-CN.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gangfun/cli.git"
+  },
+  "homepage": "https://gang.fun",
+  "bugs": {
+    "url": "https://github.com/gangfun/cli/issues"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  },
+  "keywords": [
+    "gang",
+    "gang.fun",
+    "bnb",
+    "bsc",
+    "launchpad",
+    "bonding-curve",
+    "binance",
+    "agentic-wallet",
+    "agent-id"
+  ],
+  "dependencies": {
+    "viem": "^2.0.0"
+  }
+}
