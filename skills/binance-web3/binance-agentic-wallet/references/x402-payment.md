@@ -183,6 +183,40 @@ baw x402-payment preview --paymentRequirements '{
 - The returned options are pre-sorted; options earlier in the list are recommended over later ones.
 - Only options with `status = READY_TO_SIGN` can be signed directly. `ACTION_REQUIRED` options can be signed after the user takes a remediation action; `NOT_SIGNABLE` options cannot be signed.
 
+### PowerShell 7: get a quote and stop at preview
+
+For a GET resource whose merchant documents an unpaid HTTP 402 response, the
+following PowerShell 7 example retrieves the `PAYMENT-REQUIRED` header and
+previews it. Replace the URL with the merchant endpoint you intend to inspect.
+It does not sign a payment, retry with a payment header, or fund a wallet.
+
+```powershell
+$endpoint = 'https://<merchant-host>/<paid-resource>'
+if (([uri]$endpoint).Scheme -ne 'https') { throw 'Use the intended HTTPS merchant endpoint.' }
+$response = Invoke-WebRequest -Uri $endpoint -Method Get -SkipHttpErrorCheck -MaximumRedirection 0 -TimeoutSec 15
+if ($response.StatusCode -ne 402) { throw 'Expected an unpaid HTTP 402; stop without retrying with payment.' }
+
+$requirements = [string]($response.Headers['PAYMENT-REQUIRED'] | Select-Object -First 1)
+if ([string]::IsNullOrWhiteSpace($requirements)) {
+    throw 'No PAYMENT-REQUIRED header; stop and check the merchant documentation.'
+}
+
+$preview = baw x402-payment preview --paymentRequirements $requirements --json | ConvertFrom-Json
+if ($LASTEXITCODE -ne 0 -or $preview.success -ne $true) { throw 'Preview failed; stop without signing.' }
+$preview.data.options | Select-Object index,status,reasons
+```
+
+The header is already base64, so it can be passed as one argument without
+embedding raw JSON in a native-command argument. `-SkipHttpErrorCheck` is a
+PowerShell 7 option; it allows inspection of HTTP 402 rather than throwing for
+the status code. It does not disable TLS validation.
+
+An `ACTION_REQUIRED` option with `INSUFFICIENT_BALANCE` is a completed preview,
+not a successful purchase. Stop here: this example does not call `sign` or
+automatically transfer funds. If the merchant uses POST, authentication, or a
+different quote format, follow its documented request contract instead of
+guessing from this GET example.
+
 ---
 
 ## `x402-payment sign`
