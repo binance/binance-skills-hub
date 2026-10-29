@@ -1,0 +1,51 @@
+{
+  "description": "Response body for POST /propose and GET /status/:id",
+  "type": "object",
+  "properties": {
+    "proposalId": { "type": "string", "format": "uuid" },
+    "verdict": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "decision": { "type": "string", "enum": ["PASS", "VETO", "ESCALATE"] },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "rule": { "type": "string", "example": "spendingCap" },
+              "outcome": { "type": "string", "enum": ["ok", "violated", "warning"] },
+              "detail": { "type": "string" }
+            }
+          }
+        },
+        "simulation": {
+          "type": "object",
+          "properties": {
+            "venue": { "type": "string", "example": "testnet" },
+            "referencePrice": { "type": "number" },
+            "projectedFillPrice": { "type": "number" },
+            "projectedSlippageBps": { "type": "number" },
+            "notionalUsd": { "type": "number" },
+            "projectedNavImpactPct": { "type": "number" },
+            "orderBookDepthSampledAt": { "type": "string", "format": "date-time" }
+          }
+        },
+        "decidedAt": { "type": "string", "format": "date-time" },
+        "policyVersion": { "type": "integer" }
+      }
+    },
+    "execution": {
+      "type": ["object", "null"],
+      "description": "Present only if execute:true was set and the verdict allowed execution",
+      "properties": {
+        "orderId": { "type": "string" },
+        "symbol": { "type": "string" },
+        "side": { "type": "string", "enum": ["BUY", "SELL"] },
+        "status": { "type": "string" },
+        "executedQty": { "type": "number" },
+        "cummulativeQuoteQty": { "type": "number" }
+      }
+    }
+  }
+}
