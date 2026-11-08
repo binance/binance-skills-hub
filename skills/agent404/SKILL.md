@@ -1,7 +1,8 @@
 ---
 name: agent404
 title: agent404
-description: Operate AGENT404 (a DN-404 token on BNB Chain) on behalf of an operator — discover and report live openings (the PASSDROP event series, the paid claim while it is open, the Badge Market), check the operator wallet's two-legged eligibility (PASS badge + Binance Agent ID) with read-only calls, execute entries and claims only after the operator's explicit approval for that action, and monitor entered positions (refund maturities, reward claims, vesting) until they are fully settled. Statuses in this skill age: the canonical fresh-status source is the project's llms.txt, fetched at the start of every scan.
+description: |
+  Operate AGENT404 (a DN-404 token on BNB Chain) on behalf of an operator — discover and report live openings (the PASSDROP event series, the paid claim while it is open, the Badge Market), check the operator wallet's two-legged eligibility (PASS badge + Binance Agent ID) with read-only calls, execute entries and claims only after the operator's explicit approval for that action, and monitor entered positions (refund maturities, reward claims, vesting) until they are fully settled. Statuses in this skill age: the canonical fresh-status source is the project's llms.txt, fetched at the start of every scan.
 version: "1.0.0"
 license: MIT
 metadata:
