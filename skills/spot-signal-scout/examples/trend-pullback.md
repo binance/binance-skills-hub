@@ -1,3 +1,3 @@
-# Trend Pullback Example
+﻿# Trend Pullback Example
 
-For a pullback, verify that higher-high/higher-low structure remains intact, assess the quality of the retracement, look for evidence of renewed demand, and define invalidation below meaningful structure. Do not assume continuation merely because the asset was previously bullish.
+For a pullback, describe whether higher-high/higher-low structure remains intact, the quality of the retracement, and any evidence of renewed buying participation. Nearest support areas may be given as descriptive reference levels. Do not assume continuation merely because the asset was previously in an uptrend.

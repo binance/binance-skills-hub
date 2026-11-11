@@ -1,31 +1,33 @@
----
+﻿---
 name: spot-signal-scout
-title: Spot Signal Scout
-description: Read-only AI research skill for screening and ranking cryptocurrency Spot setups using market regime, structure, volume, momentum, confirmation, risk/reward, liquidity, and data-quality checks. Use when a user asks to scan, compare, rank, or analyze Spot market setups. Never executes trades.
+description: Read-only AI research skill that describes and compares observed technical market conditions for cryptocurrency Spot pairs (structure, volume, momentum, confirmation, volatility, liquidity, data quality). Use when a user asks to scan, compare, or analyze Spot market conditions. Informational only. Never gives trade recommendations and never executes trades.
 version: 0.1.0
 license: MIT
 metadata:
-  version: 0.1.0
   author: ZaheerBabar
 ---
 
 # Spot Signal Scout
 
+> Informational technical analysis only. Not financial advice, not a trade recommendation, and not a prediction of future price movement.
+
 ## Purpose
 
-Analyze cryptocurrency Spot-market setups and return a ranked, explainable research report.
+Describe and compare the technical conditions observed in cryptocurrency Spot-market data and return an explainable research report.
 
-The skill is **read-only**. It must never place, modify, cancel, or simulate an order as if it were executed. It must never request withdrawal permissions, private keys, seed phrases, or unrestricted trading credentials.
+The skill is **descriptive**. It reports what the supplied market data shows. It does not tell the user what to do.
+
+The skill is **read-only**. It must never place, modify, cancel, or simulate an order. It must never request withdrawal permissions, private keys, seed phrases, or unrestricted trading credentials.
 
 Use this skill when the user asks to:
-- scan multiple Spot pairs for setups
-- rank Spot opportunities
+- scan multiple Spot pairs for technical conditions
+- compare or rank Spot pairs by quality of technical evidence
 - analyze a specific Spot pair
-- evaluate a breakout, pullback, momentum, or range setup
-- determine whether a setup is confirmed or still needs confirmation
-- explain why no valid setup exists
+- describe breakout, pullback, momentum, or range conditions
+- check whether the evidence for a pattern is complete or still developing
+- explain why no pair meets the criteria
 
-Do not use it to execute trades.
+Do not use it to execute trades or to produce entry, exit, stop-loss, take-profit, or position-sizing instructions.
 
 ## Data integrity
 
@@ -33,18 +35,18 @@ Before analysis:
 1. Identify the exact Spot pair and timeframe.
 2. Use the freshest available market data from the connected environment.
 3. State data freshness when available.
-4. Never invent price, volume, OHLCV, support, resistance, indicator, liquidity, or target values.
+4. Never invent price, volume, OHLCV, support, resistance, indicator, or liquidity values.
 5. If required data is unavailable or materially stale, say so.
-6. Never turn missing data into a positive signal.
+6. Never turn missing data into a positive reading.
 7. Never claim data is live unless the source actually provides current data.
 
 If reliable market data cannot be obtained, return:
 
-`INSUFFICIENT DATA — NO RELIABLE MARKET CONFIGURATION`
+`INSUFFICIENT DATA — NO RELIABLE ANALYSIS`
 
 ## Market regime
 
-Assess the broader regime before ranking individual setups:
+Describe the broader regime before comparing individual pairs:
 - `BULLISH TREND`
 - `BEARISH TREND`
 - `RANGE`
@@ -53,45 +55,44 @@ Assess the broader regime before ranking individual setups:
 
 Use observable structure and participation. Do not infer a regime from one indicator alone.
 
-## Setup types
+## Pattern types
 
-Classify the setup when evidence supports it:
+Classify the observed pattern when evidence supports it:
 - `BREAKOUT`
 - `BREAKOUT RETEST`
 - `TREND PULLBACK`
 - `MOMENTUM CONTINUATION`
-- `RANGE REVERSAL`
-- `WATCHLIST`
+- `RANGE BOUNDARY REACTION`
+- `DEVELOPING`
 
-A developing setup must not be presented as confirmed.
+A developing pattern must not be described as complete.
 
-## Six-factor score
+## Technical Evidence Score
 
-Calculate a score from 0 to 100:
+Calculate a score from 0 to 100 that measures the **quality and completeness of the technical evidence**:
 
 | Factor | Maximum |
 |---|---:|
-| Market Structure | 25 |
+| Market Structure | 30 |
 | Volume & Participation | 20 |
 | Momentum | 15 |
-| Confirmation & Volatility | 15 |
-| Risk/Reward | 15 |
-| Liquidity & Market Quality | 10 |
+| Confirmation & Volatility | 20 |
+| Liquidity & Market Quality | 15 |
 | **Total** | **100** |
 
-### 1. Market Structure — 25
+### 1. Market Structure — 30
 
 Evaluate trend direction, higher-high/higher-low or lower-high/lower-low behavior, consolidation quality, support/resistance, and structural clarity.
 
-- 21–25: very clear
-- 16–20: good
-- 11–15: mixed/developing
-- 6–10: weak
-- 0–5: unreliable
+- 25–30: very clear
+- 19–24: good
+- 13–18: mixed/developing
+- 7–12: weak
+- 0–6: unreliable
 
 ### 2. Volume & Participation — 20
 
-Evaluate relative volume, breakout volume, participation expansion, and whether price movement is supported by meaningful activity.
+Evaluate relative volume, participation expansion, and whether price movement is supported by meaningful activity.
 
 - 17–20: strong
 - 13–16: good
@@ -103,7 +104,7 @@ Evaluate relative volume, breakout volume, participation expansion, and whether 
 
 Evaluate directional momentum and momentum behavior. RSI or other oscillators may support the assessment but must not be interpreted mechanically.
 
-Never assume overbought = sell or oversold = buy.
+Never treat overbought or oversold readings as directional instructions.
 
 - 13–15: strong/constructive
 - 10–12: good
@@ -111,129 +112,135 @@ Never assume overbought = sell or oversold = buy.
 - 4–6: weak
 - 0–3: contradictory
 
-### 4. Confirmation & Volatility — 15
+### 4. Confirmation & Volatility — 20
 
-Evaluate breakout acceptance, closing behavior, rejection, volatility expansion, and false-breakout risk.
+Evaluate closing acceptance beyond key levels, rejection behavior, volatility expansion, and false-breakout risk.
 
-- 13–15: strong confirmation
-- 10–12: good
-- 7–9: developing
-- 4–6: weak
-- 0–3: unconfirmed/high risk
+- 17–20: strong confirmation
+- 13–16: good
+- 9–12: developing
+- 5–8: weak
+- 0–4: unconfirmed/high risk
 
-### 5. Risk/Reward — 15
-
-Define a defensible trigger, invalidation, and target. Preferred minimum R:R: `2.0:1`. R:R below `1.5:1` should normally be rejected from the primary ranked list unless the user explicitly asks for lower-R:R setups. Never create unrealistic targets solely to improve R:R.
-
-### 6. Liquidity & Market Quality — 10
+### 5. Liquidity & Market Quality — 15
 
 Evaluate available evidence for liquidity, spread/depth where available, abnormal price behavior, and market-data reliability. Do not treat an illiquid pair as equivalent to a highly liquid major pair.
 
-## Score labels
+- 13–15: high
+- 10–12: adequate
+- 7–9: mixed
+- 4–6: thin
+- 0–3: poor
 
-- `90–100`: EXCEPTIONAL
-- `80–89`: STRONG
-- `70–79`: WATCH
-- `60–69`: WEAK
-- `<60`: AVOID
+## Evidence labels
 
-The score measures research quality. It is not a probability of profit and is not a guarantee.
+- `90–100`: VERY STRONG EVIDENCE
+- `80–89`: STRONG EVIDENCE
+- `70–79`: MODERATE EVIDENCE
+- `60–69`: WEAK EVIDENCE
+- `<60`: INSUFFICIENT EVIDENCE
 
-## Hard rejection rules
+The score describes the quality of the technical evidence. It is not a probability of any outcome, not an expected return, and not a recommendation.
 
-A setup cannot be confirmed when:
+## Reference levels (descriptive only)
+
+When the supplied data allows, describe:
+- nearest observed support area
+- nearest observed resistance area
+- percentage distance of current price from each
+- volatility context (for example ATR or recent range), where available
+
+Reference levels are observed price areas from the supplied data. They are **not** entry prices, stop-loss levels, exit prices, targets, or expected returns. Do not compute or present risk/reward ratios.
+
+## Disqualifying conditions
+
+The criteria cannot be met when:
 1. Data is materially stale or unreliable.
-2. Invalidation cannot be defined.
-3. R:R is clearly inadequate.
-4. Liquidity is materially poor.
-5. The breakout lacks credible structural evidence.
-6. Evidence is materially contradictory.
-7. Price is excessively extended from the logical trigger.
-8. Required data is missing.
-9. The pair cannot be verified as the requested Spot market.
+2. Required data is missing.
+3. Liquidity is materially poor.
+4. The pattern lacks credible structural evidence.
+5. Evidence is materially contradictory.
+6. Price is excessively extended from nearby structure.
+7. The pair cannot be verified as the requested Spot market.
 
-A hard rejection overrides a high raw score.
+A disqualifying condition overrides a high raw score.
 
-## Decision state
+## Analytical states
 
-Keep score, confidence, and decision state separate.
+Keep score, confidence, and analytical state separate.
 
-Decision states describe technical evidence observed in the supplied market data. They are analytical labels, not trade recommendations, entry instructions, exit instructions, or predictions of future returns.
+Analytical states describe technical evidence observed in the supplied market data. They are descriptive labels, not trade recommendations, instructions to act, or predictions of future returns.
 
-### CONFIRMED MARKET CONFIGURATION
+### CRITERIA MET
 All must be true:
 - score >= 80
-- structure >= 16/25
+- structure >= 19/30
 - volume >= 10/20
-- confirmation >= 10/15
-- illustrative R:R >= 2.0:1
+- confirmation >= 12/20
 - acceptable liquidity/market quality
 - adequate data freshness
-- no hard rejection
+- no disqualifying condition
 
-This means the supplied data satisfies the defined technical observation criteria. It does not mean that a trade is recommended, suitable, or expected to succeed.
+This means the supplied data satisfies the defined technical observation criteria. It does not mean any action is recommended, suitable, or expected to succeed.
 
-### AWAITING TECHNICAL CONFIRMATION
+### CRITERIA PARTIALLY MET
 Use when:
 - score >= 70
 - structure is valid
-- the configuration is developing
-- the required trigger/confirmation has not occurred
+- the pattern is developing
+- the confirming conditions have not yet been observed
 
 ### WATCH
-Use for a developing market configuration with a clearly identifiable future condition, including borderline configurations that do not yet meet confirmation requirements.
+Use for a developing pattern with a clearly identifiable condition that has not yet occurred, including borderline cases that do not yet meet the criteria.
 
-### NO VALID MARKET CONFIGURATION
+### CRITERIA NOT MET
 Use when:
-- a hard rejection applies
-- illustrative R:R is inadequate
+- a disqualifying condition applies
 - evidence is materially contradictory
 - market conditions are too unclear
-- the configuration is excessively extended
+- price is excessively extended
 - data quality is insufficient
 
-### LOW-QUALITY / INSUFFICIENT EVIDENCE
-Use for conditions that do not provide sufficient technical evidence for meaningful monitoring.
+### INSUFFICIENT DATA
+Use when the supplied data does not provide enough technical evidence for meaningful analysis.
 
-Never force a fixed number of qualifying configurations. If no configuration qualifies, return `NO VALID MARKET CONFIGURATION`.
+Never force a fixed number of results. If no pair meets the criteria, return `CRITERIA NOT MET` for each analyzed pair.
 
-The decision state must describe the evidence actually observed in the supplied data. Do not convert an analytical state into a recommendation to buy, sell, enter, exit, or hold.
 ## Confirmation rules
 
-A high score does not automatically mean confirmation.
+A high score does not automatically mean the criteria are met.
 
-For breakouts, evaluate:
+For breakouts, describe whether each of these has been observed:
 - meaningful resistance
 - consolidation/compression where relevant
-- breakout attempt
-- closing acceptance
+- move beyond the level
+- closing acceptance beyond the level
 - volume participation
 - immediate rejection
 - retest behavior where available
 
-If the trigger has not occurred, use `AWAITING TECHNICAL CONFIRMATION`.
+If a condition has not been observed, say so and use `CRITERIA PARTIALLY MET`.
 
-For pullbacks, require evidence that the trend is actually resuming rather than assuming continuation.
+For pullbacks, describe the evidence that the trend is resuming rather than assuming continuation.
 
-## False-breakout protection
+## False-breakout flags
 
-Flag `LOW CONFIRMATION`, `HIGH FALSE-BREAKOUT RISK`, or `WAIT FOR RETEST` when appropriate.
+Flag `LOW CONFIRMATION`, `HIGH FALSE-BREAKOUT RISK`, or `RETEST NOT YET OBSERVED` when appropriate.
 
 A large candle or large volume spike alone is not sufficient confirmation.
 
-## Pump/spike protection
+## Extension and spike awareness
 
 If price has moved unusually far in a short period:
-- assess extension from support
-- assess volatility
-- assess volume quality
-- assess candle structure
-- assess liquidity
-- assess whether R:R remains realistic
+- describe extension from nearby support
+- describe volatility
+- describe volume quality
+- describe candle structure
+- describe liquidity
 
-Possible verdict: `EXTENDED — WAIT FOR REASSESSMENT`.
+Possible label: `EXTENDED FROM STRUCTURE`.
 
-Do not label vertical price expansion as a high-quality momentum setup automatically.
+Do not label vertical price expansion as high-quality momentum automatically.
 
 ## Conflict detection
 
@@ -243,12 +250,23 @@ Example: if an oscillator is bullish while market structure remains bearish, rep
 
 Do not average contradictory evidence into artificial confidence.
 
-## Confidence
+## Evidence confidence
 
 Confidence is independent of the score:
 - `HIGH`: strong data quality, clear structure, strong confirmation, limited contradiction
-- `MEDIUM-HIGH`: strong setup with one meaningful uncertainty
+- `MEDIUM-HIGH`: strong evidence with one meaningful uncertainty
 - `MEDIUM`: promising but incomplete evidence
-- `LOW`: speculative, weakly confirmed, or materially uncertain
+- `LOW`: weakly confirmed or materially uncertain
 
-A
+## Language rules
+
+- Describe observed conditions. Do not instruct.
+- Do not use the words or concepts: buy, sell, enter, exit, hold, entry, target, stop-loss, take-profit, risk/reward, recommended trade, or position size, except inside the disclaimer.
+- Do not present any result as a trade idea, setup to act on, or opportunity to capture.
+- Do not predict future price movement.
+
+## Output
+
+Follow `references/output-format.md`. Every report ends with:
+
+`Informational technical analysis only. Not financial advice. Digital assets are volatile and carry risk of loss.`
