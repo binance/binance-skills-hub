@@ -1,0 +1,27 @@
+{
+  "description": "Request body for POST /propose",
+  "type": "object",
+  "required": ["agentId", "mandateId", "symbol", "side", "usd"],
+  "properties": {
+    "agentId": { "type": "string", "description": "Identifier of the agent making the proposal" },
+    "mandateId": { "type": "string", "format": "uuid", "description": "Which active mandate to evaluate against" },
+    "symbol": { "type": "string", "example": "BTCUSDT" },
+    "side": { "type": "string", "enum": ["BUY", "SELL"] },
+    "usd": { "type": "number", "exclusiveMinimum": 0, "description": "Notional size in USD (quote asset)" },
+    "reason": { "type": "string", "description": "Optional free-text reason, shown in the audit log" },
+    "execute": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, place the real order immediately on a PASS verdict (or a human-confirmed ESCALATE)"
+    }
+  },
+  "example": {
+    "agentId": "my-agent",
+    "mandateId": "b2f1e9a0-1a2b-4c3d-8e4f-000000000001",
+    "symbol": "BTCUSDT",
+    "side": "BUY",
+    "usd": 25,
+    "reason": "momentum signal crossed threshold",
+    "execute": false
+  }
+}
