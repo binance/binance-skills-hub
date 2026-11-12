@@ -15,7 +15,6 @@ Before constructing any swap command, perform the following steps:
 - For `market-order swap` and `limit-order buy`: the target is `--toToken`
 - For `limit-order sell`: the target is `--toToken` (already restricted to BNB/USDT/USDC, so skip to Step 4)
 - If the target is a known trusted asset from the **Common Token Addresses** table in SKILL.md → skip to Step 4
-- If the target is an Agent ID exclusive launch (a returned `meme-rush` row with `chainId` `56`, `protocol` `2004`, `tokenVersion` `openfour.meme.AgentIdExclusive`) → you may **ask** the user whether to skip the audit; only skip on a clear yes, and say "no token security audit was performed" in the trade confirmation. See [agent-id-exclusive-token-launches.md](agent-id-exclusive-token-launches.md)
 
 ### Step 2: Call the Token Audit
 

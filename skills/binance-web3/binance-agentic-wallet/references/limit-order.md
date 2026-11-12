@@ -6,14 +6,6 @@ Place, list, and cancel limit orders. A limit order executes automatically once 
 
 Before executing `limit-order buy` or `limit-order sell`, complete the swap security pre-check in [security.md §1](security.md#1-swap-security-pre-check). This includes auditing non-trusted target tokens and presenting the security summary to the user.
 
-## BNB Smart Chain (BSC): Agent ID exclusive check
-
-Before `limit-order buy` / `sell` on BNB Smart Chain (BSC, `--binanceChainId 56`) for a token whose contract address ends in `4444` or
-`ffff`, run the same check as for market orders:
-[agent-id-exclusive-token-launches.md → When the user did not say "Agent ID"](agent-id-exclusive-token-launches.md#when-the-user-did-not-say-agent-id).
-An Agent ID exclusive token still on the bonding curve cannot be traded by limit order — tell the user and offer the
-Developer Mode trade instead. Otherwise continue here and do not mention the check.
-
 ## Fees
 
 Limit orders are subject to Binance Web3 Wallet trading fees (charged when the order executes). For the current fee schedule, see: https://www.binance.com/en/support/faq/detail/87cbb1ca0df34a348eaecb73c26167d7

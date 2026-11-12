@@ -5,8 +5,7 @@ Check whether the connected account has successfully claimed an Agent ID — a `
 ## When to use
 
 - The user asks "did I claim my .ai name / Agent ID?", "what's my Agent ID domain?", or wants the `.ai` domain bound to this wallet.
-- Pre-check eligibility for venues that require holding an Agent ID (e.g. [Agent ID exclusive token launches](agent-id-exclusive-token-launches.md)) **before** routing the user into a buy flow that would fail.
-- This is the only supported pre-check. Do not infer eligibility from balances or addresses.
+- Some tokens can only be bought by Agent ID holders. When the user wants to buy one, check with this command first. This is the only supported pre-check. Do not infer eligibility from balances or addresses.
 
 ## Command
 

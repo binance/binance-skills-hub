@@ -39,7 +39,6 @@ This skill drives the `baw` CLI to manage a Binance Web3 wallet — sign-in/sign
 
 | User Intent                                                          | Command                               | Reference                                         |
 |----------------------------------------------------------------------|---------------------------------------|---------------------------------------------------|
-| Agent ID 专属内盘 / Agent ID exclusive token launch → 查看或买入       | (see reference)                       | [agent-id-exclusive-token-launches.md](references/agent-id-exclusive-token-launches.md) |
 | Check if I have claimed an Agent ID / get my .ai domain               | `wallet agent-id`                     | [agent-id-claim-status.md](references/agent-id-claim-status.md) |
 | Sign in / connect wallet                                             | `auth signin` → `auth verify`         | [authentication.md](references/authentication.md) |
 | Sign out / disconnect wallet                                         | `auth signout`                        | [authentication.md](references/authentication.md) |
@@ -102,26 +101,6 @@ This skill drives the `baw` CLI to manage a Binance Web3 wallet — sign-in/sign
 | Remove liquidity from an LP position                                 | `defi lp-remove`                      | [defi.md](references/defi.md)                     |
 | Claim LP fees / rewards / matured redemptions                        | `defi claim`                          | [defi.md](references/defi.md)                     |
 | Preview a DeFi transaction (no broadcast)                            | `defi preview`                        | [defi.md](references/defi.md)                     |
-
----
-
-## Agent ID exclusive token launches
-
-When the user mentions **Agent ID 专属内盘 / Agent ID exclusive** and wants to see or buy
-such a token, read [agent-id-exclusive-token-launches.md](references/agent-id-exclusive-token-launches.md) and follow it. That file covers the whole path: querying the
-`meme-rush` skill for the `openfour.meme.AgentIdExclusive` sub-type, reading the returned row, and the swap itself.
-
-On that path the Agent ID gate applies to **trading during the bonding-curve stage**, not to who may launch — any address
-can launch such a token on Four.meme, but until it migrates only Agent ID holders can buy, and only Agent ID holders
-and the token's issuer can sell. After it migrates, every address can buy and sell. The user's wallet therefore needs
-an Agent ID to buy one before it migrates. The swap security pre-check runs as usual; on that
-path only, the agent may **ask** the user whether to skip it (see the reference file). Every other launchpad token goes
-through [security.md](references/security.md) with no skip offer.
-
-This is unrelated to `.ai` **Agent ID domain names** in [domain-resolve.md](references/domain-resolve.md) — that is a
-name-resolution feature for transfers, not a trading entitlement. Do not conflate the two.
-
-For any other launchpad / new-token discovery question, use the `meme-rush` skill directly.
 
 ---
 
