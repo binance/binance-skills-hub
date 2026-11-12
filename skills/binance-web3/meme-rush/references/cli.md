@@ -89,7 +89,7 @@ Measured 2026-10-23 (the feed moves constantly, so treat the proportions, not th
 
 | `2004` (Open Four) `tokenVersion` value | Meaning |
 |---|---|
-| `openfour.meme.AgentIdExclusive` | Agent ID exclusive launches — any address can launch; during the bonding-curve stage only Agent ID holders can buy, and only Agent ID holders and the issuer can sell (trading flow: `binance-agentic-wallet` `references/agent-id-exclusive-token-launches.md`) |
+| `openfour.meme.AgentIdExclusive` | Agent ID exclusive launches — any address can launch; during the bonding-curve stage only Agent ID holders can buy, and only Agent ID holders and the issuer can sell |
 | `openfour.meme.TaxToken` | Tax token |
 | `openfour.meme.TaxStock` | Tax stock |
 | `openfour.meme.Likwid` | Likwid |

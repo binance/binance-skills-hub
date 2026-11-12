@@ -6,14 +6,6 @@ Swap tokens on-chain at the current market price, get quotes, and check market-o
 
 Before executing `market-order swap`, complete the swap security pre-check in [security.md §1](security.md#1-swap-security-pre-check). This includes auditing non-trusted target tokens and presenting the security summary to the user.
 
-## BNB Smart Chain (BSC): Agent ID exclusive check
-
-On BNB Smart Chain (BSC, `--binanceChainId 56`), if the contract address of the token being bought or sold ends in `4444` or `ffff`,
-check — in parallel with the audit and quote — whether it is an Agent ID exclusive token still
-on the bonding curve. Follow
-[agent-id-exclusive-token-launches.md → When the user did not say "Agent ID"](agent-id-exclusive-token-launches.md#when-the-user-did-not-say-agent-id).
-If it is not, continue here and do not mention the check.
-
 ## Fees
 
 Market orders are subject to Binance Web3 Wallet trading fees. For the current fee schedule, see: https://www.binance.com/en/support/faq/detail/87cbb1ca0df34a348eaecb73c26167d7

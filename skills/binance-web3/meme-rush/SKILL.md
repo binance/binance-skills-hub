@@ -65,7 +65,6 @@ node <skill-dir>/scripts/cli.mjs meme-rush '{"chainId":"56","rankType":30,"proto
 | Anything else | omit | Omitting `pairAnchorFilter` = all quote tokens. Avoid `marketCap` / `holders` filters — brand-new tokens have them `null` |
 
 - An empty list means no such token exists right now — not an error. Do not silently swap in another sub-type.
-- To buy one, hand off to the `binance-agentic-wallet` skill (`references/agent-id-exclusive-token-launches.md`).
 
 ## Commands
 
