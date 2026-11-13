@@ -204,19 +204,26 @@ QUOTES = f"{HOME}/quotes.jsonl"
 
 
 def resolve_outcome(symbol, start_ms, close_ms):
-    """Did the window close above its open? Resolved from 1-minute candles so it
-    works for every cadence, not just hourly."""
+    """Compare the first open and last close of a completed [start, close) window."""
     import urllib.request
-    url = (f"{API}?symbol={symbol}&interval=1m"
-           f"&startTime={int(start_ms)}&endTime={int(close_ms)}&limit=1000")
-    try:
-        with urllib.request.urlopen(url, timeout=20) as r:
-            d = json.load(r)
-    except Exception:
+    start_ms, close_ms = int(start_ms), int(close_ms)
+    if (start_ms % 60000 or close_ms % 60000 or close_ms <= start_ms
+            or close_ms > datetime.now(timezone.utc).timestamp() * 1000):
         return None
-    if not d:
-        return None
-    return 1 if float(d[-1][4]) > float(d[0][1]) else 0
+    candles = []
+    # Only the boundary candles are needed, even for daily windows (>1000 minutes).
+    for minute in dict.fromkeys((start_ms, close_ms - 60000)):
+        url = (f"{API}?symbol={symbol}&interval=1m"
+               f"&startTime={minute}&endTime={minute + 59999}&limit=1")
+        try:
+            with urllib.request.urlopen(url, timeout=20) as r:
+                d = json.load(r)
+        except Exception:
+            return None
+        if not d or int(d[0][0]) != minute:
+            return None
+        candles.append(d[0])
+    return 1 if float(candles[-1][4]) > float(candles[0][1]) else 0
 
 
 def pricedin():
