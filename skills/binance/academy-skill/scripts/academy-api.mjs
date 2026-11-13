@@ -238,18 +238,16 @@ async function callApi(env, endpoint, body) {
       headers,
     };
 
-    // Timeout: abort the socket if no response within the configured window.
-    // `setTimeout` on the request fires before headers arrive; once the
-    // response starts, the timer is cleared below to let the body stream.
+    // Bound the whole request, including reading the JSON response body.
     const timer = setTimeout(() => {
       req.destroy(new Error(`[academy-skill] Request timeout after ${config.timeoutMs}ms — env=${env} endpoint=${endpoint} url=${url}`));
     }, config.timeoutMs);
 
     const req = transport(reqOptions, (res) => {
-      clearTimeout(timer);
       const chunks = [];
       res.on("data", (chunk) => chunks.push(chunk));
       res.on("end", () => {
+        clearTimeout(timer);
         const text = Buffer.concat(chunks).toString("utf8");
         const status = res.statusCode ?? 0;
         if (status < 200 || status >= 300) {
@@ -775,10 +773,10 @@ async function callGetApiBestEffort(env, url) {
       req.destroy(new Error(`[academy-skill] GET timeout after ${config.timeoutMs}ms — url=${url}`));
     }, config.timeoutMs);
     const req = transport(reqOptions, (res) => {
-      clearTimeout(timer);
       const chunks = [];
       res.on("data", (chunk) => chunks.push(chunk));
       res.on("end", () => {
+        clearTimeout(timer);
         const text = Buffer.concat(chunks).toString("utf8");
         const status = res.statusCode ?? 0;
         if (status < 200 || status >= 300) {
@@ -796,9 +794,15 @@ async function callGetApiBestEffort(env, url) {
           resolveP(null);
         }
       });
-      res.on("error", () => resolveP(null));
+      res.on("error", () => {
+        clearTimeout(timer);
+        resolveP(null);
+      });
     });
-    req.on("error", () => resolveP(null));
+    req.on("error", () => {
+      clearTimeout(timer);
+      resolveP(null);
+    });
     req.end();
   });
 }

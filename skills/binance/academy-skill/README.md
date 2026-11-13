@@ -147,7 +147,20 @@ name, third is the JSON body. Endpoints: `searchGlossary`,
 
 - Edit `env/prod.env`.
 - The script reads `ACADEMY_BASE_URL` and
-  `ACADEMY_TIMEOUT_MS` from these files.
+  `ACADEMY_TIMEOUT_MS` from these files. The timeout covers the complete HTTP
+  request, including reading the response body. Article URL lookups fall back
+  to the original URL if their best-effort request times out.
+
+### Running Offline Client Tests
+
+With Node.js 18 or later, run from this skill directory:
+
+```bash
+node --test scripts/academy-api.test.mjs
+```
+
+The tests use a local HTTP server and temporary configuration, without calling
+Binance services or changing `env/prod.env`.
 
 ### Verifying the API Still Works
 
