@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "insight": {
+      "url": "https://www.oracleinsight.xyz/api/mcp",
+      "headers": {
+        "x-insight-entry-source": "skill"
+      }
+    },
+    "priorseal": {
+      "url": "https://priorseal.xyz/mcp"
+    }
+  }
+}
