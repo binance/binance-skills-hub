@@ -1,0 +1,208 @@
+[
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "who",
+    "type": "address"
+   },
+   {
+    "indexed": false,
+    "internalType": "string",
+    "name": "handle",
+    "type": "string"
+   },
+   {
+    "indexed": false,
+    "internalType": "string",
+    "name": "bio",
+    "type": "string"
+   }
+  ],
+  "name": "Registered",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "from",
+    "type": "address"
+   },
+   {
+    "indexed": true,
+    "internalType": "address",
+    "name": "to",
+    "type": "address"
+   },
+   {
+    "indexed": false,
+    "internalType": "string",
+    "name": "handle",
+    "type": "string"
+   },
+   {
+    "indexed": false,
+    "internalType": "uint256",
+    "name": "amount",
+    "type": "uint256"
+   },
+   {
+    "indexed": false,
+    "internalType": "string",
+    "name": "message",
+    "type": "string"
+   }
+  ],
+  "name": "TipSent",
+  "type": "event"
+ },
+ {
+  "inputs": [],
+  "name": "AGENT_ID",
+  "outputs": [
+   {
+    "internalType": "contract IAgentID",
+    "name": "",
+    "type": "address"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "FEED_SIZE",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "feedCount",
+  "outputs": [
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "name": "getFeed",
+  "outputs": [
+   {
+    "components": [
+     {
+      "internalType": "address",
+      "name": "from",
+      "type": "address"
+     },
+     {
+      "internalType": "address",
+      "name": "to",
+      "type": "address"
+     },
+     {
+      "internalType": "uint128",
+      "name": "amount",
+      "type": "uint128"
+     },
+     {
+      "internalType": "uint64",
+      "name": "at",
+      "type": "uint64"
+     },
+     {
+      "internalType": "string",
+      "name": "message",
+      "type": "string"
+     }
+    ],
+    "internalType": "struct PayLink.Tip[24]",
+    "name": "",
+    "type": "tuple[24]"
+   },
+   {
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "address",
+    "name": "",
+    "type": "address"
+   }
+  ],
+  "name": "profiles",
+  "outputs": [
+   {
+    "internalType": "uint128",
+    "name": "received",
+    "type": "uint128"
+   },
+   {
+    "internalType": "uint64",
+    "name": "tips",
+    "type": "uint64"
+   },
+   {
+    "internalType": "string",
+    "name": "bio",
+    "type": "string"
+   }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "string",
+    "name": "bio",
+    "type": "string"
+   }
+  ],
+  "name": "register",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [
+   {
+    "internalType": "string",
+    "name": "handle",
+    "type": "string"
+   },
+   {
+    "internalType": "string",
+    "name": "message",
+    "type": "string"
+   }
+  ],
+  "name": "tip",
+  "outputs": [],
+  "stateMutability": "payable",
+  "type": "function"
+ }
+]
