@@ -146,7 +146,7 @@ error EnforcedPause()
 | Address | `0x9eF8CA94a74B7Fbc5ae0b1F7a2dCaFCa14eE2A92` |
 | Purpose | Agent ID (or BAB) holders deposit ANTB; the AGENT CHAIN relayer credits `l2Recipient` 1:1 in native ANTB from `Deposited` events |
 | Beta escrow model | Until the Nitro Inbox for AGENT CHAIN is live on BSC, ANTB stays escrowed in this contract. **The owner can move escrowed ANTB with `withdrawTo`** (to the real Inbox once it exists, or back to depositors). This is a trusted step during Beta, bounded by the escrowed balance, and every call emits `EscrowWithdrawn`. Deposit only what you are prepared to have escrowed under those terms. |
-| Beta caps | `perAddressCap = 1 ANTB`, `globalCap = 500 ANTB` (cumulative deposits; enforced on-chain; owner-settable via `setCaps`) |
+| Beta caps | `perAddressCap = 0.1 ANTB`, `globalCap = 100 ANTB` (cumulative deposits; enforced on-chain; owner-settable via `setCaps`) |
 | Requires registration? | **No.** `deposit()` checks `isAgent(msg.sender)` only. `l2Recipient` must be non-zero; it is **not** checked against any registry — a recipient that is not a mirrored agent on L2 will hold ANTB the sequencer will not let it spend. |
 | Owner permissions (disclosed) | `pause()` / `unpause()`, `setCaps(uint256,uint256)`, `setInbox(address)` (informational in Beta), `withdrawTo(address,uint256)` (Beta escrow), `setBab`, `transferOwnership` / `renounceOwnership`. The owner **cannot** take ANTB from a user's wallet (only what was deposited). |
 

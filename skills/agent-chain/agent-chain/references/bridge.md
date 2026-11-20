@@ -4,7 +4,7 @@ Deposits BEP-20 ANTB into the AGENT CHAIN Beta bridge escrow on BSC; the AGENT C
 
 - Contracts (BSC): `ANTB` `0x38Dd26788Cf2d901E3aBf04efE3007d459d0Fc53` (18 decimals); `Bridge` — address in [contracts.md](contracts.md) (`0x9eF8CA94a74B7Fbc5ae0b1F7a2dCaFCa14eE2A92` until published).
 - Requirement: `msg.sender` passes `isAgent` (Agent ID, or BAB token when enabled). **Registration in `AgentRegistryMirror` is not required.** `l2Recipient` must be non-zero; the contract does not check it against any registry.
-- **Mainnet Beta caps: 1 ANTB per address, 500 ANTB total** (cumulative deposits; owner-settable via `setCaps`). Check `remainingFor` / `remainingGlobal` before previewing.
+- **Mainnet Beta caps: 0.1 ANTB per address, 100 ANTB total** (cumulative deposits; owner-settable via `setCaps`). Check `remainingFor` / `remainingGlobal` before previewing.
 - **Beta escrow model:** until the Nitro Inbox for AGENT CHAIN is live on BSC, deposited ANTB stays in this contract and **the owner can move it with `withdrawTo`** (to the real Inbox, or back to depositors). Every such move emits `EscrowWithdrawn`. This is a disclosed, trusted step bounded by the escrowed balance — tell the user plainly.
 - Withdrawals (L2 → BSC) go through the ArbSys precompile on AGENT CHAIN once the Inbox is live; they are not part of this skill yet.
 
@@ -90,11 +90,11 @@ console.log('deposit :', encodeFunctionData({ abi: parseAbi(['function deposit(u
 " 0.5 0x9eF8CA94a74B7Fbc5ae0b1F7a2dCaFCa14eE2A92 <L2_RECIPIENT>
 ```
 
-Example for exactly 1 ANTB (`1000000000000000000` wei = `0de0b6b3a7640000`):
+Example for exactly 0.1 ANTB (`100000000000000000` wei = `016345785d8a0000`):
 
 ```
-approve : 0x095ea7b30000000000000000000000000x9eF8CA94a74B7Fbc5ae0b1F7a2dCaFCa14eE2A920000000000000000000000000000000000000000000000000de0b6b3a7640000
-deposit : 0x6e553f650000000000000000000000000000000000000000000000000de0b6b3a7640000000000000000000000000000<L2_RECIPIENT>
+approve : 0x095ea7b30000000000000000000000000x9eF8CA94a74B7Fbc5ae0b1F7a2dCaFCa14eE2A92000000000000000000000000000000000000000000000000016345785d8a0000
+deposit : 0x6e553f65000000000000000000000000000000000000000000000000016345785d8a0000000000000000000000000000<L2_RECIPIENT>
 ```
 
 ### Step 1 — `approve` (skip if existing allowance ≥ amount; say so)
@@ -136,7 +136,7 @@ Show and confirm:
 > Contract: `Bridge` `0x9eF8CA94a74B7Fbc5ae0b1F7a2dCaFCa14eE2A92` (BSC)
 > Function: `deposit(amount = 0.5 ANTB, l2Recipient = <L2_RECIPIENT>)` — returns a deposit nonce
 > Value: 0 BNB · `balanceChanges`: −0.5 ANTB from you → bridge escrow · Risks: `<riskDetails or none>`
-> After this: the relayer credits 0.5 native ANTB on AGENT CHAIN to `<L2_RECIPIENT>` (chainId 1119 mainnet / 111900 testnet), usable for gas. Beta caps: 1 ANTB/address, 500 total. Escrowed ANTB can be moved by the bridge owner during Beta (logged as `EscrowWithdrawn`).
+> After this: the relayer credits 0.1 native ANTB on AGENT CHAIN to `<L2_RECIPIENT>` (chainId 1119 mainnet / 111900 testnet), usable for gas. Beta caps: 0.1 ANTB/address, 100 total. Escrowed ANTB can be moved by the bridge owner during Beta (logged as `EscrowWithdrawn`).
 >
 > *(Bridging risk warning above applies.)* Reply **yes** to sign, or anything else to stop.
 
